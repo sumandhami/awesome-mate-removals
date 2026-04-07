@@ -16,8 +16,7 @@ const TeamCard = ({
       <div className=" flex justify-center relative z-20 -mb-[6rem]">
         <img
           src={teamThumb}
-          className="m-auto w-9/12 rounded-full border-[10px] border-HoverColor-0 transition-all duration-500 group-hover:border-SecondaryColor-0"
-        />
+          className="m-auto w-9/12 rounded-full border-[10px] border-HoverColor-0 transition-all duration-500 group-hover:border-SecondaryColor-0" alt="" loading="lazy" decoding="async" />
       </div>
       <div
         className="text-center bg-white rounded-md pt-[126px] 2xl:pt-[140px] relative z-10 overflow-hidden
@@ -25,8 +24,7 @@ const TeamCard = ({
       >
         <img
           src={teamShape}
-          className="absolute bottom-1/4 left-1/4 animate-dance2 -z-10"
-        />
+          className="absolute bottom-1/4 left-1/4 animate-dance2 -z-10" alt="" loading="lazy" decoding="async" />
         <h5 className="font-Inter font-semibold text-[22px] text-HeadingColor-0 transition-all duration-500 group-hover:text-white">
           {teamTitle}
         </h5>
@@ -69,3 +67,4 @@ const TeamCard = ({
 };
 
 export default TeamCard;
+

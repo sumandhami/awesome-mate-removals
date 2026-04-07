@@ -16,12 +16,10 @@ const Breadcamp = ({
       <div className="Container relative">
         <img
           src={breadCampShape}
-          className="absolute -top-24 right-24 animate-zoomInOut hidden md:block"
-        />
+          className="absolute -top-24 right-24 animate-zoomInOut hidden md:block" alt="" loading="lazy" decoding="async" />
         <img
           src={breadCampShape}
-          className="absolute -bottom-24 left-0 animate-dance2 hidden md:block"
-        />
+          className="absolute -bottom-24 left-0 animate-dance2 hidden md:block" alt="" loading="lazy" decoding="async" />
         <h1 className="font-Inter font-bold text-4xl sm:text-[46px] text-white capitalize">
           {breadCampTitle}
         </h1>
@@ -60,3 +58,4 @@ const Breadcamp = ({
 };
 
 export default Breadcamp;
+

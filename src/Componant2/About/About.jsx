@@ -12,15 +12,13 @@ const About = () => {
       <div className="Container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[92px] lg:gap-5 xl:gap-20 items-center">
           <div className="relative z-10">
-            <img src={aboutThumb} />
+            <img src={aboutThumb} alt="" loading="lazy" decoding="async" />
             <img
               src={aboutShape}
-              className="absolute top-0 right-0 -z-10 animate-movebtn"
-            />
+              className="absolute top-0 right-0 -z-10 animate-movebtn" alt="" loading="lazy" decoding="async" />
             <img
               src={aboutShape2}
-              className="absolute bottom-0 left-[10%] -z-10 animate-movebtn"
-            />
+              className="absolute bottom-0 left-[10%] -z-10 animate-movebtn" alt="" loading="lazy" decoding="async" />
           </div>
           <div>
             <h5 className="font-Inter font-medium text-SecondaryColor-0">
@@ -58,7 +56,7 @@ const About = () => {
                 </Link>
               </div>
               <div className="bg-PrimaryColor-0 rounded-lg w-[192px] h-[192px] flex justify-center items-center flex-col">
-                <img src={icon} />
+                <img src={icon} alt="" loading="lazy" decoding="async" />
                 <CountUp
                   start={-11}
                   end={12}
@@ -78,3 +76,4 @@ const About = () => {
 };
 
 export default About;
+

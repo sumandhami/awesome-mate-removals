@@ -38,12 +38,10 @@ const Banner = () => {
                 </Link>
                 <img
                   src={bannerShape1}
-                  className="absolute left-2/4 -top-24 animate-zoomInOut"
-                />
+                  className="absolute left-2/4 -top-24 animate-zoomInOut" alt="" loading="lazy" decoding="async" />
                 <img
                   src={bannerShape2}
-                  className="absolute left-2/4 bottom-0 animate-rotational"
-                />
+                  className="absolute left-2/4 bottom-0 animate-rotational" alt="" loading="lazy" decoding="async" />
               </div>
             </div>
           </section>
@@ -70,12 +68,10 @@ const Banner = () => {
                 </Link>
                 <img
                   src={bannerShape1}
-                  className="absolute left-2/4 -top-24 animate-zoomInOut"
-                />
+                  className="absolute left-2/4 -top-24 animate-zoomInOut" alt="" loading="lazy" decoding="async" />
                 <img
                   src={bannerShape2}
-                  className="absolute left-2/4 bottom-0 animate-rotational"
-                />
+                  className="absolute left-2/4 bottom-0 animate-rotational" alt="" loading="lazy" decoding="async" />
               </div>
             </div>
           </section>
@@ -87,3 +83,4 @@ const Banner = () => {
 };
 
 export default Banner;
+

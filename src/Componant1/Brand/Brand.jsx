@@ -39,32 +39,32 @@ const Brand = () => {
         <Swiper {...settings}>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb} />
+              <img src={brandThumb} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb2} />
+              <img src={brandThumb2} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb3} />
+              <img src={brandThumb3} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb4} />
+              <img src={brandThumb4} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb5} />
+              <img src={brandThumb5} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb3} />
+              <img src={brandThumb3} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
         </Swiper>
@@ -74,3 +74,4 @@ const Brand = () => {
 };
 
 export default Brand;
+

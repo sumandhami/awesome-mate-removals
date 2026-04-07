@@ -1,0 +1,100 @@
+NEXT.JS MIGRATION PROGRESS
+Date: 2026-04-07
+Branch target: tests/nextjs (user indicated)
+
+IMPLEMENTATION STATUS
+- Milestone 1 complete: Core migration from Vite React to Next.js App Router baseline.
+
+COMPLETED IN THIS ITERATION
+1) Framework/tooling migration
+- package.json scripts switched from Vite to Next.js:
+  - dev: next dev
+  - build: next build
+  - start: next start
+  - lint: next lint
+- Added Next.js dependency stack and removed Vite-specific runtime packages.
+- ESLint config aligned with Next.js core-web-vitals baseline.
+
+2) App Router architecture created
+- Root app layout created.
+- Route-group layouts created to preserve original shell variants:
+  - (main): Navbar + ScrollToTop + Footer
+  - (main2): Navbar3 + ScrollToTop + Footer
+  - (main3): Navbar2 + ScrollToTop + Footer
+- Canonical SEO-friendly routes created and mapped to existing page components.
+
+3) Backward compatibility layer
+- Added react-router-dom compatibility shim for existing components.
+- This allows current Link/NavLink usage to function while using Next.js routing under the hood.
+- Avoided bulk rewrites across existing components to preserve originality.
+
+4) SEO + ops baseline
+- Added sitemap generator.
+- Added robots generator.
+- Added global not-found and app error boundary integration.
+
+5) Security baseline
+- Added response security headers in next.config.mjs:
+  - X-Content-Type-Options
+  - X-Frame-Options
+  - Referrer-Policy
+  - Permissions-Policy
+  - CSP baseline
+
+6) Redirect strategy
+- Added permanent redirects from legacy routes to canonical SEO-friendly routes (home2, home3, about, services, service_details*, etc).
+
+7) Build validation
+- npm install successful.
+- next build successful (EXIT:0).
+
+CURRENT KNOWN WARNINGS (NON-BLOCKING)
+- Many existing components still use <img> instead of next/image.
+- Many <img> elements are missing explicit alt text.
+- A few react-hooks/exhaustive-deps warnings exist in accordion components.
+
+These warnings do not block build but must be addressed for the target Lighthouse/accessibility/security quality gate.
+
+REMAINING WORK TO REACH YOUR FULL REQUIREMENTS
+1) Performance and Lighthouse uplift to 90+
+- Migrate key above-the-fold and repeated images to next/image.
+- Add explicit alt text strategy (semantic + decorative).
+- Add lazy-loading and priority strategy for LCP images.
+- Add bundle optimization pass (code splitting, deferred heavy widgets).
+
+2) Security hardening completion
+- Replace placeholder form action="#" flows with secure server-side handlers.
+- Add server-side validation/rate-limit strategy for form endpoints.
+- Add environment variable templates and deployment secret policy.
+
+3) SEO completion
+- Replace placeholder metadataBase domain.
+- Add per-route metadata (title/description/canonical/open graph/twitter).
+- Add structured data blocks for business and breadcrumbs.
+
+4) Quality gates in CI
+- Add CI workflow with hard gates for:
+  - lint
+  - build
+  - Lighthouse categories >= 90
+  - optional accessibility gate (axe)
+
+5) Content parity cleanup
+- Update internal links to canonical paths (current redirects keep behavior safe).
+- Audit and preserve every business section visual parity after image optimizations.
+
+TOP FAILURE POINTS + 3 MEASURES EACH (IMPLEMENTATION VIEW)
+1) Hydration/runtime mismatch with browser APIs
+- Measure A: Keep route-group layouts client-bound where legacy components require browser APIs.
+- Measure B: Use compatibility shim for router APIs to avoid mixed router state.
+- Measure C: Add smoke tests for nav/sticky/scroll interactions after each optimization pass.
+
+2) Lighthouse not reaching 90 due image/template legacy patterns
+- Measure A: Prioritize next/image conversion for all home hero/brand/blog thumbnails.
+- Measure B: Add alt-text audit script and fail CI for missing critical alt tags.
+- Measure C: Apply route-level Lighthouse budget enforcement in CI before merge/deploy.
+
+3) Redirect/canonical drift during continued refactor
+- Measure A: Keep single source of truth in next.config.mjs redirects.
+- Measure B: Add route map regression checklist (legacy -> canonical).
+- Measure C: Add automatic crawl check in preview deployment.

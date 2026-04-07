@@ -7,8 +7,7 @@ const BlogCard = ({blogThumb,thumbContent,blogDate,blogComment,blogUrl,blogTitle
         <div className="relative overflow-hidden rounded-t-md">
           <img
             src={blogThumb}
-            className="transition-all duration-500 scale-100 group-hover:scale-110 w-full"
-          />
+            className="transition-all duration-500 scale-100 group-hover:scale-110 w-full" alt="" loading="lazy" decoding="async" />
           <div className="absolute right-0 -bottom-2">
             <h6 className="font-Inter text-[15px] text-center inline-block overflow-hidden rounded-s px-5 py-2 text-white transition-all duration-500 group-hover:text-white bg-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:right-0 before:w-0 before:h-full before:bg-PrimaryColor-0 before:transition-all before:duration-500 before:-z-10 group-hover:before:w-full group-hover:before:left-0">
               {thumbContent}

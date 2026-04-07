@@ -29,7 +29,7 @@ const TestimonialCard = ({
       </p>
       <div className="flex flex-col lg:flex-row lg:items-center gap-5 pt-6">
         <div>
-          <img src={testiImg} />
+          <img src={testiImg} alt="" loading="lazy" decoding="async" />
         </div>
         <div>
           <h5 className="font-Inter font-medium text-white text-xl lg:text-lg xl:text-xl">
@@ -41,10 +41,11 @@ const TestimonialCard = ({
         </div>
       </div>
       <div className="absolute bottom-7 right-7 animate-rotational -z-10">
-        <img src={testiShape} />
+        <img src={testiShape} alt="" loading="lazy" decoding="async" />
       </div>
     </div>
   );
 };
 
 export default TestimonialCard;
+

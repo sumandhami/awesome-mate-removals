@@ -51,15 +51,13 @@ const Banner = () => {
                 </h6>
               </div>
             </div>
-            <img src={bannerThumb} />
+            <img src={bannerThumb} alt="" loading="lazy" decoding="async" />
             <img
               src={bannerShape1}
-              className="absolute right-0 top-0 animate-zoomInOut"
-            />
+              className="absolute right-0 top-0 animate-zoomInOut" alt="" loading="lazy" decoding="async" />
             <img
               src={bannerShape2}
-              className="absolute left-0 bottom-0 animate-rotational"
-            />
+              className="absolute left-0 bottom-0 animate-rotational" alt="" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
@@ -68,3 +66,4 @@ const Banner = () => {
 };
 
 export default Banner;
+

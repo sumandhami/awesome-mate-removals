@@ -19,14 +19,14 @@ const Footer = () => {
   return (
     <footer className="bg-HeadingColor-0 relative z-10">
       <div className="absolute top-1/4 left-0 right-0 animate-wiggle -z-10">
-        <img src={footerShape} />
+        <img src={footerShape} alt="" loading="lazy" decoding="async" />
       </div>
       <div className="Container">
         <div className="grid grid-cols-1 lg:grid-cols-3 lg:items-center bg-[url('/images/subscribe-bg.png')] bg-bottom sm:bg-right lg:bg-center md:gap-7 lg:gap-0 bg-cover bg-no-repeat py-[30px] px-5 sm:px-10 rounded-b-3xl mb-[120px]">
           <div className="col-span-1">
             <div className="flex flex-col sm:flex-row sm:items-center gap-6">
               <div className="w-[70px] h-[70px] rounded-full flex items-center justify-center bg-white">
-                <img src={callImg} />
+                <img src={callImg} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="flex-1">
                 <p className="text-HeadingColor-0 font-Poppins font-light text-[15px]">
@@ -44,7 +44,15 @@ const Footer = () => {
             <h4 className="font-Inter font-semibold text-white text-[28px]">
               Subscribe Now
             </h4>
-            <form action="#" method="post" className="relative">
+            <form action="/api/forms" method="post" className="relative">
+              <input type="hidden" name="formType" value="newsletter" />
+              <input
+                type="text"
+                name="hp"
+                className="hidden"
+                tabIndex="-1"
+                autoComplete="off"
+              />
               <input
                 type="email"
                 name="email"
@@ -66,7 +74,7 @@ const Footer = () => {
         </div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-12">
           <div className="2xl:col-span-3">
-            <img src={footerLogo} />
+            <img src={footerLogo} alt="" loading="lazy" decoding="async" />
             <p className="font-Poppins text-white mt-7 mb-9">
               Competently repurpose forward conveniently target e-business
               multipurpose clean
@@ -147,7 +155,7 @@ const Footer = () => {
             </h4>
             <div className="flex items-center gap-5 mb-8">
               <div>
-                <img src={blogThumb} />
+                <img src={blogThumb} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="flex-1">
                 <Link to={"/blog_details"}>
@@ -163,7 +171,7 @@ const Footer = () => {
             </div>
             <div className="flex items-center gap-5">
               <div>
-                <img src={blogThumb2} />
+                <img src={blogThumb2} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="flex-1">
                 <Link to={"/blog_details"}>
@@ -235,3 +243,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

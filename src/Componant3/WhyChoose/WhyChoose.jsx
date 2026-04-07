@@ -9,8 +9,7 @@ const WhyChoose = () => {
     <section className="pt-[120px] bg-[url('/images/contact-bg.png')] bg-cover bg-center bg-no-repeat relative">
       <img
         src={WhyChooseShape}
-        className="absolute left-20 -bottom-[88px] hidden 2xl:block"
-      />
+        className="absolute left-20 -bottom-[88px] hidden 2xl:block" alt="" loading="lazy" decoding="async" />
       <div className="Container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 2xl:gap-[142px]">
           <div className="bg-SecondaryColor-0 rounded-t-md pt-10 pb-[60px]">
@@ -20,10 +19,18 @@ const WhyChoose = () => {
               </h1>
             </div>
             <form
-              action="#"
+              action="/api/forms"
               method="post"
               className="grid grid-cols-1 gap-[22px] items-center mt-9 px-5 sm:px-[60px]"
             >
+              <input type="hidden" name="formType" value="why-choose-3" />
+              <input
+                type="text"
+                name="hp"
+                className="hidden"
+                tabIndex="-1"
+                autoComplete="off"
+              />
               <input
                 type="text"
                 name="name"
@@ -73,7 +80,7 @@ const WhyChoose = () => {
             </h1>
             <div className="flex flex-col sm:flex-row gap-7 mt-12">
               <div>
-                <img src={boxImg} />
+                <img src={boxImg} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="flex-1">
                 <h5 className="font-Inter font-semibold text-[22px] text-white">
@@ -88,7 +95,7 @@ const WhyChoose = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-7 mt-7">
               <div>
-                <img src={boxImg3} />
+                <img src={boxImg3} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="flex-1">
                 <h5 className="font-Inter font-semibold text-[22px] text-white">
@@ -115,3 +122,4 @@ const WhyChoose = () => {
 };
 
 export default WhyChoose;
+

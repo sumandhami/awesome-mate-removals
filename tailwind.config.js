@@ -1,11 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       fontFamily: {
-        Inter: ["Inter", "sans-serif"],
-        Poppins: ["Poppins", "sans-serif"],
+        Inter: ["var(--font-inter)", "sans-serif"],
+        Poppins: ["var(--font-poppins)", "sans-serif"],
       },
       colors: {
         PrimaryColor: ["#ffc702"],

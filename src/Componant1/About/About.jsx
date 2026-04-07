@@ -15,7 +15,7 @@ const About = () => {
       <div className="Container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[92px] lg:gap-5 xl:gap-24 items-center">
           <div className="relative">
-            <img src={aboutThumb} />
+            <img src={aboutThumb} alt="" loading="lazy" decoding="async" />
             <div className="absolute top-[4.5rem] right-[3rem]">
               <button
                 className="h-[90px] w-[90px] rounded-full bg-SecondaryColor-0 border-4 border-white text-white flex justify-center items-center relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-SecondaryColor-0 before:opacity-50 before:-z-10 before:rounded-full before:animate-ping"
@@ -34,8 +34,7 @@ const About = () => {
           <div className="relative">
             <img
               src={aboutShape}
-              className="absolute -top-6 right-0 animate-rotational"
-            />
+              className="absolute -top-6 right-0 animate-rotational" alt="" loading="lazy" decoding="async" />
             <h5 className="font-Inter font-medium text-SecondaryColor-0">
               ABOUT US
             </h5>
@@ -71,7 +70,7 @@ const About = () => {
                 </Link>
               </div>
               <div className="bg-PrimaryColor-0 rounded-lg w-[192px] h-[192px] flex justify-center items-center flex-col">
-                <img src={icon} />
+                <img src={icon} alt="" loading="lazy" decoding="async" />
                 <CountUp
                   start={-11}
                   end={12}
@@ -91,3 +90,4 @@ const About = () => {
 };
 
 export default About;
+

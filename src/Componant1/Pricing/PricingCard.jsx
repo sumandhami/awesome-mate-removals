@@ -21,7 +21,7 @@ const PricingCard = ({
   return (
     <div className="group bg-[#f4f5f8] rounded-xl relative z-10 before:absolute before:bottom-0 before:left-0 before:w-full before:h-0 before:opacity-0 before:bg-SecondaryColor-0 before:rounded-xl before:-z-10 before:transition-all before:duration-500 hover:before:h-full hover:before:opacity-100 hover:before:top-0">
       <div className="absolute top-1/4 left-0 right-0 animate-zoomInOut -z-10">
-        <img src={pricingShape} />
+        <img src={pricingShape} alt="" loading="lazy" decoding="async" />
       </div>
       <div className="relative z-10 -top-6 mb-3">
         <div className="w-[120px] h-[120px] rounded-e-xl rounded-b-xl bg-SecondaryColor-0 transition-all duration-300 text-white  flex flex-col items-center justify-center mx-auto font-Inter relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-PrimaryColor-0 before:rounded-e-xl before:rounded-b-xl before:transition-all before:duration-500 before:scale-0 before:-z-10 group-hover:before:scale-100 after:absolute after:top-0 after:-left-6 after:w-6 after:h-[14px] after:transition-all after:duration-500 after:border-[12px] after:border-r-HoverColor-0 after:border-t-white after:border-l-white after:border-b-HoverColor-0 group-hover:after:border-r-[#bb9010] group-hover:after:border-b-[#bb9010]">
@@ -87,3 +87,4 @@ const PricingCard = ({
 };
 
 export default PricingCard;
+

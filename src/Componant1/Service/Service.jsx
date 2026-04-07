@@ -7,8 +7,7 @@ const Service = () => {
     <div className="bg-[url('/images/service-bg.png')] bg-cover bg-center bg-no-repeat py-28 relative z-10">
       <img
         src={serviceShape}
-        className="absolute top-0 left-0 right-0 animate-zoomInOut -z-10"
-      />
+        className="absolute top-0 left-0 right-0 animate-zoomInOut -z-10" alt="" loading="lazy" decoding="async" />
       <Appoinment />
       <ServiceMain />
     </div>
@@ -16,3 +15,4 @@ const Service = () => {
 };
 
 export default Service;
+

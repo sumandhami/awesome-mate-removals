@@ -11,10 +11,10 @@ const About = () => {
       <div className="Container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[92px] lg:gap-5 xl:gap-20 items-center">
           <div className="relative z-10">
-            <img src={aboutThumb} />
+            <img src={aboutThumb} alt="" loading="lazy" decoding="async" />
             <div className="absolute bottom-0 left-0">
               <div className="relative before:w-full before:h-full before:border before:rounded-full before:border-dashed before:absolute before:top-0 before:left-0 before:border-PrimaryColor-0 before:animate-rotational">
-                <img src={aboutShape} />
+                <img src={aboutShape} alt="" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -33,7 +33,7 @@ const About = () => {
             </p>
             <div className="flex flex-col gap-7 sm:flex-row sm:items-center mt-8">
               <div className="w-[75px] h-[75px] rounded-full border-[5px] border-white">
-                <img src={aboutIcon} />
+                <img src={aboutIcon} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="flex-1">
                 <h6 className="font-Inter font-semibold text-xl text-HeadingColor-0">
@@ -47,7 +47,7 @@ const About = () => {
             </div>
             <div className="flex flex-col gap-7 sm:flex-row sm:items-center mt-8">
               <div className="w-[75px] h-[75px] rounded-full border-[5px] border-white">
-                <img src={aboutIcon2} />
+                <img src={aboutIcon2} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="flex-1">
                 <h6 className="font-Inter font-semibold text-xl text-HeadingColor-0">
@@ -73,3 +73,4 @@ const About = () => {
 };
 
 export default About;
+

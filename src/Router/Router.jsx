@@ -2,28 +2,28 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../Main/Main";
 import Main2 from "../Main/Main2";
 import Main3 from "../Main/Main3";
-import Home1 from "../Pages/Home1/Home1";
-import Home2 from "../Pages/Home2/Home2";
-import Home3 from "../Pages/Home3/Home3";
+import Home1 from "../PageViews/Home1/Home1";
+import Home2 from "../PageViews/Home2/Home2";
+import Home3 from "../PageViews/Home3/Home3";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
-import ProjectDetails from "../Pages/InnerPage/ProjectDetails/ProjectDetails";
-import BlogDetails from "../Pages/InnerPage/BlogDetails/BlogDetails";
-import ProjectInner from "../Pages/InnerPage/ProjectInner/ProjectInner";
-import PricingInner from "../Pages/InnerPage/PricingInner/PricingInner";
-import TeamInner from "../Pages/InnerPage/TeamInner/TeamInner";
-import ServiceDetails from "../Pages/InnerPage/ServiceDetails/ServiceDetails";
-import BlogList from "../Pages/InnerPage/BlogList/BlogList";
-import AboutInner from "../Pages/InnerPage/AboutInner/AboutInner";
-import ServiceInner from "../Pages/InnerPage/ServiceInner/ServiceInner";
-import BlogGrid from "../Pages/InnerPage/BlogGrid/BlogGrid";
-import TestimonialInner from "../Pages/InnerPage/TestimonialInner/TestimonialInner";
-import ContactInner from "../Pages/InnerPage/ContactInner/ContactInner";
-import AppointmentInner from "../Pages/InnerPage/Appointment/AppointmentInner";
-import ServiceDetails5 from "../Pages/InnerPage/ServiceDetails/ServiceDetails5";
-import ServiceDetails4 from "../Pages/InnerPage/ServiceDetails/ServiceDetails4";
-import ServiceDetails6 from "../Pages/InnerPage/ServiceDetails/ServiceDetails6";
-import ServiceDetails3 from "../Pages/InnerPage/ServiceDetails/ServiceDetails3";
-import ServiceDetails2 from "../Pages/InnerPage/ServiceDetails/ServiceDetails2";
+import ProjectDetails from "../PageViews/InnerPage/ProjectDetails/ProjectDetails";
+import BlogDetails from "../PageViews/InnerPage/BlogDetails/BlogDetails";
+import ProjectInner from "../PageViews/InnerPage/ProjectInner/ProjectInner";
+import PricingInner from "../PageViews/InnerPage/PricingInner/PricingInner";
+import TeamInner from "../PageViews/InnerPage/TeamInner/TeamInner";
+import ServiceDetails from "../PageViews/InnerPage/ServiceDetails/ServiceDetails";
+import BlogList from "../PageViews/InnerPage/BlogList/BlogList";
+import AboutInner from "../PageViews/InnerPage/AboutInner/AboutInner";
+import ServiceInner from "../PageViews/InnerPage/ServiceInner/ServiceInner";
+import BlogGrid from "../PageViews/InnerPage/BlogGrid/BlogGrid";
+import TestimonialInner from "../PageViews/InnerPage/TestimonialInner/TestimonialInner";
+import ContactInner from "../PageViews/InnerPage/ContactInner/ContactInner";
+import AppointmentInner from "../PageViews/InnerPage/Appointment/AppointmentInner";
+import ServiceDetails5 from "../PageViews/InnerPage/ServiceDetails/ServiceDetails5";
+import ServiceDetails4 from "../PageViews/InnerPage/ServiceDetails/ServiceDetails4";
+import ServiceDetails6 from "../PageViews/InnerPage/ServiceDetails/ServiceDetails6";
+import ServiceDetails3 from "../PageViews/InnerPage/ServiceDetails/ServiceDetails3";
+import ServiceDetails2 from "../PageViews/InnerPage/ServiceDetails/ServiceDetails2";
 
 const router = createBrowserRouter([
   {
@@ -133,3 +133,4 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
+

@@ -9,7 +9,7 @@ const Feature = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-7">
           <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row lg:items-start xl:items-center sm:items-center gap-7 overflow-hidden bg-BodyBg-0 px-9 py-8 rounded relative before:absolute before:bottom-0 before:left-1/2 before:w-0 before:h-1 before:bg-SecondaryColor-0 before:transition-all before:duration-500 hover:before:left-0 hover:before:w-full">
             <div>
-              <img src={boxImg} />
+              <img src={boxImg} alt="" loading="lazy" decoding="async" />
             </div>
             <div className="flex-1">
               <h5 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">
@@ -22,7 +22,7 @@ const Feature = () => {
           </div>
           <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row lg:items-start xl:items-center sm:items-center gap-7 bg-BodyBg-0 px-9 py-8 rounded relative overflow-hidden before:absolute before:bottom-0 before:left-1/2 before:w-0 before:h-1 before:bg-SecondaryColor-0 efore:transition-all before:duration-500 hover:before:left-0 hover:before:w-full">
             <div>
-              <img src={boxImg2} />
+              <img src={boxImg2} alt="" loading="lazy" decoding="async" />
             </div>
             <div className="flex-1">
               <h5 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">
@@ -35,7 +35,7 @@ const Feature = () => {
           </div>
           <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row lg:items-start xl:items-center sm:items-center gap-7 bg-BodyBg-0 px-9 py-8 rounded relative overflow-hidden before:absolute before:bottom-0 before:left-1/2 before:w-0 before:h-1 before:bg-SecondaryColor-0 before:transition-all before:duration-500 hover:before:left-0 hover:before:w-full">
             <div>
-              <img src={boxImg3} />
+              <img src={boxImg3} alt="" loading="lazy" decoding="async" />
             </div>
             <div className="flex-1">
               <h5 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">
@@ -53,3 +53,4 @@ const Feature = () => {
 };
 
 export default Feature;
+

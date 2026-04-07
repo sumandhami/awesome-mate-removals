@@ -11,7 +11,7 @@ const PortfolioCard = ({
   return (
     <div>
       <div className="relative z-10">
-        <img src={portfolioThumb} />
+        <img src={portfolioThumb} alt="" loading="lazy" decoding="async" />
         <div className="portfolio-content2 bg-SecondaryColor-0 rounded-s-md rounded-e-md border-b-4 border-SecondaryColor-0 hover:border-PrimaryColor-0 absolute -bottom-full transition-all duration-500 left-1/2 -translate-x-1/2 flex justify-between items-center w-10/12 pt-6 px-4 lg:px-6 2xl:px-[30px] pb-6">
           <div>
             <p className="text-white font-Inter">
@@ -37,3 +37,4 @@ const PortfolioCard = ({
 };
 
 export default PortfolioCard;
+

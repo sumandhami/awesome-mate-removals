@@ -13,8 +13,7 @@ const Appointment = () => {
           <div className="relative">
             <img
               src={appointmentThumb}
-              className="w-full lg:w-[inherit] lg:max-w-[inherit] lg:-ml-[28.8rem] xl:-ml-[24rem] 2xl:-ml-[19.5rem]"
-            />
+              className="w-full lg:w-[inherit] lg:max-w-[inherit] lg:-ml-[28.8rem] xl:-ml-[24rem] 2xl:-ml-[19.5rem]" alt="" loading="lazy" decoding="async" />
             <div className="absolute top-0 right-0 2xl:right-7 bg-SecondaryColor-0 w-[100px] h-[100px] md:w-[150px] md:h-[150px] rounded-es-xl flex justify-center items-center">
               <button
                 className="w-[70px] h-[70px] md:h-[92px] md:w-[92px] text-white rounded-2xl bg-transparent flex justify-center items-center relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:border before:border-dashed before:border-white before:-z-10 before:rounded-full before:animate-rotational"
@@ -34,7 +33,15 @@ const Appointment = () => {
             <h2 className="font-Inter font-bold text-3xl md:text-[40px] mb-11">
               Request A Quote
             </h2>
-            <form action="#" method="post" className="flex flex-col gap-7">
+            <form action="/api/forms" method="post" className="flex flex-col gap-7">
+              <input type="hidden" name="formType" value="quote" />
+              <input
+                type="text"
+                name="hp"
+                className="hidden"
+                tabIndex="-1"
+                autoComplete="off"
+              />
               <div className="flex flex-col md:flex-row gap-7">
                 <input
                   type="text"
@@ -90,3 +97,4 @@ const Appointment = () => {
 };
 
 export default Appointment;
+

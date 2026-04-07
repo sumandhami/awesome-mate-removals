@@ -9,10 +9,18 @@ const Appoinment = () => {
         </h1>
       </div>
       <form
-        action="#"
+        action="/api/forms"
         method="post"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7 items-center mt-14"
       >
+        <input type="hidden" name="formType" value="service-appointment" />
+        <input
+          type="text"
+          name="hp"
+          className="hidden"
+          tabIndex="-1"
+          autoComplete="off"
+        />
         <input
           type="text"
           name="name"

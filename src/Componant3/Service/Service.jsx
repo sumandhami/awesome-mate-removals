@@ -65,7 +65,7 @@ const Service = () => {
               Just <br className="hidden 2xl:block" /> Feel Free contact us
               based web develop.
             </p>
-            <img src={serviceThumb} />
+            <img src={serviceThumb} alt="" loading="lazy" decoding="async" />
           </div>
           <div>
             {serviceData.map(
@@ -100,3 +100,4 @@ const Service = () => {
 };
 
 export default Service;
+
