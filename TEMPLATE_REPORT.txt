@@ -1,0 +1,216 @@
+CLEENY TEMPLATE ARCHITECTURE REPORT
+Generated: 2026-04-06
+
+============================================================
+1) BUILD STATUS AND FIXES APPLIED
+============================================================
+Current status: BUILD SUCCESSFUL (vite build passes).
+
+Errors fixed:
+1. Dependency incompatibility in CSS pipeline:
+   - Cause: tailwindcss v4 was installed, but the template is authored in a Tailwind v3 style.
+   - Fix: changed tailwindcss version to ^3.4.17 in package.json.
+2. Missing asset import:
+   - Cause: src/Componant3/Blog/Blog.jsx imports /images/blog-thumb4.png, but file name on disk was blog-thumb4 - Copy.png.
+   - Fix: renamed the file to public/images/blog-thumb4.png.
+
+Verification:
+- npm install: success
+- npm run build: success
+
+Build note:
+- Vite reports one large output chunk (> 500 kB), which is a warning (not a failure).
+
+============================================================
+2) BASELINE STACK (WHAT THIS TEMPLATE IS)
+============================================================
+Framework and tooling:
+- React 19
+- Vite 8
+- React Router DOM 7 (createBrowserRouter + RouterProvider)
+- Tailwind CSS 3.4 + PostCSS + Autoprefixer
+- React Icons, Swiper, React Compare Image, CountUp, FS Lightbox
+
+Project type:
+- Multi-homepage marketing template for a cleaning service business.
+- Mostly static content with reusable section blocks.
+
+============================================================
+3) APP ENTRYPOINT FLOW
+============================================================
+Runtime boot sequence:
+1. index.html loads src/main.jsx.
+2. main.jsx mounts the app and renders RouterProvider.
+3. RouterProvider uses route definitions from src/Router/Router.jsx.
+4. Router selects one of three layout shells (Main, Main2, Main3).
+5. Each layout renders shared shell + Outlet content.
+
+Important files:
+- src/main.jsx
+- src/Router/Router.jsx
+- src/Main/Main.jsx
+- src/Main/Main2.jsx
+- src/Main/Main3.jsx
+
+============================================================
+4) ROUTING ARCHITECTURE (FULL MAP)
+============================================================
+Router style:
+- Flat path map grouped under 3 layout wrappers.
+- No lazy loading; all route components are imported eagerly.
+
+Layout group A (Main):
+- / -> Home1
+
+Layout group B (Main2):
+- /home2 -> Home2
+- /project -> ProjectInner
+- /about -> AboutInner
+- /service -> ServiceInner
+- /service_details -> ServiceDetails
+- /service_details2 -> ServiceDetails2
+- /service_details3 -> ServiceDetails3
+- /service_details4 -> ServiceDetails4
+- /service_details5 -> ServiceDetails5
+- /service_details6 -> ServiceDetails6
+- /pricing_inner -> PricingInner
+- /project_details -> ProjectDetails
+- /team_inner -> TeamInner
+- /testimonial -> TestimonialInner
+- /appointment -> AppointmentInner
+- /blog_grid -> BlogGrid
+- /blog_list -> BlogList
+- /blog_details -> BlogDetails
+- /contact -> ContactInner
+
+Layout group C (Main3):
+- /home3 -> Home3
+
+Fallback:
+- errorElement is ErrorPage for each layout group.
+
+============================================================
+5) LAYOUT HIERARCHY AND SHARED SHELL
+============================================================
+Each Main layout has the same structural pattern:
+- Navbar variant
+- ScrollToTop helper
+- Outlet (page content)
+- Footer
+
+Layout-to-navbar mapping:
+- Main -> Navbar
+- Main2 -> Navbar3
+- Main3 -> Navbar2
+
+Shared shell components:
+- src/Shared/Navbar/*
+- src/Shared/Footer/Footer.jsx
+- src/Shared/ScrollToTop/ScrollToTop.jsx
+- src/Shared/ErrorPage/ErrorPage.jsx
+- src/Shared/Breadcamp/Breadcamp.jsx
+
+============================================================
+6) PAGE COMPOSITION MODEL
+============================================================
+Home pages are section-composed (no CMS, no API):
+- Home1 assembles sections from src/Componant1/*.
+- Home2 assembles mostly src/Componant2/* plus Blog from Componant1.
+- Home3 assembles mostly src/Componant3/* plus Brand from Componant2.
+
+Inner pages follow a recurring pattern:
+- Breadcamp hero at top.
+- 1-3 content sections, often reused from Componant1/2 blocks.
+- Example: AboutInner uses About + Support + Process + Team + Testimonial.
+
+Design implication:
+- The template is intentionally modular and section-first.
+- You can swap, reorder, or remove sections quickly to create new page variants.
+
+============================================================
+7) STYLING BASELINE
+============================================================
+Core styling files:
+- src/index.css
+- tailwind.config.js
+- postcss.config.js
+
+Tailwind usage style:
+- Utility-first markup with heavy @apply abstractions for repeated patterns.
+- Custom theme tokens for brand colors, fonts, breakpoints, animation names, shadows.
+- Custom utility classes include Container, header-btn, primary-btn, sticky behavior styles.
+
+Assets:
+- Most media referenced from public/images via absolute paths like /images/....
+- This means file naming consistency in public/images is critical for successful builds.
+
+============================================================
+8) DATA AND STATE ARCHITECTURE
+============================================================
+Current data model:
+- No backend/API integration by default.
+- No global state manager (Redux/Zustand/Context-based app state) in template core.
+- Content mostly hardcoded inside component-level arrays/props.
+- Many forms are UI-only placeholders.
+
+What this means for customization:
+- To make content editable/scalable, move static arrays into a data layer (JSON/CMS/API).
+- Add validation and submission logic for contact/appointment/newsletter forms.
+
+============================================================
+9) KNOWN CODEBASE CHARACTERISTICS TO KNOW EARLY
+============================================================
+1. Naming inconsistencies are present by design/source template:
+   - Folder name uses "Componant" instead of "Component".
+   - Some files/components have typos (for example, Breadcamp, Appoiontment, Serivces text).
+2. main.jsx nests React.StrictMode twice (functionally fine but redundant).
+3. src/Main/Main2.jsx defines const Main3 and exports default (works, but name is confusing).
+4. Route naming is underscore-based and not REST-style (for example /service_details2).
+
+These do not currently break the build, but they matter for maintainability if you refactor.
+
+============================================================
+10) FULL CUSTOMIZATION SCOPE (PRACTICAL ROADMAP)
+============================================================
+Recommended order before deep feature changes:
+1. Foundation cleanup:
+   - Normalize naming and route conventions.
+   - Keep import paths stable during rename operations.
+2. Branding layer:
+   - Replace logo, color tokens, typography, spacing scales in Tailwind config and index.css.
+3. Content layer:
+   - Replace static lorem/placeholder business copy.
+   - Centralize repeating cards/lists into reusable data files.
+4. Navigation and IA:
+   - Simplify menus, remove unused pages, align menu labels with actual routes.
+5. Functional layer:
+   - Implement real form handlers, validation, API calls, and error/success states.
+6. Performance layer:
+   - Add route/component code splitting and optimize large bundle warning.
+7. Quality layer:
+   - Add linting rules, tests, and a content QA pass for typos and broken links.
+
+============================================================
+11) KEY FILES TO START CUSTOMIZING FIRST
+============================================================
+- src/Router/Router.jsx
+- src/Main/Main.jsx
+- src/Main/Main2.jsx
+- src/Main/Main3.jsx
+- src/Pages/Home1/Home1.jsx
+- src/Pages/Home2/Home2.jsx
+- src/Pages/Home3/Home3.jsx
+- src/Shared/Navbar/Navbar.jsx
+- src/Shared/Navbar/Navbar2.jsx
+- src/Shared/Navbar/Navbar3.jsx
+- src/Shared/Footer/Footer.jsx
+- src/index.css
+- tailwind.config.js
+
+============================================================
+12) CURRENT READY STATE
+============================================================
+- Install: working
+- Build: working
+- Template architecture: documented
+- Ready for content + branding customization
