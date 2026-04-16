@@ -26,12 +26,14 @@ const ScrollToTop = () => {
   return (
     <div className="relative">
       {showScroll && (
-        <div
+        <button
+          type="button"
+          aria-label="Scroll to top"
           className="fixed bottom-10 text-white right-6 z-50 bg-PrimaryColor-0 border-2 border-white rounded-full h-12 w-12 cursor-pointer animate-movebtn flex justify-center items-center hover:border-PrimaryColor-0 hover:bg-white hover:text-PrimaryColor-0 hover:animate-none"
           onClick={scrollToTop}
         >
           <FaArrowUpLong size={"24"} />
-        </div>
+        </button>
       )}
     </div>
   );

@@ -11,7 +11,7 @@ const TestimonialInnerCard = ({
     <div className="px-5 sm:px-10 lg:px-5 xl:px-10 relative shadow-shade bg-white group rounded-xl z-10 overflow-hidden before:absolute before:top-0 before:left-1/2 before:w-0 before:h-full before:bg-SecondaryColor-0 before:-z-10 before:transition-all before:duration-500 hover:before:w-full hover:before:left-0">
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row lg:items-center gap-5 lg:gap-2 xl:gap-5 pt-8">
         <div>
-          <img src={testiImg} alt="" loading="lazy" decoding="async" />
+          <img src={testiImg?.src || testiImg} alt="" loading="lazy" decoding="async" />
         </div>
         <div>
           <ul className="flex gap-1 items-center text-xl text-PrimaryColor-0">

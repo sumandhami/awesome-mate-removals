@@ -1,7 +1,5 @@
 const routes = [
   "",
-  "/home/two",
-  "/home/three",
   "/about-us",
   "/services",
   "/services/floor-cleaning",
@@ -20,6 +18,8 @@ const routes = [
   "/blog/list",
   "/blog/details",
   "/contact",
+  "/privacy-policy",
+  "/terms-and-conditions",
 ];
 
 export default function sitemap() {

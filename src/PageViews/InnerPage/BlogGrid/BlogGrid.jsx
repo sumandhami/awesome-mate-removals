@@ -146,7 +146,7 @@ const BlogGrid = () => {
               </div>
             </div>
             <div className="flex lg:justify-end">
-              <Link to={"/blog_details"}>
+              <Link to={"#"}>
                 <button className="primary-btn">
                   Veiw All Blog
                   <FaArrowRightLong size={"20"} />

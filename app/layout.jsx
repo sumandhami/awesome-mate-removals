@@ -19,11 +19,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Cleeny - Cleaning Service",
-    template: "%s | Cleeny",
+    default: "Awesome Mate Removals",
+    template: "%s | Awesome Mate Removals",
   },
   description:
-    "Cleeny is a modern cleaning service website template built for home and business cleaning brands.",
+    "Awesome Mate Removals provides residential, office, furniture, and special-item moving services across Perth.",
   manifest: "/site.webmanifest",
   alternates: {
     canonical: "/",
@@ -31,16 +31,16 @@ export const metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "Cleeny - Cleaning Service",
+    title: "Awesome Mate Removals",
     description:
-      "Cleeny is a modern cleaning service website template built for home and business cleaning brands.",
-    siteName: "Cleeny",
+      "Fully insured Perth movers for house, office, furniture, and specialty-item relocations.",
+    siteName: "Awesome Mate Removals",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cleeny - Cleaning Service",
+    title: "Awesome Mate Removals",
     description:
-      "Cleeny is a modern cleaning service website template built for home and business cleaning brands.",
+      "Perth moving company for house, office, furniture, and heavy-item removals.",
   },
 };
 
@@ -48,23 +48,29 @@ export default function RootLayout({ children }) {
   const orgSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "Cleeny",
+    name: "Awesome Mate Removals",
     url: siteUrl,
-    telephone: "+980765546900",
-    email: "example@yahoo.com",
+    telephone: "041207264",
+    email: "awesomemateremovals@gmail.com",
+    identifier: "ABN 42293475158",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "102/B Philosophy Market Road",
-      addressLocality: "California",
-      addressCountry: "US",
+      streetAddress: "Unit 5/207 Waterloo Street",
+      addressLocality: "Tuart Hill",
+      postalCode: "6060",
+      addressRegion: "WA",
+      addressCountry: "AU",
     },
     description:
-      "Professional residential and commercial cleaning services with modern, reliable workflows.",
+      "Professional Perth removalists for house, office, furniture, and special-item moving services.",
   };
 
   return (
     <html lang="en">
       <body className={`${inter.variable} ${poppins.variable}`}>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}

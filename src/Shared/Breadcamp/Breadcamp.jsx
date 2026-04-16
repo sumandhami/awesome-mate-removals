@@ -15,10 +15,10 @@ const Breadcamp = ({
     <div className="bg-[url('/images/breatcome-bg.png')] bg-no-repeat bg-cover bg-center flex items-center h-[400px] sm:h-[450px] text-center pt-20">
       <div className="Container relative">
         <img
-          src={breadCampShape}
+          src={breadCampShape?.src || breadCampShape}
           className="absolute -top-24 right-24 animate-zoomInOut hidden md:block" alt="" loading="lazy" decoding="async" />
         <img
-          src={breadCampShape}
+          src={breadCampShape?.src || breadCampShape}
           className="absolute -bottom-24 left-0 animate-dance2 hidden md:block" alt="" loading="lazy" decoding="async" />
         <h1 className="font-Inter font-bold text-4xl sm:text-[46px] text-white capitalize">
           {breadCampTitle}

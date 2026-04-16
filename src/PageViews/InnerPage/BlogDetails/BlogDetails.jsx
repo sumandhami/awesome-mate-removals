@@ -41,7 +41,7 @@ const BlogDetails = () => {
             <div className="col-span-2">
               <div className="border border-BorderColor-0 rounded-md overflow-hidden">
                 <div className="relative">
-                  <img src={blogListImg} className="w-full" alt="" loading="lazy" decoding="async" />
+                  <img src={blogListImg?.src || blogListImg} className="w-full" alt="" loading="lazy" decoding="async" />
                   <h6 className="font-Inter text-white px-5 py-2 rounded absolute top-5 left-5 bg-SecondaryColor-0">
                     Cleaning
                   </h6>
@@ -146,10 +146,10 @@ const BlogDetails = () => {
                   </ul>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-7 mt-16">
                     <div>
-                      <img src={blogDetailsImg} alt="" loading="lazy" decoding="async" />
+                      <img src={blogDetailsImg?.src || blogDetailsImg} alt="" loading="lazy" decoding="async" />
                     </div>
                     <div>
-                      <img src={blogDetailsImg2} alt="" loading="lazy" decoding="async" />
+                      <img src={blogDetailsImg2?.src || blogDetailsImg2} alt="" loading="lazy" decoding="async" />
                     </div>
                   </div>
                   <Link to={"/"}>
@@ -226,7 +226,7 @@ const BlogDetails = () => {
                     className="flex flex-col sm:flex-row lg:flex-col xl:flex-row xl:items-center gap-5 sm:items-center lg:items-start mt-5"
                   >
                     <div>
-                      <img src={itemthumb} alt="" loading="lazy" decoding="async" />
+                      <img src={itemthumb?.src || itemthumb} alt="" loading="lazy" decoding="async" />
                     </div>
                     <div className="flex-1">
                       <h4 className="font-Inter font-medium sm:text-lg md:text-base 2xl:text-lg text-HoverColor-0 sm:leading-[26px]">
@@ -258,7 +258,7 @@ const BlogDetails = () => {
                       </p>
                     </div>
                     <div>
-                      <img src={itemthumb3} alt="" loading="lazy" decoding="async" />
+                      <img src={itemthumb3?.src || itemthumb3} alt="" loading="lazy" decoding="async" />
                     </div>
                   </Link>
                 </div>
@@ -393,7 +393,7 @@ const BlogDetails = () => {
                 </h4>
                 <ul className="mt-8">
                   <li>
-                    <Link to={"/service_details"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         Floor Cleaning
@@ -401,7 +401,7 @@ const BlogDetails = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details2"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         House Cleaning
@@ -409,7 +409,7 @@ const BlogDetails = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details3"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         Office Cleaning
@@ -417,7 +417,7 @@ const BlogDetails = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details4"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         Cleaning Specialist
@@ -425,7 +425,7 @@ const BlogDetails = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details5"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         Window Cleaning
@@ -433,7 +433,7 @@ const BlogDetails = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details6"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         kitchen Cleaning
@@ -446,10 +446,10 @@ const BlogDetails = () => {
                 <h4 className="font-Inter font-semibold text-2xl text-HeadingColor-0 pb-3 mb-8 relative before:absolute before:bottom-0 before:left-0 before:w-7 before:h-[2px] before:bg-SecondaryColor-0">
                   Popular Post
                 </h4>
-                <Link to={"/blog-details"}>
+                <Link to={"#"}>
                   <button className="group flex gap-4 mb-6">
                     <div>
-                      <img src={itemthumb} alt="" loading="lazy" decoding="async" />
+                      <img src={itemthumb?.src || itemthumb} alt="" loading="lazy" decoding="async" />
                     </div>
                     <div className="flex-1 text-left">
                       <h6 className="font-Poppins font-medium text-lg lg:text-base 2xl:text-lg leading-6 text-HeadingColor-0 transition-all duration-500 group-hover:text-SecondaryColor-0">
@@ -461,10 +461,10 @@ const BlogDetails = () => {
                     </div>
                   </button>
                 </Link>
-                <Link to={"/blog_details"}>
+                <Link to={"#"}>
                   <button className="group flex gap-4 my-6">
                     <div>
-                      <img src={itemthumb2} alt="" loading="lazy" decoding="async" />
+                      <img src={itemthumb2?.src || itemthumb2} alt="" loading="lazy" decoding="async" />
                     </div>
                     <div className="flex-1 text-left">
                       <h6 className="font-Poppins font-medium text-lg lg:text-base 2xl:text-lg leading-6 text-HeadingColor-0 transition-all duration-500 group-hover:text-SecondaryColor-0">
@@ -476,10 +476,10 @@ const BlogDetails = () => {
                     </div>
                   </button>
                 </Link>
-                <Link to={"/blog_details"}>
+                <Link to={"#"}>
                   <button className="group flex gap-4 my-6">
                     <div>
-                      <img src={itemthumb3} alt="" loading="lazy" decoding="async" />
+                      <img src={itemthumb3?.src || itemthumb3} alt="" loading="lazy" decoding="async" />
                     </div>
                     <div className="flex-1 text-left">
                       <h6 className="font-Poppins font-medium text-lg lg:text-base 2xl:text-lg leading-6 text-HeadingColor-0 transition-all duration-500 group-hover:text-SecondaryColor-0">

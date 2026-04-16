@@ -37,7 +37,7 @@ const ServiceDetails5 = () => {
                 </h4>
                 <ul className="mt-8">
                   <li>
-                    <Link to={"/service_details"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center justify-between rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <span className="flex items-center gap-3">
                           <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
@@ -48,7 +48,7 @@ const ServiceDetails5 = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details2"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center justify-between rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <span className="flex items-center gap-3">
                           <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
@@ -59,7 +59,7 @@ const ServiceDetails5 = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details3"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center justify-between rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <span className="flex items-center gap-3">
                           <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
@@ -70,7 +70,7 @@ const ServiceDetails5 = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details4"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center justify-between rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <span className="flex items-center gap-3">
                           <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
@@ -81,7 +81,7 @@ const ServiceDetails5 = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details5"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-white transition-all duration-500 group px-7 py-4 flex items-center justify-between rounded bg-SecondaryColor-0 mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <span className="flex items-center gap-3">
                           <FaRegFolderOpen className="text-white transition-all duration-500 group-hover:text-white" />
@@ -92,7 +92,7 @@ const ServiceDetails5 = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details6"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center justify-between rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <span className="flex items-center gap-3">
                           <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
@@ -140,7 +140,7 @@ const ServiceDetails5 = () => {
                 </ul>
               </div>
               <div className="rounded-lg px-9 overflow-hidden bg-[url('/images/widget-thumb.png')] bg-cover bg-no-repeat bg-center py-[50px]">
-                <img src={wedgetIcon} alt="" loading="lazy" decoding="async" />
+                <img src={wedgetIcon?.src || wedgetIcon} alt="" loading="lazy" decoding="async" />
                 <h6 className="font-Inter font-medium text-lg text-white mt-5 mb-2">
                   Call Us Anytime
                 </h6>
@@ -182,7 +182,7 @@ const ServiceDetails5 = () => {
                 meta-services. Interactively harness integrated ROI whereas
                 frictionless products.
               </p>
-              <img src={projectDetailsThumb} className="w-full" alt="" loading="lazy" decoding="async" />
+              <img src={projectDetailsThumb?.src || projectDetailsThumb} className="w-full" alt="" loading="lazy" decoding="async" />
               <h2 className="font-Inter font-bold text-2xl sm:text-3xl text-HeadingColor-0 mt-[74px]">
                 What the Benifits?
               </h2>
@@ -197,7 +197,7 @@ const ServiceDetails5 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 mt-7">
                 <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row gap-5 bg-[#f3f4f8] rounded-md px-6 py-7">
                   <div className="w-[72px] h-[72px] rounded-full bg-white flex justify-center items-center">
-                    <img src={projectDetailsIcon} alt="" loading="lazy" decoding="async" />
+                    <img src={projectDetailsIcon?.src || projectDetailsIcon} alt="" loading="lazy" decoding="async" />
                   </div>
                   <div className="flex-1">
                     <h6 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">
@@ -211,7 +211,7 @@ const ServiceDetails5 = () => {
                 </div>
                 <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row gap-5 bg-[#f3f4f8] rounded-md px-6 py-7">
                   <div className="w-[72px] h-[72px] rounded-full bg-white flex justify-center items-center">
-                    <img src={projectDetailsIcon2} alt="" loading="lazy" decoding="async" />
+                    <img src={projectDetailsIcon2?.src || projectDetailsIcon2} alt="" loading="lazy" decoding="async" />
                   </div>
                   <div className="flex-1">
                     <h6 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">

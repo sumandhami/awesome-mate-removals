@@ -69,7 +69,7 @@ const ProjectDetails = () => {
                 </div>
               </div>
               <div className="rounded-lg overflow-hidden bg-white mb-7 text-center pt-9 pb-6">
-                <img src={profilethumb} className="m-auto" alt="" loading="lazy" decoding="async" />
+                <img src={profilethumb?.src || profilethumb} className="m-auto" alt="" loading="lazy" decoding="async" />
                 <h6 className="font-Inter font-semibold text-[22px] text-HeadingColor-0 mt-5 mb-1">
                   Abrahum Khan
                 </h6>
@@ -108,7 +108,7 @@ const ProjectDetails = () => {
                 </ul>
               </div>
               <div className="rounded-lg px-9 overflow-hidden bg-[url('/images/widget-thumb.png')] bg-cover bg-no-repeat bg-center py-[50px]">
-                <img src={wedgetIcon} alt="" loading="lazy" decoding="async" />
+                <img src={wedgetIcon?.src || wedgetIcon} alt="" loading="lazy" decoding="async" />
                 <h6 className="font-Inter font-medium text-lg text-white mt-5 mb-2">
                   Call Us Anytime
                 </h6>
@@ -150,7 +150,7 @@ const ProjectDetails = () => {
                 meta-services. Interactively harness integrated ROI whereas
                 frictionless products.
               </p>
-              <img src={projectDetailsThumb} className="w-full" alt="" loading="lazy" decoding="async" />
+              <img src={projectDetailsThumb?.src || projectDetailsThumb} className="w-full" alt="" loading="lazy" decoding="async" />
               <h2 className="font-Inter font-bold text-2xl sm:text-3xl text-HeadingColor-0 mt-[74px]">
                 What the Benifits?
               </h2>
@@ -165,7 +165,7 @@ const ProjectDetails = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 mt-7">
                 <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row gap-5 bg-white rounded-md px-6 py-7">
                   <div className="w-[72px] h-[72px] rounded-full bg-[#f3f4f8] flex justify-center items-center">
-                    <img src={projectDetailsIcon} alt="" loading="lazy" decoding="async" />
+                    <img src={projectDetailsIcon?.src || projectDetailsIcon} alt="" loading="lazy" decoding="async" />
                   </div>
                   <div className="flex-1">
                     <h6 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">
@@ -179,7 +179,7 @@ const ProjectDetails = () => {
                 </div>
                 <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row gap-5 bg-white rounded-md px-6 py-7">
                   <div className="w-[72px] h-[72px] rounded-full bg-[#f3f4f8] flex justify-center items-center">
-                    <img src={projectDetailsIcon2} alt="" loading="lazy" decoding="async" />
+                    <img src={projectDetailsIcon2?.src || projectDetailsIcon2} alt="" loading="lazy" decoding="async" />
                   </div>
                   <div className="flex-1">
                     <h6 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">
@@ -246,7 +246,7 @@ const ProjectDetails = () => {
                   </ul>
                 </div>
                 <div className="mt-3">
-                  <img src={projectDetailsListThumb} alt="" loading="lazy" decoding="async" />
+                  <img src={projectDetailsListThumb?.src || projectDetailsListThumb} alt="" loading="lazy" decoding="async" />
                 </div>
               </div>
             </div>

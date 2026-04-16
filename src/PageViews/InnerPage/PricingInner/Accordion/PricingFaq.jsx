@@ -26,7 +26,7 @@ const PricingFaq = () => {
       <div className="Container">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 items-center">
           <div>
-            <img src={pricingFaqImg} alt="" loading="lazy" decoding="async" />
+            <img src={pricingFaqImg?.src || pricingFaqImg} alt="" loading="lazy" decoding="async" />
           </div>
           <div className="w-full mx-auto">
             <div className="mb-11">

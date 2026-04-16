@@ -7,7 +7,7 @@ const BlogListCard = ({blogListImg,thumbContent,blogListTitle,postByIcon,postBy,
     <div className="border border-BorderColor-0 rounded-md overflow-hidden group">
       <div className="relative overflow-hidden">
         <img
-          src={blogListImg}
+          src={blogListImg?.src || blogListImg}
           className="w-full transition-all duration-500 group-hover:scale-110" alt="" loading="lazy" decoding="async" />
         <h6 className="font-Inter text-white px-5 py-2 rounded absolute top-5 -left-1/4 transition-all duration-500 bg-SecondaryColor-0 group-hover:left-5">
           {thumbContent}

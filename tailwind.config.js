@@ -13,7 +13,7 @@ export default {
       },
       colors: {
         PrimaryColor: ["#ffc702"],
-        SecondaryColor: ["#2f6eff"],
+        SecondaryColor: ["#1e4dc4"],
         HoverColor: ["#0a2a99"],
         HeadingColor: ["#00197e"],
         TextColor: ["#3a4268"],

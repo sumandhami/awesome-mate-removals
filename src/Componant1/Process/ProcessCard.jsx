@@ -9,18 +9,28 @@ const ProcessCard = ({
 }) => {
   return (
     <div className="text-center group relative">
-      <img src={processShape} className="absolute right-0" alt="" loading="lazy" decoding="async" />
+      <img src={processShape?.src || processShape} className="absolute right-0" alt="" loading="lazy" decoding="async" />
       <div className="relative">
         <div className="w-28 h-28 bg-white rounded-2xl flex items-center justify-center shadow-shadow m-auto relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:scale-0 before:h-full before:rounded-2xl before:bg-SecondaryColor-0 before:transition-all before:duration-500 group-hover:before:scale-100">
-          <img
-            src={processIcon}
-            className="transition-all duration-500 group-hover:brightness-0 group-hover:invert-[1]" alt="" loading="lazy" decoding="async" />
+          {typeof processIcon === "string" || processIcon?.src ? (
+            <img
+              src={processIcon?.src || processIcon}
+              className="relative z-10 transition-all duration-500 group-hover:brightness-0 group-hover:invert-[1] group-hover:scale-110"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <span className="relative z-10 text-SecondaryColor-0 transition-all duration-500 group-hover:text-white group-hover:scale-110">
+              {processIcon}
+            </span>
+          )}
           <h6 className="h-[26px] w-[26px] rounded-full bg-PrimaryColor-0 text-sm flex justify-center items-center text-HeadingColor-0 font-Inter absolute top-1/2 -translate-y-1/2 -right-[13px]">
             {boxNumber}
           </h6>
         </div>
         <img
-          src={boxShape}
+          src={boxShape?.src || boxShape}
           draggable="false"
           className="!w-[inherit] absolute top-1/2 -translate-y-1/2 -right-[170px] hidden xl:block" alt="" loading="lazy" decoding="async" />
       </div>

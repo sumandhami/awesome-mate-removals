@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import callImg from "/images/subscribe-icon.png";
-import footerLogo from "/images/footer-logo.png";
-import blogThumb from "/images/footer-thumb.png";
-import blogThumb2 from "/images/footer-thumb2.png";
+import footerLogo from "/images/footer-logo.jpg";
 import footerShape from "/images/footer-shape.png";
 import {
   FaChevronRight,
@@ -19,30 +17,28 @@ const Footer = () => {
   return (
     <footer className="bg-HeadingColor-0 relative z-10">
       <div className="absolute top-1/4 left-0 right-0 animate-wiggle -z-10">
-        <img src={footerShape} alt="" loading="lazy" decoding="async" />
+        <img src={footerShape?.src || footerShape} alt="" loading="lazy" decoding="async" />
       </div>
-      <div className="Container">
+      <div className="Container px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 lg:items-center bg-[url('/images/subscribe-bg.png')] bg-bottom sm:bg-right lg:bg-center md:gap-7 lg:gap-0 bg-cover bg-no-repeat py-[30px] px-5 sm:px-10 rounded-b-3xl mb-[120px]">
           <div className="col-span-1">
             <div className="flex flex-col sm:flex-row sm:items-center gap-6">
               <div className="w-[70px] h-[70px] rounded-full flex items-center justify-center bg-white">
-                <img src={callImg} alt="" loading="lazy" decoding="async" />
+                <img src={callImg?.src || callImg} alt="Call us" loading="lazy" decoding="async" />
               </div>
               <div className="flex-1">
                 <p className="text-HeadingColor-0 font-Poppins font-light text-[15px]">
-                  Call Us Now
+                  Need Moving Help?
                 </p>
-                <Link to={"/"}>
-                  <button className="font-Inter text-left font-semibold text-HeadingColor-0 text-[22px] mt-1">
-                    +980 765 (546) 900
-                  </button>
-                </Link>
+                <a href="tel:041207264" className="font-Inter text-left font-semibold text-HeadingColor-0 text-[22px] mt-1 inline-block">
+                  Call Us Now: 041207264
+                </a>
               </div>
             </div>
           </div>
           <div className="col-span-2 text-left lg:text-right flex flex-col lg:flex-row gap-7 lg:gap-4 xl:gap-[70px] justify-end lg:items-center">
             <h4 className="font-Inter font-semibold text-white text-[28px]">
-              Subscribe Now
+              Get a Quote Update
             </h4>
             <form action="/api/forms" method="post" className="relative">
               <input type="hidden" name="formType" value="newsletter" />
@@ -57,7 +53,7 @@ const Footer = () => {
                 type="email"
                 name="email"
                 id="email"
-                placeholder="Enter E-Mail*"
+                placeholder="Enter your email"
                 required
                 className="w-full lg:w-[300px] 2xl:w-[394px] h-[56px] rounded-md bg-white text-TextColor-0 placeholder:text-TextColor-0 px-5 py-2"
               />
@@ -73,169 +69,214 @@ const Footer = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-12">
-          <div className="2xl:col-span-3">
-            <img src={footerLogo} alt="" loading="lazy" decoding="async" />
+          <div className="2xl:col-span-3 min-w-0">
+            <img src={footerLogo?.src || footerLogo} alt="Awesome Mate Removals" loading="lazy" decoding="async" />
             <p className="font-Poppins text-white mt-7 mb-9">
-              Competently repurpose forward conveniently target e-business
-              multipurpose clean
+              Awesome Mate Removals is a local Perth moving company for residential,
+              furniture, commercial, and interstate removals.
             </p>
             <ul className="flex gap-3">
               <li>
-                <button className="w-10 h-10 rounded-full border-2 border-[#334899] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
+                <a href="#" aria-label="Facebook" className="w-10 h-10 rounded-full border-2 border-[#334899] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
                   <FaFacebookF />
-                </button>
+                </a>
               </li>
               <li>
-                <button className="w-10 h-10 rounded-full border-2 border-[#334899] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
+                <a href="#" aria-label="X" className="w-10 h-10 rounded-full border-2 border-[#334899] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
                   <FaXTwitter />
-                </button>
+                </a>
               </li>
               <li>
-                <button className="w-10 h-10 rounded-full border-2 border-[#334899] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
+                <a href="#" aria-label="LinkedIn" className="w-10 h-10 rounded-full border-2 border-[#334899] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
                   <FaLinkedinIn />
-                </button>
+                </a>
               </li>
               <li>
-                <button className="w-10 h-10 rounded-full border-2 border-[#334899] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
+                <a href="#" aria-label="Pinterest" className="w-10 h-10 rounded-full border-2 border-[#334899] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
                   <FaPinterestP />
-                </button>
+                </a>
               </li>
             </ul>
           </div>
-          <div className="2xl:col-span-2">
+          <div className="2xl:col-span-2 min-w-0">
             <h4 className="font-Inter text-2xl text-white font-semibold mb-[30px]">
-              Company
+              Quick Links
             </h4>
             <ul>
               <li>
-                <Link to={"/"}>
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link to="/" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     Home
-                  </button>
                 </Link>
               </li>
               <li>
-                <Link to={"/about"}>
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     About Us
-                  </button>
                 </Link>
               </li>
               <li>
-                <Link to={"/service"}>
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     Our Services
-                  </button>
                 </Link>
               </li>
               <li>
-                <Link to={"/team_inner"}>
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
-                    Meet Our Team
-                  </button>
+                    Projects
                 </Link>
               </li>
               <li>
-                <Link to={"/blog_list"}>
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1">
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1">
                     <FaChevronRight className="text-sm opacity-50" />
-                    Latest Blog
-                  </button>
+                    Contact
                 </Link>
               </li>
             </ul>
           </div>
-          <div className="2xl:col-span-4">
+          <div className="2xl:col-span-4 min-w-0">
             <h4 className="font-Inter text-2xl text-white font-semibold mb-9">
-              Latest Blog
+              Services
             </h4>
-            <div className="flex items-center gap-5 mb-8">
-              <div>
-                <img src={blogThumb} alt="" loading="lazy" decoding="async" />
-              </div>
-              <div className="flex-1">
-                <Link to={"/blog_details"}>
-                  <button className="font-Inter font-medium text-white text-left xl:text-base 2xl:text-lg transition-all duration-500 hover:text-PrimaryColor-0">
-                    10 Most Popular Clean <br className="hidden 2xl:block" />{" "}
-                    Tips for Housey
-                  </button>
+            <ul>
+              <li>
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                    <FaChevronRight className="text-sm opacity-50" />
+                    All Services
                 </Link>
-                <p className="font-Poppins text-[#808CBF] text-sm pl-4 relative before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:w-2 before:h-2 before:rounded-full before:bg-[#808CBF] mt-2">
-                  Nov 16, 2024
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-5">
-              <div>
-                <img src={blogThumb2} alt="" loading="lazy" decoding="async" />
-              </div>
-              <div className="flex-1">
-                <Link to={"/blog_details"}>
-                  <button className="font-Inter font-medium text-white text-left xl:text-base 2xl:text-lg transition-all duration-500 hover:text-PrimaryColor-0">
-                    Floor cleeny and <br className="hidden 2xl:block" /> Washing
-                    New...
-                  </button>
+              </li>
+              <li>
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                    <FaChevronRight className="text-sm opacity-50" />
+                    Residential Moving
                 </Link>
-                <p className="font-Poppins text-[#808CBF] text-sm pl-4 relative before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:w-2 before:h-2 before:rounded-full before:bg-[#808CBF] mt-2">
-                  Nov 16, 2024
-                </p>
-              </div>
-            </div>
+              </li>
+              <li>
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                    <FaChevronRight className="text-sm opacity-50" />
+                    Furniture Removals
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                    <FaChevronRight className="text-sm opacity-50" />
+                    Commercial Relocation
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                    <FaChevronRight className="text-sm opacity-50" />
+                    Interstate Removals
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                    <FaChevronRight className="text-sm opacity-50" />
+                    Specialty Item Moves
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1">
+                    <FaChevronRight className="text-sm opacity-50" />
+                    Packing and Kitchen Moves
+                </Link>
+              </li>
+            </ul>
           </div>
-          <div className="2xl:col-span-3">
+          <div className="2xl:col-span-3 min-w-0">
             <h4 className="font-Inter text-2xl text-white font-semibold mb-10">
-              Latest Blog
+              Contact & Map
             </h4>
             <div className="flex gap-5 mb-5">
-              <div className="h-[44px] w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white text-xl bg-[#183088]">
+              <div className="h-[44px] w-[44px] min-w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white text-xl bg-[#183088]">
                 <IoLocationOutline />
               </div>
               <div className="flex-1 -mt-1">
-                <h6 className="font-Inter font-medium text-[17px] text-white">
-                  Address
-                </h6>
+                <h6 className="font-Inter font-medium text-[17px] text-white">Name</h6>
                 <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  102/B Philosophy Market Road California, USA
+                  Awesome Mate Removals
                 </p>
               </div>
             </div>
             <div className="flex gap-5 mb-5">
-              <div className="h-[44px] w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white text-xl bg-[#183088]">
+              <div className="h-[44px] w-[44px] min-w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white text-xl bg-[#183088]">
                 <FiPhoneCall />
               </div>
               <div className="flex-1 -mt-1">
-                <h6 className="font-Inter font-medium text-[17px] text-white">
-                  Call Us
-                </h6>
+                <h6 className="font-Inter font-medium text-[17px] text-white">Phone</h6>
                 <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  +880 123 (4567) 890
+                  041207264
                 </p>
               </div>
             </div>
-            <div className="flex gap-5">
-              <div className="h-[44px] w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white text-xl bg-[#183088]">
-                <HiOutlineMail />
+            <div className="flex gap-5 mb-5">
+              <div className="h-[44px] w-[44px] min-w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white bg-[#183088]">
+                <HiOutlineMail className="text-[24px] md:text-[28px] lg:text-[32px]" />
               </div>
               <div className="flex-1 -mt-1">
-                <h6 className="font-Inter font-medium text-[17px] text-white">
-                  Email
-                </h6>
+                <h6 className="font-Inter font-medium text-[17px] text-white">Email</h6>
                 <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  example@yahoo.com
+                  awesomemateremovals@gmail.com
                 </p>
               </div>
+            </div>
+            <div className="flex gap-5 mb-5">
+              <div className="h-[44px] w-[44px] min-w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white text-xl bg-[#183088]">
+                <IoLocationOutline />
+              </div>
+              <div className="flex-1 -mt-1">
+                <h6 className="font-Inter font-medium text-[17px] text-white">Address</h6>
+                <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
+                  Unit 5/207 Waterloo Street, Tuart Hill WA 6060
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-5 mb-5">
+              <div className="h-[44px] w-[44px] min-w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white text-xl bg-[#183088]">
+                <FiPhoneCall />
+              </div>
+              <div className="flex-1 -mt-1">
+                <h6 className="font-Inter font-medium text-[17px] text-white">ABN</h6>
+                <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
+                  42293475158
+                </p>
+              </div>
+            </div>
+            <div className="rounded-md overflow-hidden border border-[#334899] mt-2">
+              <iframe
+                title="Awesome Mate Perth Service Area"
+                src="https://www.google.com/maps?q=Unit%205%2F207%20Waterloo%20Street%2C%20Tuart%20Hill%20WA%206060&output=embed"
+                className="w-full h-[170px]"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
         </div>
-        <div className="text-left sm:text-center py-6 border-t border-[#334899] mt-24">
+        <div className="text-left sm:text-center py-6 border-t border-[#334899] mt-20 overflow-x-auto">
           <p className="font-Poppins text-white">
-            © Copyrights 2024 Cleeny All rights reserved by
-            <span className="text-PrimaryColor-0"> Dream IT</span>
+            © Copyrights 2026 Awesome Mate Removals. All rights reserved.
           </p>
+          <p className="font-Poppins text-[#B9BBD2] mt-2">
+            Website designed and developed by{" "}
+            <a
+              href="https://rootalpine.com"
+              target="_blank"
+              rel="noreferrer"
+              className="text-PrimaryColor-0 hover:underline"
+            >
+              AlpineRoot Technologies
+            </a>
+          </p>
+          <div className="flex justify-center gap-6 mt-3">
+            <Link to="#" className="font-Poppins text-[#B9BBD2] hover:text-PrimaryColor-0 transition-all duration-300">
+              Privacy Policy
+            </Link>
+            <Link to="#" className="font-Poppins text-[#B9BBD2] hover:text-PrimaryColor-0 transition-all duration-300">
+              Terms
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

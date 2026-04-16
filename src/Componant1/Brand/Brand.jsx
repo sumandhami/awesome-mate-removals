@@ -28,7 +28,7 @@ const Brand = () => {
         slidesPerView: 4,
       },
       1200: {
-        slidesPerView: 5,
+        slidesPerView: 4,
       },
     },
   };
@@ -39,32 +39,42 @@ const Brand = () => {
         <Swiper {...settings}>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb} alt="" loading="lazy" decoding="async" />
+              <img src={brandThumb?.src || brandThumb} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb2} alt="" loading="lazy" decoding="async" />
+              <img src={brandThumb2?.src || brandThumb2} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb3} alt="" loading="lazy" decoding="async" />
+              <img src={brandThumb3?.src || brandThumb3} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb4} alt="" loading="lazy" decoding="async" />
+              <img src={brandThumb4?.src || brandThumb4} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb5} alt="" loading="lazy" decoding="async" />
+              <img src={brandThumb5?.src || brandThumb5} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="flex justify-center">
-              <img src={brandThumb3} alt="" loading="lazy" decoding="async" />
+              <img src={brandThumb3?.src || brandThumb3} alt="" loading="lazy" decoding="async" />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="flex justify-center">
+              <img src={brandThumb4?.src || brandThumb4} alt="" loading="lazy" decoding="async" />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="flex justify-center">
+              <img src={brandThumb5?.src || brandThumb5} alt="" loading="lazy" decoding="async" />
             </div>
           </SwiperSlide>
         </Swiper>

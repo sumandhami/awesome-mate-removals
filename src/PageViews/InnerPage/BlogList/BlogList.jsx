@@ -182,7 +182,7 @@ const BlogList = () => {
                 </h4>
                 <ul className="mt-8">
                   <li>
-                    <Link to={"/service_details"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         Floor Cleaning
@@ -190,7 +190,7 @@ const BlogList = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details2"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         House Cleaning
@@ -198,7 +198,7 @@ const BlogList = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details3"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         Office Cleaning
@@ -206,7 +206,7 @@ const BlogList = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details4"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         Cleaning Specialist
@@ -214,7 +214,7 @@ const BlogList = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details5"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         Window Cleaning
@@ -222,7 +222,7 @@ const BlogList = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/service_details6"}>
+                    <Link to={"#"}>
                       <button className="w-full font-Inter text-left text-HeadingColor-0 transition-all duration-500 group px-7 py-4 flex items-center gap-2 rounded bg-white mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
                         <FaRegFolderOpen className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white" />
                         kitchen Cleaning
@@ -235,10 +235,10 @@ const BlogList = () => {
                 <h4 className="font-Inter font-semibold text-2xl text-HeadingColor-0 pb-3 mb-8 relative before:absolute before:bottom-0 before:left-0 before:w-7 before:h-[2px] before:bg-SecondaryColor-0">
                   Popular Post
                 </h4>
-                <Link to={"/blog-details"}>
+                <Link to={"#"}>
                   <button className="group flex gap-4 mb-6">
                     <div>
-                      <img src={itemthumb} alt="" loading="lazy" decoding="async" />
+                      <img src={itemthumb?.src || itemthumb} alt="" loading="lazy" decoding="async" />
                     </div>
                     <div className="flex-1 text-left">
                       <h6 className="font-Poppins font-medium text-lg lg:text-base 2xl:text-lg leading-6 text-HeadingColor-0 transition-all duration-500 group-hover:text-SecondaryColor-0">
@@ -250,10 +250,10 @@ const BlogList = () => {
                     </div>
                   </button>
                 </Link>
-                <Link to={"/blog_details"}>
+                <Link to={"#"}>
                   <button className="group flex gap-4 my-6">
                     <div>
-                      <img src={itemthumb2} alt="" loading="lazy" decoding="async" />
+                      <img src={itemthumb2?.src || itemthumb2} alt="" loading="lazy" decoding="async" />
                     </div>
                     <div className="flex-1 text-left">
                       <h6 className="font-Poppins font-medium text-lg lg:text-base 2xl:text-lg leading-6 text-HeadingColor-0 transition-all duration-500 group-hover:text-SecondaryColor-0">
@@ -265,10 +265,10 @@ const BlogList = () => {
                     </div>
                   </button>
                 </Link>
-                <Link to={"/blog_details"}>
+                <Link to={"#"}>
                   <button className="group flex gap-4 my-6">
                     <div>
-                      <img src={itemthumb3} alt="" loading="lazy" decoding="async" />
+                      <img src={itemthumb3?.src || itemthumb3} alt="" loading="lazy" decoding="async" />
                     </div>
                     <div className="flex-1 text-left">
                       <h6 className="font-Poppins font-medium text-lg lg:text-base 2xl:text-lg leading-6 text-HeadingColor-0 transition-all duration-500 group-hover:text-SecondaryColor-0">
@@ -287,35 +287,35 @@ const BlogList = () => {
                 </h4>
                 <ul className="inline-block">
                   <li className="inline-block mr-[10px] mb-[10px]">
-                    <Link to={"/blog_details"}>
+                    <Link to={"#"}>
                       <button className="bg-white rounded flex items-center justify-center text-HeadingColor-0 transition-all duration-500 font-medium px-5 py-2 font-Inter text-sm relative z-[1] before:absolute before:top-0 before:left-0 before:rounded before:w-full before:h-full before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 before:-z-[1] hover:before:scale-100 hover:text-white">
                         Cleaning
                       </button>
                     </Link>
                   </li>
                   <li className="inline-block mr-[10px] mb-[10px]">
-                    <Link to={"/blog_details"}>
+                    <Link to={"#"}>
                       <button className="bg-white rounded flex items-center justify-center text-HeadingColor-0 transition-all duration-500 font-medium px-5 py-2 font-Inter text-sm relative z-[1] before:absolute before:top-0 before:left-0 before:rounded before:w-full before:h-full before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 before:-z-[1] hover:before:scale-100 hover:text-white">
                         Floor Cleaning
                       </button>
                     </Link>
                   </li>
                   <li className="inline-block mr-[10px] mb-[10px]">
-                    <Link to={"/blog_details"}>
+                    <Link to={"#"}>
                       <button className="bg-white rounded flex items-center justify-center text-HeadingColor-0 transition-all duration-500 font-medium px-5 py-2 font-Inter text-sm relative z-[1] before:absolute before:top-0 before:left-0 before:rounded before:w-full before:h-full before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 before:-z-[1] hover:before:scale-100 hover:text-white">
                         House Cleaning
                       </button>
                     </Link>
                   </li>
                   <li className="inline-block mr-[10px] mb-[10px]">
-                    <Link to={"/blog_details"}>
+                    <Link to={"#"}>
                       <button className="bg-white rounded flex items-center justify-center text-HeadingColor-0 transition-all duration-500 font-medium px-5 py-2 font-Inter text-sm relative z-[1] before:absolute before:top-0 before:left-0 before:rounded before:w-full before:h-full before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 before:-z-[1] hover:before:scale-100 hover:text-white">
                         Window Cleaning
                       </button>
                     </Link>
                   </li>
                   <li className="inline-block mr-[10px] mb-[10px]">
-                    <Link to={"/blog_details"}>
+                    <Link to={"#"}>
                       <button className="bg-white rounded flex items-center justify-center text-HeadingColor-0 transition-all duration-500 font-medium px-5 py-2 font-Inter text-sm relative z-[1] before:absolute before:top-0 before:left-0 before:rounded before:w-full before:h-full before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 before:-z-[1] hover:before:scale-100 hover:text-white">
                         Pool Cleaning
                       </button>

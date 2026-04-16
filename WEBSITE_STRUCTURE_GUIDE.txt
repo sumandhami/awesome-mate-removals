@@ -1,0 +1,413 @@
+QUICK REPLACE CHECKLIST (for content team)
+------------------------------------------
+Logo: public/images/footer-logo.png
+Hero Background: public/images/hero-bg.jpg
+
+CLEENY WEBSITE STRUCTURE GUIDE
+Purpose: Fast edit map for pages, sections, components, styles, and images.
+
+PART A - SWIPER LOOP WARNING (SHORT EXPLANATION)
+1. Why warning appears:
+- Swiper loop needs enough slides for the current slidesPerView/slidesPerGroup values.
+- If not enough slides exist, loop becomes unstable and warning is shown.
+2. Is it mandatory to fix:
+- Not always a blocker, but recommended for production-quality UX/log cleanliness.
+3. Practical fixes:
+- Add/duplicate slides, or reduce slidesPerView, or disable loop for that breakpoint.
+
+PART B - ROUTE TO FILE MAP (NEXT APP ROUTER)
+- /
+  app page: app/(main)/page.jsx
+  page view: src/PageViews/Home1/Home1.jsx (rendered line: 6)
+- /about-us
+  app page: app/(main2)/about-us/page.jsx
+  page view: src/PageViews/InnerPage/AboutInner/AboutInner.jsx (rendered line: 6)
+- /appointment
+  app page: app/(main2)/appointment/page.jsx
+  page view: src/PageViews/InnerPage/Appointment/AppointmentInner.jsx (rendered line: 6)
+- /blog/details
+  app page: app/(main2)/blog/details/page.jsx
+  page view: src/PageViews/InnerPage/BlogDetails/BlogDetails.jsx (rendered line: 6)
+- /blog/grid
+  app page: app/(main2)/blog/grid/page.jsx
+  page view: src/PageViews/InnerPage/BlogGrid/BlogGrid.jsx (rendered line: 6)
+- /blog/list
+  app page: app/(main2)/blog/list/page.jsx
+  page view: src/PageViews/InnerPage/BlogList/BlogList.jsx (rendered line: 6)
+- /contact
+  app page: app/(main2)/contact/page.jsx
+  page view: src/PageViews/InnerPage/ContactInner/ContactInner.jsx (rendered line: 6)
+- /home/two
+  app page: app/(main2)/home/two/page.jsx
+  page view: src/PageViews/Home2/Home2.jsx (rendered line: 6)
+- /pricing
+  app page: app/(main2)/pricing/page.jsx
+  page view: src/PageViews/InnerPage/PricingInner/PricingInner.jsx (rendered line: 6)
+- /projects/house-floor-cleaning
+  app page: app/(main2)/projects/house-floor-cleaning/page.jsx
+  page view: src/PageViews/InnerPage/ProjectDetails/ProjectDetails.jsx (rendered line: 6)
+- /projects
+  app page: app/(main2)/projects/page.jsx
+  page view: src/PageViews/InnerPage/ProjectInner/ProjectInner.jsx (rendered line: 6)
+- /services/cleaning-specialist
+  app page: app/(main2)/services/cleaning-specialist/page.jsx
+  page view: src/PageViews/InnerPage/ServiceDetails/ServiceDetails4.jsx (rendered line: 6)
+- /services/floor-cleaning
+  app page: app/(main2)/services/floor-cleaning/page.jsx
+  page view: src/PageViews/InnerPage/ServiceDetails/ServiceDetails.jsx (rendered line: 6)
+- /services/house-cleaning
+  app page: app/(main2)/services/house-cleaning/page.jsx
+  page view: src/PageViews/InnerPage/ServiceDetails/ServiceDetails2.jsx (rendered line: 6)
+- /services/kitchen-cleaning
+  app page: app/(main2)/services/kitchen-cleaning/page.jsx
+  page view: src/PageViews/InnerPage/ServiceDetails/ServiceDetails6.jsx (rendered line: 6)
+- /services/office-cleaning
+  app page: app/(main2)/services/office-cleaning/page.jsx
+  page view: src/PageViews/InnerPage/ServiceDetails/ServiceDetails3.jsx (rendered line: 6)
+- /services
+  app page: app/(main2)/services/page.jsx
+  page view: src/PageViews/InnerPage/ServiceInner/ServiceInner.jsx (rendered line: 6)
+- /services/window-cleaning
+  app page: app/(main2)/services/window-cleaning/page.jsx
+  page view: src/PageViews/InnerPage/ServiceDetails/ServiceDetails5.jsx (rendered line: 6)
+- /team
+  app page: app/(main2)/team/page.jsx
+  page view: src/PageViews/InnerPage/TeamInner/TeamInner.jsx (rendered line: 6)
+- /testimonials
+  app page: app/(main2)/testimonials/page.jsx
+  page view: src/PageViews/InnerPage/TestimonialInner/TestimonialInner.jsx (rendered line: 6)
+- /home/three
+  app page: app/(main3)/home/three/page.jsx
+  page view: src/PageViews/Home3/Home3.jsx (rendered line: 6)
+
+PART C - PAGE VIEW SECTION ORDER (WHAT BUILDS EACH PAGE)
+- src/PageViews/Home1/Home1.jsx
+  line 16: Banner -> src/Componant1/Banner/Banner.jsx
+  line 17: Feature -> src/Componant1/Feature/Feature.jsx
+  line 18: About -> src/Componant1/About/About.jsx
+  line 19: Service -> src/Componant1/Service/Service.jsx
+  line 20: ProcessCard -> src/Componant1/Process/Process.jsx
+  line 21: Portfolio -> src/Componant1/Portfolio/Portfolio.jsx
+  line 22: Support -> src/Componant1/Support/Support.jsx
+  line 23: Pricing -> src/Componant1/Pricing/Pricing.jsx
+  line 24: Testimonial -> src/Componant1/Testimonial/Testimonial.jsx
+  line 25: Blog -> src/Componant1/Blog/Blog.jsx
+  line 26: Brand -> src/Componant1/Brand/Brand.jsx
+- src/PageViews/Home2/Home2.jsx
+  line 15: Banner -> src/Componant2/Banner/Banner.jsx
+  line 16: About -> src/Componant2/About/About.jsx
+  line 17: Service -> src/Componant2/Service/Service.jsx
+  line 18: Process -> src/Componant2/Process/Process.jsx
+  line 19: WhyChoose -> src/Componant2/WhyChoose/WhyChoose.jsx
+  line 20: Portfolio -> src/Componant2/Portfolio/Portfolio.jsx
+  line 21: TeamMember -> src/Componant2/TeamMember/TeamMember.jsx
+  line 22: Testimonial -> src/Componant2/Testimonial/Testimonial.jsx
+  line 23: Support -> src/Componant2/Support/Support.jsx
+  line 24: Blog -> src/Componant1/Blog/Blog.jsx
+- src/PageViews/Home3/Home3.jsx
+  line 15: Banner -> src/Componant3/Banner/Banner.jsx
+  line 16: Feature -> src/Componant3/Feature/Feature.jsx
+  line 17: About -> src/Componant3/About/About.jsx
+  line 18: Service -> src/Componant3/Service/Service.jsx
+  line 19: TeamMember -> src/Componant3/TeamMember/TeamMember.jsx
+  line 20: Portfolio -> src/Componant3/Portfolio/Portfolio.jsx
+  line 21: Testimonial -> src/Componant3/Testimonial/Testimonial.jsx
+  line 22: Blog -> src/Componant3/Blog/Blog.jsx
+  line 23: Appointment -> src/Componant3/Appointment/Appointment.jsx
+  line 24: Brand -> src/Componant2/Brand/Brand.jsx
+- src/PageViews/InnerPage/AboutInner/AboutInner.jsx
+  line 17: About -> src/Componant1/About/About.jsx
+  line 18: Support -> src/Componant2/Support/Support.jsx
+  line 19: Process -> src/Componant1/Process/Process.jsx
+  line 20: TeamMember -> src/Componant2/TeamMember/TeamMember.jsx
+  line 21: Testimonial -> src/Componant2/Testimonial/Testimonial.jsx
+- src/PageViews/InnerPage/Appointment/AppointmentInner.jsx
+  line 15: Appointment -> src/PageViews/InnerPage/Appointment/Appoiontment.jsx
+  line 16: Support -> src/Componant1/Support/Support.jsx
+  line 17: Process -> src/Componant1/Process/Process.jsx
+- src/PageViews/InnerPage/BlogDetails/BlogDetails.jsx
+  local/inline page content (no imported section stack detected)
+- src/PageViews/InnerPage/BlogGrid/BlogGrid.jsx
+  local/inline page content (no imported section stack detected)
+- src/PageViews/InnerPage/BlogList/BlogList.jsx
+  local/inline page content (no imported section stack detected)
+- src/PageViews/InnerPage/ContactInner/ContactInner.jsx
+  line 15: Appointment -> src/Componant3/Appointment/Appointment.jsx
+  line 16: ContactLocation -> src/PageViews/InnerPage/ContactInner/ContactLocation.jsx
+- src/PageViews/InnerPage/PricingInner/PricingInner.jsx
+  line 14: Pricing -> src/Componant1/Pricing/Pricing.jsx
+  line 16: PricingFaq -> src/PageViews/InnerPage/PricingInner/Accordion/PricingFaq.jsx
+- src/PageViews/InnerPage/ProjectDetails/ProjectDetails.jsx
+  local/inline page content (no imported section stack detected)
+- src/PageViews/InnerPage/ProjectInner/ProjectInner.jsx
+  local/inline page content (no imported section stack detected)
+- src/PageViews/InnerPage/ServiceDetails/ServiceDetails.jsx
+  line 243: ServiceFaq -> src/PageViews/InnerPage/ServiceDetails/Accordion/ServiceFaq.jsx
+- src/PageViews/InnerPage/ServiceDetails/ServiceDetails2.jsx
+  line 243: ServiceFaq -> src/PageViews/InnerPage/ServiceDetails/Accordion/ServiceFaq.jsx
+- src/PageViews/InnerPage/ServiceDetails/ServiceDetails3.jsx
+  line 243: ServiceFaq -> src/PageViews/InnerPage/ServiceDetails/Accordion/ServiceFaq.jsx
+- src/PageViews/InnerPage/ServiceDetails/ServiceDetails4.jsx
+  line 243: ServiceFaq -> src/PageViews/InnerPage/ServiceDetails/Accordion/ServiceFaq.jsx
+- src/PageViews/InnerPage/ServiceDetails/ServiceDetails5.jsx
+  line 243: ServiceFaq -> src/PageViews/InnerPage/ServiceDetails/Accordion/ServiceFaq.jsx
+- src/PageViews/InnerPage/ServiceDetails/ServiceDetails6.jsx
+  line 243: ServiceFaq -> src/PageViews/InnerPage/ServiceDetails/Accordion/ServiceFaq.jsx
+- src/PageViews/InnerPage/ServiceInner/ServiceInner.jsx
+  line 168: Support -> src/Componant1/Support/Support.jsx
+  line 169: Pricing -> src/Componant1/Pricing/Pricing.jsx
+- src/PageViews/InnerPage/TeamInner/TeamInner.jsx
+  local/inline page content (no imported section stack detected)
+- src/PageViews/InnerPage/TestimonialInner/TestimonialInner.jsx
+  local/inline page content (no imported section stack detected)
+
+PART D - SECTION COMPONENT INDEX (EDIT HOTSPOTS)
+- src/Componant1/About/About.jsx
+  section blocks lines: 14
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L4:/images/about-thumb.png | L5:/images/about-shape2.png | L6:/images/counter-icon.png
+- src/Componant1/Banner/Banner.jsx
+  section blocks lines: 10
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: 10, 33
+  image imports: L2:/images/hero-thumb.png | L3:/images/hero-shape2.png | L4:/images/hero-shape.png
+- src/Componant1/Blog/Blog.jsx
+  section blocks lines: 50
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L3:/images/blog-thumb.png | L4:/images/blog-thumb2.png | L5:/images/blog-thumb3.png
+- src/Componant1/Brand/Brand.jsx
+  section blocks lines: none
+  form lines: none
+  swiper/loop lines: 13, 39
+  background image class lines: none
+  image imports: L2:/images/brand-img.png | L3:/images/brand-img2.png | L4:/images/brand-img3.png | L5:/images/brand-img4.png | L6:/images/brand-img5.png
+- src/Componant1/Feature/Feature.jsx
+  section blocks lines: 7
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L1:/images/feature-icon.png | L2:/images/feature-icon2.png | L3:/images/feature-icon3.png
+- src/Componant1/Portfolio/Portfolio.jsx
+  section blocks lines: 86
+  form lines: none
+  swiper/loop lines: 58, 108
+  background image class lines: 86
+  image imports: L3:/images/portfolio-img.png | L4:/images/portfolio-img2.png | L5:/images/portfolio-img3.png
+- src/Componant1/Pricing/Pricing.jsx
+  section blocks lines: 59
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L2:/images/pricing-shape.png
+- src/Componant1/Process/Process.jsx
+  section blocks lines: 38
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L2:/images/work-icon.png | L3:/images/work-icon2.png | L4:/images/work-icon3.png | L5:/images/work-shape3.png | L6:/images/work-shape4.png | L7:/images/work-shape.png
+- src/Componant1/Service/Service.jsx
+  section blocks lines: none
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: 7
+  image imports: L3:/images/service-shape-1.png
+- src/Componant1/Support/Support.jsx
+  section blocks lines: 7
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: 9
+  image imports: L3:/images/address-thumb.png
+- src/Componant1/Testimonial/Testimonial.jsx
+  section blocks lines: 79
+  form lines: none
+  swiper/loop lines: 53, 90
+  background image class lines: 79
+  image imports: L2:/images/testi-thumb-2.png | L3:/images/testi-thumb.png | L4:/images/testi-icon.png
+- src/Componant2/About/About.jsx
+  section blocks lines: 11
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: 11
+  image imports: L2:/images/about-thumb2.png | L3:/images/about-shape3.png | L4:/images/about-shape4.png | L5:/images/counter-icon.png
+- src/Componant2/Banner/Banner.jsx
+  section blocks lines: 20, 50
+  form lines: none
+  swiper/loop lines: 11, 18
+  background image class lines: 20, 50
+  image imports: L2:/images/hero-shape2.png | L3:/images/hero-shape.png
+- src/Componant2/Brand/Brand.jsx
+  section blocks lines: none
+  form lines: none
+  swiper/loop lines: 13, 39
+  background image class lines: none
+  image imports: L2:/images/brand-img.png | L3:/images/brand-img2.png | L4:/images/brand-img3.png | L5:/images/brand-img4.png | L6:/images/brand-img5.png
+- src/Componant2/Portfolio/Portfolio.jsx
+  section blocks lines: 86
+  form lines: none
+  swiper/loop lines: 58, 108
+  background image class lines: none
+  image imports: L3:/images/portfolio-img.png | L4:/images/portfolio-img7.png | L5:/images/portfolio-img2.png
+- src/Componant2/Process/Process.jsx
+  section blocks lines: 38
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L2:/images/work-icon.png | L3:/images/work-icon2.png | L4:/images/work-icon3.png | L5:/images/work-shape3.png | L6:/images/work-shape4.png | L7:/images/work-shape.png
+- src/Componant2/Service/Service.jsx
+  section blocks lines: 56
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: 56
+  image imports: L3:/images/service-img.png | L4:/images/service-img2.png | L5:/images/service-img3.png | L6:/images/service-shape.png | L7:/images/service-icon.png | L8:/images/service-icon2.png | ...
+- src/Componant2/Support/Support.jsx
+  section blocks lines: none
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: 7
+  image imports: L3:/images/address-thumb.png
+- src/Componant2/TeamMember/TeamMember.jsx
+  section blocks lines: 58
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: 58
+  image imports: L1:/images/team-thumb.png | L2:/images/team-thumb2.png | L3:/images/team-thumb3.png | L4:/images/team-thumb4.png
+- src/Componant2/Testimonial/Testimonial.jsx
+  section blocks lines: 72
+  form lines: none
+  swiper/loop lines: 52, 83
+  background image class lines: 72
+  image imports: L2:/images/testi-thumb-2.png | L3:/images/testi-thumb.png | L4:/images/testi-icon2.png
+- src/Componant2/WhyChoose/WhyChoose.jsx
+  section blocks lines: 9
+  form lines: 21
+  swiper/loop lines: none
+  background image class lines: 9
+  image imports: L2:/images/feature-icon.png | L3:/images/feature-icon3.png | L4:/images/contact-shape.png
+- src/Componant3/About/About.jsx
+  section blocks lines: 10
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L2:/images/about-thumb3.png | L3:/images/about-shape5.png | L4:/images/about-icon.png | L5:/images/about-icon2.png
+- src/Componant3/Appointment/Appointment.jsx
+  section blocks lines: 10
+  form lines: 36
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L4:/images/appointment-thumb.jpg
+- src/Componant3/Banner/Banner.jsx
+  section blocks lines: 9
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: 9
+  image imports: L2:/images/hero-shape2.png | L3:/images/hero-shape4.png | L4:/images/hero-thumb2.png
+- src/Componant3/Blog/Blog.jsx
+  section blocks lines: 46
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L3:/images/blog-thumb4.png | L4:/images/blog-thumb5.png | L5:/images/blog-thumb6.png
+- src/Componant3/Feature/Feature.jsx
+  section blocks lines: 30
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L2:/images/feature-icon-4.png | L3:/images/feature-icon-5.png | L4:/images/feature-icon-6.png
+- src/Componant3/Portfolio/Portfolio.jsx
+  section blocks lines: 69
+  form lines: none
+  swiper/loop lines: 47, 89
+  background image class lines: none
+  image imports: L3:/images/portfolio-img5.png | L4:/images/portfolio-img7.png | L5:/images/portfolio-img6.png
+- src/Componant3/Service/Service.jsx
+  section blocks lines: 51
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: 51
+  image imports: L3:/images/service-thumb.png | L4:/images/service-icon7.png | L5:/images/service-icon8.png | L6:/images/service-icon9.png | L7:/images/service-icon10.png
+- src/Componant3/TeamMember/TeamMember.jsx
+  section blocks lines: 49
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L1:/images/team-thumb5.png | L2:/images/team-thumb6.png | L3:/images/team-thumb7.png | L4:/images/team-thumb8.png
+- src/Componant3/Testimonial/Testimonial.jsx
+  section blocks lines: 117
+  form lines: none
+  swiper/loop lines: 97, 128
+  background image class lines: 117
+  image imports: L2:/images/testi-thumb-3.png | L3:/images/testi-thumb-4.png | L4:/images/testi-thumb-5.png | L5:/images/testi-shape4.png | L6:/images/counter-icon2.png | L7:/images/counter-icon3.png | ...
+- src/PageViews/InnerPage/Appointment/Appoiontment.jsx
+  section blocks lines: 9
+  form lines: 66
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L2:/images/contact-icon.png | L3:/images/contact-icon2.png | L4:/images/contact-shape.png
+- src/PageViews/InnerPage/ContactInner/ContactLocation.jsx
+  section blocks lines: none
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: none
+- src/PageViews/InnerPage/PricingInner/Accordion/PricingFaq.jsx
+  section blocks lines: none
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: L2:/images/faq-thumb.png
+- src/PageViews/InnerPage/ServiceDetails/Accordion/ServiceFaq.jsx
+  section blocks lines: none
+  form lines: none
+  swiper/loop lines: none
+  background image class lines: none
+  image imports: none
+
+PART E - STYLING SYSTEM (WHERE DESIGN LIVES)
+1. Global styles and tokens:
+- app/layout.jsx: global font setup and root wrapper
+- src/index.css: global utilities, buttons, sticky header, swiper bullet overrides
+- tailwind.config.js: colors, breakpoints, animations, font families
+- postcss.config.js: Tailwind + Autoprefixer pipeline
+2. Component styles:
+- Most section files use Tailwind utility classes directly in JSX className strings.
+- Background images are often set via className bg-[url('/images/...')].
+3. Shared style-sensitive components:
+- src/Shared/Navbar/Navbar.jsx
+- src/Shared/Navbar/Navbar2.jsx
+- src/Shared/Navbar/Navbar3.jsx
+- src/Shared/Footer/Footer.jsx
+
+PART F - IMAGE SYSTEM (WHERE IMAGES COME FROM)
+1. Asset folder:
+- public/images/
+2. How images are used:
+- Imports from /images/... inside components.
+- Background images via Tailwind bg-[url('/images/...')] classes.
+3. Quick troubleshooting path:
+- Check component import line -> check public/images file exists -> check rendered section line from Part D.
+
+PART G - SHARED LAYOUT/WRAPPER STRUCTURE
+- app/(main)/layout.jsx -> src/Layouts/MainShell.jsx -> Navbar + Footer + ScrollToTop
+- app/(main2)/layout.jsx -> src/Layouts/Main2Shell.jsx -> Navbar3 + Footer + ScrollToTop
+- app/(main3)/layout.jsx -> src/Layouts/Main3Shell.jsx -> Navbar2 + Footer + ScrollToTop
+- Inner pages commonly include src/Shared/Breadcamp/Breadcamp.jsx near top.
+
+PART H - OTHER IMPORTANT FILES YOU SHOULD KNOW
+- next.config.mjs: redirects, headers, aliases, image formats
+- app/api/forms/route.js: form endpoint validation/rate-limit/webhook flow
+- app/robots.js and app/sitemap.js: SEO crawling/indexing output
+- .env.example + .gitignore: environment contract and secret-file safety
+- README.md: run instructions and security/env notes
+
+PART I - FAST CHANGE CHECKLIST
+- Change homepage composition/order: src/PageViews/Home1/Home1.jsx, Home2/Home2.jsx, Home3/Home3.jsx
+- Change section content/design: edit the section component listed for that page in Part C
+- Change global colors/fonts/sizing: tailwind.config.js + src/index.css
+- Change nav/footer sitewide: src/Shared/Navbar/* and src/Shared/Footer/Footer.jsx
+- Change contact/form behavior: app/api/forms/route.js + related frontend form components
+- Change route URL behavior: app page files + next.config.mjs redirects

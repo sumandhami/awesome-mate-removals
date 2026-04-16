@@ -12,8 +12,8 @@ const PortfolioCard = ({
 }) => {
   return (
     <div>
-      <div className="relative z-10 overflow-hidden">
-        <img src={portfolioThumb} alt="" loading="lazy" decoding="async" />
+      <div className="relative z-10 overflow-hidden aspect-[7/5]">
+        <img src={portfolioThumb?.src || portfolioThumb} className="w-full h-full object-cover" alt={portfolioTitle} loading="lazy" decoding="async" />
         <h6 className="font-Inter font-medium text-[15px] text-HeadingColor-0 px-[22px] py-2 rounded-full bg-PrimaryColor-0 inline-block absolute top-6 -left-full transition-all duration-500 opacity-0 portfolio-thumb-title">
           {thumbTitle}
         </h6>
@@ -23,16 +23,12 @@ const PortfolioCard = ({
               <span className="text-base">{portfolioLocateIcon}</span>
               {portfolioLocation}
             </p>
-            <Link to={portfolioUrl}>
-              <button className="font-Inter font-semibold text-xl lg:text-lg xl:text-[22px] 2xl:text-2xl text-white mt-4 text-left">
+            <Link to={portfolioUrl} className="font-Inter font-semibold text-xl lg:text-lg xl:text-[22px] 2xl:text-2xl text-white mt-4 text-left block">
                 {portfolioTitle}
-              </button>
             </Link>
           </div>
-          <Link to={portfolioUrl}>
-            <button className="w-[40px] h-[40px] rounded-full flex items-center justify-center text-HeadingColor-0 bg-PrimaryColor-0 -rotate-45">
+          <Link to={portfolioUrl} aria-label={`View ${portfolioTitle}`} className="w-[40px] h-[40px] rounded-full flex items-center justify-center text-HeadingColor-0 bg-PrimaryColor-0 -rotate-45">
               {portfolioIcon}
-            </button>
           </Link>
         </div>
       </div>

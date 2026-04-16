@@ -16,12 +16,12 @@ const ServiceCard = ({
   return (
     <div className="group">
       <div>
-        <img src={serviceThumb} className="w-full" alt="" loading="lazy" decoding="async" />
+        <img src={serviceThumb?.src || serviceThumb} className="w-full" alt="" loading="lazy" decoding="async" />
       </div>
       <div className="bg-HoverColor-0 pb-5">
         <div className="w-10/12 mb-5 -mt-[30px] bg-white rounded-e-md px-4 md:px-8 pb-6 transition-all duration-500 relative z-10 before:absolute before:right-0 before:w-0 before:h-full before:rounded-e-md before:bg-SecondaryColor-0 before:-z-10 before:transition-all before:duration-500 group-hover:before:w-full group-hover:before:left-0 group-hover:-mt-[120px]">
           <img
-            src={serviceShape}
+            src={serviceShape?.src || serviceShape}
             className="absolute bottom-0 right-10 animate-dance2 -z-10 opacity-0 transition-all
            duration-500 group-hover:opacity-100" alt="" loading="lazy" decoding="async" />
           <h5 className="font-Inter font-semibold text-HeadingColor-0 xl:text-lg 2xl:text-2xl transition-all duration-500 group-hover:text-white pt-4">
@@ -46,7 +46,7 @@ const ServiceCard = ({
             </button>
           </Link>
           <div className="brightness-0 invert-[1] transition-all duration-500 group-hover:rotate-[360deg]">
-            <img src={serviceIcon} alt="" loading="lazy" decoding="async" />
+            <img src={serviceIcon?.src || serviceIcon} alt="" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>

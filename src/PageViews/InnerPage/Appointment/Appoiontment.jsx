@@ -8,7 +8,7 @@ const Appointment = () => {
   return (
     <section className="pb-40 bg-[#f3f4f8] relative z-10">
       <img
-        src={WhyChooseShape}
+        src={WhyChooseShape?.src || WhyChooseShape}
         className="absolute z-10 left-20 -bottom-0 hidden 2xl:block" alt="" loading="lazy" decoding="async" />
       <div className="Container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 2xl:gap-[142px]">
@@ -21,7 +21,7 @@ const Appointment = () => {
             </h1>
             <div className="flex flex-col sm:flex-row gap-7 mt-12">
               <div>
-                <img src={boxImg} alt="" loading="lazy" decoding="async" />
+                <img src={boxImg?.src || boxImg} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="flex-1">
                 <h5 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">
@@ -36,7 +36,7 @@ const Appointment = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-7 mt-7">
               <div>
-                <img src={boxImg3} alt="" loading="lazy" decoding="async" />
+                <img src={boxImg3?.src || boxImg3} alt="" loading="lazy" decoding="async" />
               </div>
               <div className="flex-1">
                 <h5 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">

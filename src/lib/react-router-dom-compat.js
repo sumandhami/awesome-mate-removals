@@ -13,6 +13,9 @@ function normalizeHref(target) {
   }
 
   if (typeof target === "string") {
+    if (target === "[object Object]") {
+      return "/";
+    }
     return target;
   }
 
@@ -54,6 +57,23 @@ function hasNestedLinkElements(node) {
   }
 
   return hasNestedLinkElements(node.props?.children);
+}
+
+function resolveSerializedNavLinkClassName(className, isActive) {
+  if (typeof className !== "string") {
+    return className;
+  }
+
+  const legacyClassSuffix = className.replace(
+    /^\s*(?:\(\s*\{[\s\S]*?\}\s*\)|\w+)\s*=>[\s\S]*?(?:""|''|\"\")\s*;?\s*\}?\s*/,
+    ""
+  );
+
+  if (legacyClassSuffix === className) {
+    return className;
+  }
+
+  return `${isActive ? "active" : ""} ${legacyClassSuffix}`.trim();
 }
 
 export const Link = forwardRef(function CompatLink(
@@ -98,7 +118,7 @@ export function NavLink({
   const resolvedClassName =
     typeof className === "function"
       ? className({ isActive, isPending: false })
-      : className;
+      : resolveSerializedNavLinkClassName(className, isActive);
 
   const resolvedChildren =
     typeof children === "function"

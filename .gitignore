@@ -13,8 +13,10 @@ dist-ssr
 .next
 out
 *.local
+.env
 .env.local
 .env.*.local
+.env.test
 .lighthouseci
 .next-build.log
 

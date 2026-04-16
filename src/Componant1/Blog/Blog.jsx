@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { FaArrowRightLong } from "react-icons/fa6";
-import blogThumb from "/images/blog-thumb.png";
-import blogThumb2 from "/images/blog-thumb2.png";
-import blogThumb3 from "/images/blog-thumb3.png";
+import blogThumb from "/images/gallery/truck-1.png";
+import blogThumb2 from "/images/gallery/truck-1.png";
+import blogThumb3 from "/images/gallery/truck-1.png";
 import BlogCard from "./BlogCard";
 import { Link } from "react-router-dom";
 
@@ -13,9 +13,9 @@ const blogData = [
     thumbDate: "02",
     thumbMonth: "MAY",
     blogUrl: "/blog_details",
-    blogTitle: "Newest Cleaning Tools for House 2024",
+    blogTitle: "Perth Moving Checklist: 30 Days to Moving Day",
     blogDesc:
-      "Competently repurpose forward benefits conveniently target e-business",
+      "Plan utilities, boxes, and booking timelines with a proven local checklist.",
     btnContent: "Read More",
     btnIcon: <FaArrowRightLong />,
   },
@@ -25,9 +25,9 @@ const blogData = [
     thumbDate: "12",
     thumbMonth: "MAY",
     blogUrl: "/blog_details",
-    blogTitle: "10 Most Popular Cleaning Tips for House",
+    blogTitle: "How to Move Heavy Furniture Without Damage",
     blogDesc:
-      "Competently repurpose forward benefits conveniently target e-business",
+      "Learn practical packing and lifting methods used by professional movers.",
     btnContent: "Read More",
     btnIcon: <FaArrowRightLong />,
   },
@@ -37,9 +37,9 @@ const blogData = [
     thumbDate: "25",
     thumbMonth: "MAY",
     blogUrl: "/blog_details",
-    blogTitle: "Floor Cleaning Use New Equipment",
+    blogTitle: "Office Relocation Tips to Reduce Downtime",
     blogDesc:
-      "Competently repurpose forward benefits conveniently target e-business",
+      "Smart sequencing and packing strategies for faster commercial moves.",
     btnContent: "Read More",
     btnIcon: <FaArrowRightLong />,
   },
@@ -47,7 +47,7 @@ const blogData = [
 
 const Blog = () => {
   return (
-    <section className="py-28">
+    <section className="performance-section py-28">
       <div className="Container">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:items-center">
           <div>
@@ -55,17 +55,15 @@ const Blog = () => {
               <h5 className="font-Inter font-medium text-SecondaryColor-0">
                 LATEST BLOG
               </h5>
-              <h1 className="font-Inter font-bold text-[22px] leading-8 sm:text-[38px] sm:leading-[48px] md:text-[44px] md:leading-[54px] lg:text-[32px] lg:leading-[42px] xl:text-[35px] xl:leading-[45px] 2xl:text-[44px] 2xl:leading-[54px] text-HeadingColor-0 mt-3 mb-3">
-                Learn about our Latest <br /> News from Blog
-              </h1>
+              <h2 className="font-Inter font-bold text-[22px] leading-8 sm:text-[38px] sm:leading-[48px] md:text-[44px] md:leading-[54px] lg:text-[32px] lg:leading-[42px] xl:text-[35px] xl:leading-[45px] 2xl:text-[44px] 2xl:leading-[54px] text-HeadingColor-0 mt-3 mb-3">
+                Recent Blog Posts for <br /> Perth Movers
+              </h2>
             </div>
           </div>
           <div className="flex lg:justify-end">
-            <Link to={"/blog_grid"}>
-              <button className="primary-btn">
+            <Link to="#" className="primary-btn">
                 Veiw All Blog
                 <FaArrowRightLong size={"20"} />
-              </button>
             </Link>
           </div>
         </div>

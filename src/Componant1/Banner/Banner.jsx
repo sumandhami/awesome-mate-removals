@@ -1,63 +1,49 @@
-import { Link } from "react-router-dom";
-import bannerThumb from "/images/hero-thumb.png";
-import bannerShape1 from "/images/hero-shape2.png";
-import bannerShape2 from "/images/hero-shape.png";
-import { FaArrowRightLong, FaPhone } from "react-icons/fa6";
-import { TypeAnimation } from "react-type-animation";
+import Image from "next/image";
+import { FaPhone } from "react-icons/fa6";
+import ContactForm from "@/components/ContactForm/ContactForm";
 
 const Banner = () => {
   return (
-    <section className="bg-[url('/images/hero-bg.png')] bg-cover bg-center bg-no-repeat h-[1000px] sm:h-[75rem] lg:h-[814px] flex items-center">
-      <div className="Container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-36 md:gap-32 lg:gap-0 items-center">
-          <div>
+    <section className="min-h-[720px] sm:min-h-[820px] lg:min-h-[814px] pt-6 sm:pt-10 lg:pt-0 flex items-center overflow-hidden relative">
+      <Image
+        src="/images/gallery/truck-6.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center"
+      />
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/30 z-0" />
+      
+      <div className="Container relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-12 sm:gap-16 lg:gap-0 lg:items-end">
+          <div className="flex flex-col justify-end lg:min-h-[610px] lg:pb-28 xl:pb-32">
             <h5 className="font-Inter text-lg text-PrimaryColor-0 font-medium">
-              BEST CLEENY AGENCY
+              LOCAL PERTH MOVING COMPANY
             </h5>
-            <h1 className="font-Inter font-extrabold text-white text-[34px] leading-[44px] sm:text-6xl sm:leading-[70px] lg:text-[58px] 2xl:text-[65px] 2xl:leading-[72px] mt-6 mb-6">
-              NEED CLEENY? CALL
-              <span className="text-PrimaryColor-0">US TODAY</span>
+            <h1 className="font-Inter font-extrabold text-white text-[27px] leading-[38px] sm:text-[53px] sm:leading-[63px] lg:text-[51px] xl:text-[55px] 2xl:text-[58px] 2xl:leading-[65px] mt-6 mb-6">
+              Trusted Movers in Perth - Residential, Commercial & Furniture Removals
             </h1>
-            <p className="font-Poppins text-white opacity-80 mb-9 w-10/12">
-              Need Clean of your home or office? Just Feel Free to Contact us.
-              We try to Help you as soon as possible.
+            <p className="font-Poppins text-white opacity-80 mb-9 w-full sm:w-10/12">
+              Fully insured, local Perth moving company. Get your free instant quote in 60 seconds.
             </p>
-            <Link to={"/contact"}>
-              <button className="primary-btn">
-                Get Started Now
-                <FaArrowRightLong size={"20"} />
-              </button>
-            </Link>
-          </div>
-          <div className="relative">
-            <div className="bg-[url('/images/hero-shape3.png')] bg-no-repeat bg-contain bg-right h-[130px] w-[205px] flex flex-col items-center justify-center gap-1 absolute left-0 sm:-top-[6rem] -top-[8rem] lg:-left-[6rem] lg:-top-[5rem] xl:-top-[2rem]">
-              <TypeAnimation
-                sequence={["Help Line", 1000, "Call Us", 1000]}
-                wrapper="span"
-                speed={50}
-                style={{
-                  fontSize: "16px",
-                  fontFamily: "Inter",
-                  fontWeight: 600,
-                  color: "#fff",
-                  display: "inline-block",
-                }}
-                repeat={Infinity}
-              />
-              <div className="flex items-center gap-2">
-                <FaPhone size={"20"} className="text-PrimaryColor-0" />
-                <h6 className="font-Inter font-bold text-white text-2xl">
-                  246900
-                </h6>
-              </div>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="tel:041207264"
+                className="primary-btn2"
+                aria-label="Call Awesome Mate Removals on 041207264"
+              >
+                Call Us Now: 041207264
+                <FaPhone size={"18"} />
+              </a>
             </div>
-            <img src={bannerThumb} alt="" loading="lazy" decoding="async" />
-            <img
-              src={bannerShape1}
-              className="absolute right-0 top-0 animate-zoomInOut" alt="" loading="lazy" decoding="async" />
-            <img
-              src={bannerShape2}
-              className="absolute left-0 bottom-0 animate-rotational" alt="" loading="lazy" decoding="async" />
+          </div>
+          <div className="relative w-full max-w-[420px] mx-auto lg:max-w-[420px] lg:ml-auto lg:mr-0 lg:mt-0 lg:mb-28 xl:mb-32 self-end">
+            {/* Contact Form Component */}
+            <div className="bg-white bg-opacity-95 p-5 md:p-6 rounded-lg shadow-lg">
+              <ContactForm />
+            </div>
           </div>
         </div>
       </div>

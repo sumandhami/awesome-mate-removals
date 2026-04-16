@@ -1,0 +1,127 @@
+HOMEPAGE MEDIA UPDATE GUIDE
+Generated: 2026-04-15
+
+0) QUICK CHANGE PATHS (YOUR REQUEST)
+- Hero section background image file:
+  public/images/hero-bg.png
+  Used in: src/Componant1/Banner/Banner.jsx line 9
+
+- Website logo file:
+  public/images/logo.png
+  Used in: src/Shared/Navbar/Navbar.jsx line 11
+
+1) WHERE TO REPLACE HOMEPAGE IMAGES/VIDEOS
+- Main image folder: public/images/
+- Optional local video folder (create if needed): public/videos/
+
+2) HOMEPAGE MEDIA LINE MAP (ALL MEDIA ON /)
+
+A. Navbar + Footer shell media
+- src/Shared/Navbar/Navbar.jsx
+  - Line 11: import Logo from "/images/logo.png";
+- src/Shared/Footer/Footer.jsx
+  - Line 2: import callImg from "/images/subscribe-icon.png";
+  - Line 3: import footerLogo from "/images/footer-logo.png";
+  - Line 4: import footerShape from "/images/footer-shape.png";
+  - Line 22: bg-[url('/images/subscribe-bg.png')]
+
+B. Home route composition
+- src/PageViews/Home1/Home1.jsx
+  - Line 18: Banner
+  - Line 19: Feature
+  - Line 20: Service
+  - Line 21: ProcessCard
+  - Line 22: About
+  - Line 23: MovingCost (no media)
+  - Line 24: WhyChoose (no file image imports)
+  - Line 25: ServiceAreas (no media)
+  - Line 26: Blog
+  - Line 27: Testimonial
+  - Line 28: Portfolio (Swiper)
+  - Line 29: HomeFaq (no media)
+  - Line 30: Support
+
+C. Section-wise homepage media references
+
+- src/Componant1/Banner/Banner.jsx
+  - Line 2: /images/hero-thumb.png
+  - Line 3: /images/hero-shape2.png
+  - Line 4: /images/hero-shape.png
+  - Line 9: bg-[url('/images/hero-bg.png')]
+  - Line 39: bg-[url('/images/hero-shape3.png')]
+
+- src/Componant1/Feature/Feature.jsx
+  - Line 1: /images/feature-icon.png
+  - Line 2: /images/feature-icon2.png
+  - Line 3: /images/feature-icon3.png
+
+- src/Componant1/Service/Service.jsx
+  - Line 2: /images/service-shape-1.png
+  - Line 5: bg-[url('/images/service-bg.png')]
+- src/Componant1/Service/ServiceMain.jsx
+  - Line 3: /images/service-img.png
+  - Line 4: /images/service-img2.png
+  - Line 5: /images/service-img3.png
+  - Line 6: /images/service-shape.png
+  - Line 7: /images/service-icon.png
+  - Line 8: /images/service-icon2.png
+  - Line 9: /images/service-icon3.png
+
+- src/Componant1/Process/Process.jsx
+  - Line 2: /images/work-icon.png
+  - Line 3: /images/work-icon2.png
+  - Line 4: /images/work-icon3.png
+  - Line 5: /images/work-shape3.png
+  - Line 6: /images/work-shape4.png
+  - Line 7: /images/work-shape.png
+
+- src/Componant1/About/About.jsx
+  - Line 4: /images/about-thumb.png
+  - Line 5: /images/about-shape2.png
+  - Line 6: /images/counter-icon.png
+  - Line 23: FsLightbox video URL (external MP4)
+    https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4
+
+- src/Componant1/Blog/Blog.jsx
+  - Line 3: /images/blog-thumb.png
+  - Line 4: /images/blog-thumb2.png
+  - Line 5: /images/blog-thumb3.png
+
+- src/Componant1/Testimonial/Testimonial.jsx
+  - Line 2: /images/testi-thumb-2.png
+  - Line 3: /images/testi-thumb.png
+  - Line 4: /images/testi-icon.png
+  - Line 44: bg-[url('/images/testi-bg.png')]
+
+- src/Componant1/Portfolio/Portfolio.jsx
+  - Line 3: /images/portfolio-img.png
+  - Line 4: /images/portfolio-img2.png
+  - Line 5: /images/portfolio-img3.png
+  - Line 71: bg-[url('/images/portfolio-bg.png')]
+
+- src/Componant1/Support/Support.jsx
+  - Line 3: /images/address-thumb.png
+  - Line 9: bg-[url('/images/address-bg.png')]
+
+3) HOW TO UPDATE IMAGES/VIDEOS
+- Keep same filenames in public/images/ if you want zero code changes.
+- If you change a filename, update the matching import/class reference line shown above.
+- For About video:
+  - Option A: replace external URL in src/Componant1/About/About.jsx line 23.
+  - Option B: place local file in public/videos/ and use URL like /videos/your-video.mp4.
+
+4) SWIPER WARNING FIX (WHERE TO ADD)
+Homepage Swiper is in src/Componant1/Portfolio/Portfolio.jsx.
+The required Autoplay module registration is already implemented:
+- Line 9: import { Autoplay, Pagination } from "swiper/modules";
+- Line 108: modules={[Autoplay, Pagination]}
+
+If warning appears again in any Swiper component:
+- Add Autoplay to swiper/modules import.
+- Add Autoplay inside modules=[...].
+- Keep loop only when slide count is enough for the configured slidesPerView.
+
+5) QUICK DEPLOY CHECK
+- npm run lint:strict
+- npm run build
+- Open / and confirm every section image loads and Portfolio slider auto-plays.

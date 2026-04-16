@@ -1,150 +1,150 @@
 /* eslint-disable no-unused-vars */
 import { FaArrowRightLong, FaCheck } from "react-icons/fa6";
-import serviceThumb from "/images/service-img.png";
-import serviceThumb2 from "/images/service-img2.png";
-import serviceThumb3 from "/images/service-img3.png";
+import {
+  FiHome,
+  FiTruck,
+  FiBriefcase,
+  FiMap,
+  FiTrash2,
+  FiPackage,
+} from "react-icons/fi";
+import serviceThumb from "/images/gallery/residential.png";
+import serviceThumb2 from "/images/gallery/furniture packing (1).png";
+import serviceThumb3 from "/images/gallery/commercial.png";
+import serviceThumb4 from "/images/gallery/truck-1 (1).png";
+import serviceThumb5 from "/images/gallery/junk.png";
+import serviceThumb6 from "/images/gallery/special (1).png";
 import serviceShape from "/images/service-shape.png";
-import serviceIcon from "/images/service-icon.png";
-import serviceIcon2 from "/images/service-icon2.png";
-import serviceIcon3 from "/images/service-icon3.png";
 import ServiceCard from "./ServiceCard";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
 
 const serviceData = [
   {
     id: 1,
     serviceThumb: serviceThumb,
-    serviceIcon: serviceIcon,
+    serviceIcon: <FiHome size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
     serviceShape: serviceShape,
-    serviceTitle: `Office Floor Cleaning`,
+    serviceTitle: `Residential Moving`,
     serviceListIcon: <FaCheck />,
-    serviceListContent: `House Floor Cleaning`,
-    serviceListContent2: `Roof Clean & Wash`,
-    serviceUrl: "/service_details",
-    buttonContent: `Veiw Details`,
+    serviceListContent: `Safe packing, loading, and transport for homes and apartments.`,
+    serviceListContent2: null,
+    serviceUrl: "#",
+    buttonContent: `Learn More`,
     buttonIcon: <FaArrowRightLong />,
   },
   {
     id: 2,
     serviceThumb: serviceThumb2,
-    serviceIcon: serviceIcon2,
+    serviceIcon: <FiTruck size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
     serviceShape: serviceShape,
-    serviceTitle: `House Wash & Clean`,
+    serviceTitle: `Furniture Removals`,
     serviceListIcon: <FaCheck />,
-    serviceListContent: `House Floor Cleaning`,
-    serviceListContent2: `Roof Clean & Wash`,
-    serviceUrl: "/service_details",
-    buttonContent: `Veiw Details`,
+    serviceListContent: `Specialist handling for heavy, fragile, and high-value furniture items.`,
+    serviceListContent2: null,
+    serviceUrl: "#",
+    buttonContent: `Learn More`,
     buttonIcon: <FaArrowRightLong />,
   },
   {
     id: 3,
     serviceThumb: serviceThumb3,
-    serviceIcon: serviceIcon3,
+    serviceIcon: <FiBriefcase size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
     serviceShape: serviceShape,
-    serviceTitle: `House Kitchen Cleaning`,
+    serviceTitle: `Commercial Relocation`,
     serviceListIcon: <FaCheck />,
-    serviceListContent: `House Floor Cleaning`,
-    serviceListContent2: `Roof Clean & Wash`,
-    serviceUrl: "/service_details",
-    buttonContent: `Veiw Details`,
+    serviceListContent: `Planned office and retail moves with minimal business disruption.`,
+    serviceListContent2: null,
+    serviceUrl: "#",
+    buttonContent: `Learn More`,
     buttonIcon: <FaArrowRightLong />,
   },
   {
     id: 4,
-    serviceThumb: serviceThumb,
-    serviceIcon: serviceIcon,
+    serviceThumb: serviceThumb4,
+    serviceIcon: <FiMap size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
     serviceShape: serviceShape,
-    serviceTitle: `Office Floor Cleaning`,
+    serviceTitle: `Interstate Removals`,
     serviceListIcon: <FaCheck />,
-    serviceListContent: `House Floor Cleaning`,
-    serviceListContent2: `Roof Clean & Wash`,
-    serviceUrl: "/service_details",
-    buttonContent: `Veiw Details`,
+    serviceListContent: `End-to-end long-distance moving from Perth with secure transit.`,
+    serviceListContent2: null,
+    serviceUrl: "#",
+    buttonContent: `Learn More`,
+    buttonIcon: <FaArrowRightLong />,
+  },
+  {
+    id: 5,
+    serviceThumb: serviceThumb5,
+    serviceIcon: <FiTrash2 size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
+    serviceShape: serviceShape,
+    serviceTitle: `Junk Removals`,
+    serviceListIcon: <FaCheck />,
+    serviceListContent: `Fast and responsible removal of unwanted furniture, boxes, and general clutter.`,
+    serviceListContent2: null,
+    serviceUrl: "#",
+    buttonContent: `Learn More`,
+    buttonIcon: <FaArrowRightLong />,
+  },
+  {
+    id: 6,
+    serviceThumb: serviceThumb6,
+    serviceIcon: <FiPackage size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
+    serviceShape: serviceShape,
+    serviceTitle: `Special Items Moves`,
+    serviceListIcon: <FaCheck />,
+    serviceListContent: `Expert handling for pianos, statues, marble tables, pool tables, and fragile valuables.`,
+    serviceListContent2: null,
+    serviceUrl: "#",
+    buttonContent: `Learn More`,
     buttonIcon: <FaArrowRightLong />,
   },
 ];
 
 const ServiceMain = () => {
-  const settings = {
-    loop: true,
-    spaceBetween: 30,
-    speed: 1000,
-    autoplay: true,
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-      },
-      768: {
-        slidesPerView: 2,
-      },
-      992: {
-        slidesPerView: 3,
-      },
-      1400: {
-        slidesPerView: 3,
-      },
-    },
-  };
-  const pagination = {
-    clickable: true,
-    renderBullet: function (index, className) {
-      return '<span class="' + className + ' pagination-bullet"></span>';
-    },
-  };
   return (
-    <section className="pt-28">
+    <section>
       <div className="Container">
         <div className="text-center">
           <h5 className="font-Inter font-medium text-PrimaryColor-0">
             OUR SERVICES
           </h5>
-          <h1 className="font-Inter font-bold text-[22px] leading-8 sm:text-[38px] sm:leading-[48px] md:text-[44px] md:leading-[54px] lg:text-[32px] lg:leading-[42px] xl:text-[35px] xl:leading-[45px] 2xl:text-[44px] 2xl:leading-[54px] text-white mt-3">
-            Professional cleeny Services
-          </h1>
+          <h2 className="font-Inter font-bold text-[22px] leading-8 sm:text-[38px] sm:leading-[48px] md:text-[44px] md:leading-[54px] lg:text-[32px] lg:leading-[42px] xl:text-[35px] xl:leading-[45px] 2xl:text-[44px] 2xl:leading-[54px] text-white mt-3">
+            Perth Removalist Services
+          </h2>
         </div>
         <div className="mt-[60px]">
-          <Swiper {...settings} pagination={pagination} modules={[Pagination]}>
-            <div>
-              {serviceData.map(
-                ({
-                  id,
-                  serviceThumb,
-                  serviceIcon,
-                  serviceShape,
-                  serviceTitle,
-                  serviceListIcon,
-                  serviceListContent,
-                  serviceListContent2,
-                  serviceUrl,
-                  buttonContent,
-                  buttonIcon,
-                }) => {
-                  return (
-                    <SwiperSlide key={id}>
-                      <div className="pb-[80px]">
-                        <ServiceCard
-                          serviceThumb={serviceThumb}
-                          serviceIcon={serviceIcon}
-                          serviceShape={serviceShape}
-                          serviceTitle={serviceTitle}
-                          serviceListIcon={serviceListIcon}
-                          serviceListContent={serviceListContent}
-                          serviceListContent2={serviceListContent2}
-                          serviceUrl={serviceUrl}
-                          buttonContent={buttonContent}
-                          buttonIcon={buttonIcon}
-                        />
-                      </div>
-                    </SwiperSlide>
-                  );
-                }
-              )}
-            </div>
-          </Swiper>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+            {serviceData.map(
+              ({
+                id,
+                serviceThumb,
+                serviceIcon,
+                serviceShape,
+                serviceTitle,
+                serviceListIcon,
+                serviceListContent,
+                serviceListContent2,
+                serviceUrl,
+                buttonContent,
+                buttonIcon,
+              }) => {
+                return (
+                  <div key={id}>
+                    <ServiceCard
+                      serviceThumb={serviceThumb}
+                      serviceIcon={serviceIcon}
+                      serviceShape={serviceShape}
+                      serviceTitle={serviceTitle}
+                      serviceListIcon={serviceListIcon}
+                      serviceListContent={serviceListContent}
+                      serviceListContent2={serviceListContent2}
+                      serviceUrl={serviceUrl}
+                      buttonContent={buttonContent}
+                      buttonIcon={buttonIcon}
+                    />
+                  </div>
+                );
+              }
+            )}
+          </div>
         </div>
       </div>
     </section>

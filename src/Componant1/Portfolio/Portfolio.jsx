@@ -1,8 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { FaArrowRight, FaArrowRightLong, FaLocationDot } from "react-icons/fa6";
-import portfolioThumb from "/images/portfolio-img.png";
-import portfolioThumb2 from "/images/portfolio-img2.png";
-import portfolioThumb3 from "/images/portfolio-img3.png";
+import portfolioThumb from "/images/gallery/truck-1.png";
+import portfolioThumb2 from "/images/gallery/truck-1.png";
+import portfolioThumb3 from "/images/gallery/truck-1.png";
+import portfolioThumb4 from "/images/gallery/truck-1.png";
+import portfolioThumb5 from "/images/gallery/truck-1.png";
+import portfolioThumb6 from "/images/gallery/truck-1.png";
+import portfolioThumb7 from "/images/gallery/truck-1.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -14,40 +18,70 @@ const PortfolioData = [
   {
     id: 1,
     portfolioThumb: portfolioThumb,
-    thumbTitle: "Cleaning",
+    thumbTitle: "Residential Move",
     portfolioLocateIcon: <FaLocationDot />,
-    portfolioLocation: "Sandigo, USA",
-    portfolioTitle: "House Floor Cleaning",
+    portfolioLocation: "Perth, WA",
+    portfolioTitle: "Family Home Relocation",
     portfolioUrl: "/project_details",
     portfolioIcon: <FaArrowRight />,
   },
   {
     id: 2,
     portfolioThumb: portfolioThumb2,
-    thumbTitle: "Cleaning",
+    thumbTitle: "Furniture Move",
     portfolioLocateIcon: <FaLocationDot />,
-    portfolioLocation: "Sandigo, USA",
-    portfolioTitle: "House Floor Cleaning",
+    portfolioLocation: "Joondalup, WA",
+    portfolioTitle: "Heavy Furniture Transfer",
     portfolioUrl: "/project_details",
     portfolioIcon: <FaArrowRight />,
   },
   {
     id: 3,
     portfolioThumb: portfolioThumb3,
-    thumbTitle: "Cleaning",
+    thumbTitle: "Office Move",
     portfolioLocateIcon: <FaLocationDot />,
-    portfolioLocation: "Sandigo, USA",
-    portfolioTitle: "House Floor Cleaning",
+    portfolioLocation: "Subiaco, WA",
+    portfolioTitle: "Commercial Office Relocation",
     portfolioUrl: "/project_details",
     portfolioIcon: <FaArrowRight />,
   },
   {
     id: 4,
-    portfolioThumb: portfolioThumb,
-    thumbTitle: "Cleaning",
+    portfolioThumb: portfolioThumb4,
+    thumbTitle: "Apartment Move",
     portfolioLocateIcon: <FaLocationDot />,
-    portfolioLocation: "Sandigo, USA",
-    portfolioTitle: "House Floor Cleaning",
+    portfolioLocation: "Fremantle, WA",
+    portfolioTitle: "Apartment Transition Move",
+    portfolioUrl: "/project_details",
+    portfolioIcon: <FaArrowRight />,
+  },
+  {
+    id: 5,
+    portfolioThumb: portfolioThumb5,
+    thumbTitle: "Storage Move",
+    portfolioLocateIcon: <FaLocationDot />,
+    portfolioLocation: "Midland, WA",
+    portfolioTitle: "Short-Term Storage Transfer",
+    portfolioUrl: "/project_details",
+    portfolioIcon: <FaArrowRight />,
+  },
+  {
+    id: 6,
+    portfolioThumb: portfolioThumb6,
+    thumbTitle: "Interstate Move",
+    portfolioLocateIcon: <FaLocationDot />,
+    portfolioLocation: "Perth to Adelaide",
+    portfolioTitle: "Long-Distance House Move",
+    portfolioUrl: "/project_details",
+    portfolioIcon: <FaArrowRight />,
+  },
+  {
+    id: 7,
+    portfolioThumb: portfolioThumb7,
+    thumbTitle: "Packing Service",
+    portfolioLocateIcon: <FaLocationDot />,
+    portfolioLocation: "Canning Vale, WA",
+    portfolioTitle: "Full Packing and Loading",
     portfolioUrl: "/project_details",
     portfolioIcon: <FaArrowRight />,
   },
@@ -60,7 +94,6 @@ const Portfolio = () => {
     speed: 1000,
     centeredSlides: true,
     initialSlide: 1,
-    autoplay: true,
     breakpoints: {
       320: {
         slidesPerView: 1,
@@ -83,23 +116,21 @@ const Portfolio = () => {
     },
   };
   return (
-    <section className="portfolio2 bg-[url('/images/portfolio-bg.png')] bg-cover bg-center bg-no-repeat py-28 portfolio">
+    <section className="performance-section portfolio2 bg-[url('/images/portfolio-bg.png')] bg-cover bg-center bg-no-repeat py-28 portfolio">
       <div className="Container">
         <div className="flex flex-col md:flex-row gap-7 md:items-center justify-between">
           <div>
             <h5 className="font-Inter font-medium text-SecondaryColor-0">
               CLEENY PORTFOLIO
             </h5>
-            <h1 className="font-Inter font-bold text-[22px] leading-8 sm:text-[38px] sm:leading-[48px] md:text-[44px] md:leading-[54px] lg:text-[32px] lg:leading-[42px] xl:text-[35px] xl:leading-[45px] 2xl:text-[44px] 2xl:leading-[54px] text-HeadingColor-0 mt-3">
+            <h2 className="font-Inter font-bold text-[22px] leading-8 sm:text-[38px] sm:leading-[48px] md:text-[44px] md:leading-[54px] lg:text-[32px] lg:leading-[42px] xl:text-[35px] xl:leading-[45px] 2xl:text-[44px] 2xl:leading-[54px] text-HeadingColor-0 mt-3">
               Latest cleeny Portfolio <br /> from Work Galary
-            </h1>
+            </h2>
           </div>
           <div>
-            <Link to={"/project"}>
-              <button className="primary-btn">
+            <Link to="#" className="primary-btn">
                 Veiw All Work
                 <FaArrowRightLong size={"20"} />
-              </button>
             </Link>
           </div>
         </div>
