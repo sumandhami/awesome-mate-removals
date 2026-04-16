@@ -10,7 +10,7 @@ import { CiPlay1 } from "react-icons/ci";
 const About = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   return (
-    <section className="performance-section py-[120px]">
+    <section id="about" className="performance-section py-[120px] scroll-mt-[120px]">
       <div className="Container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[92px] lg:gap-5 xl:gap-24 items-center">
           <div className="relative">

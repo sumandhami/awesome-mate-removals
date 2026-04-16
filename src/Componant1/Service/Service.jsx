@@ -3,7 +3,7 @@ import serviceShape from "/images/service-shape-1.png";
 
 const Service = () => {
   return (
-    <div className="performance-section bg-[url('/images/gallery/servicebg.png')] bg-cover bg-center bg-no-repeat py-28 relative z-10">
+    <div id="services" className="performance-section bg-[url('/images/gallery/servicebg.png')] bg-cover bg-center bg-no-repeat py-28 relative z-10 scroll-mt-[120px]">
       <div className="absolute inset-0 bg-black/25 z-0" />
       <img
         src={serviceShape?.src || serviceShape}

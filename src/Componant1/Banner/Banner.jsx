@@ -4,7 +4,7 @@ import ContactForm from "@/components/ContactForm/ContactForm";
 
 const Banner = () => {
   return (
-    <section className="min-h-[720px] sm:min-h-[820px] lg:min-h-[814px] pt-6 sm:pt-10 lg:pt-0 flex items-center overflow-hidden relative">
+    <section id="home" className="min-h-[720px] sm:min-h-[820px] lg:min-h-[814px] pt-6 sm:pt-10 lg:pt-0 flex items-center overflow-hidden relative">
       <Image
         src="/images/gallery/truck-6.png"
         alt=""
@@ -39,7 +39,7 @@ const Banner = () => {
               </a>
             </div>
           </div>
-          <div className="relative w-full max-w-[420px] mx-auto lg:max-w-[420px] lg:ml-auto lg:mr-0 lg:mt-0 lg:mb-28 xl:mb-32 self-end">
+          <div id="contact-form" className="relative w-full max-w-[420px] mx-auto lg:max-w-[420px] lg:ml-auto lg:mr-0 lg:mt-0 lg:mb-28 xl:mb-32 self-end">
             {/* Contact Form Component */}
             <div className="bg-white bg-opacity-95 p-5 md:p-6 rounded-lg shadow-lg">
               <ContactForm />

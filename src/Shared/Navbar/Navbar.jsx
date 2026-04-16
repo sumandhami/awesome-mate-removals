@@ -7,7 +7,6 @@ import {
   FaPinterestP,
   FaXTwitter,
 } from "react-icons/fa6";
-import { BiChevronDown } from "react-icons/bi";
 import Logo from "/images/logo final.png";
 import { useState, useEffect } from "react";
 import { IoMdCall, IoMdClose } from "react-icons/io";
@@ -67,7 +66,7 @@ const Navbar = () => {
       {/* top Navbar */}
       <header className="bg-SecondaryColor-0 overflow-hidden md:block">
         <div className="Container flex items-center justify-between">
-          <div className="flex items-center gap-10">
+          <div className="flex items-center gap-6 md:gap-10">
             <p className="font-Poppins text-[15px] text-white md:flex items-center gap-1 relative before:absolute before:top-1/2 before:right-0 before:w-[1px] before:h-5 before:bg-BorderColor-0 before-:translate-1/2 hidden">
               <IoLocationOutline className="text-xl relative bottom-[2px]" />
               Unit 5/207 Waterloo Street, Tuart Hill WA 6060
@@ -80,7 +79,7 @@ const Navbar = () => {
               awesomemateremovals@gmail.com
             </Link>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 md:gap-6">
             <ul className="flex items-center">
               <li>
                 <a
@@ -181,7 +180,7 @@ const Navbar = () => {
               </button>
             </div>
             {/* All navLink are hear with active */}
-            <div className="flex gap-6 items-center">
+            <div className="flex gap-3 md:gap-6 items-center">
               <ul
                 className={`${
                   isOpen ? "block" : "hidden"
@@ -189,7 +188,7 @@ const Navbar = () => {
               >
                 <li>
                   <NavLink
-                    to="/"
+                    to="/#home"
                     className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
                   >
                     Home
@@ -198,77 +197,38 @@ const Navbar = () => {
                 <li>
                   <NavLink
                     className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
-                    to="#"
+                    to="/#about"
                   >
-                    About
+                    About Us
                   </NavLink>
                 </li>
-                <li className="relative group">
+                <li>
                   <NavLink
                     className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
-                    to="#"
+                    to="/#services"
                   >
-                    <span className="flex items-center">
-                      Service
-                      <BiChevronDown className="ml-1" />
-                    </span>
+                    Our Services
                   </NavLink>
-                  <div className="absolute pt-5 lg:pt-8 z-20">
-                    <ul className="shadow-lg hidden group-hover:block rounded-sm text-white w-[220px] text-left transition-all duration-500 text-sm py-4 bg-HeadingColor-0">
-                      <li className="px-5 group hover:bg-SecondaryColor-0">
-                        <Link to="#" className="py-2 block hover:ml-3 duration-300">
-                          Our Service
-                        </Link>
-                      </li>
-                      <li className="px-5 group hover:bg-SecondaryColor-0">
-                        <Link to="#" className="py-2 block hover:ml-3 duration-300">
-                          Service Details
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
                 </li>
-                <li className="relative group">
+                <li>
                   <NavLink
                     className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
-                    to="#"
+                    to="/#blog"
                   >
-                    <span className="flex items-center">
-                      Blog
-                      <BiChevronDown className="ml-1" />
-                    </span>
+                    Blog
                   </NavLink>
-                  <div className="absolute pt-5 lg:pt-8 z-20">
-                    <ul className="shadow-lg hidden group-hover:block rounded-sm text-white w-[220px] text-left transition-all duration-500 text-sm py-4 bg-HoverColor-0">
-                      <li className="px-5 group hover:bg-SecondaryColor-0">
-                        <Link to="#" className="py-2 block hover:ml-3 duration-300">
-                          Blog Grid
-                        </Link>
-                      </li>
-                      <li className="px-5 group hover:bg-SecondaryColor-0">
-                        <Link to="#" className="py-2 block hover:ml-3 duration-300">
-                          Blog List
-                        </Link>
-                      </li>
-                      <li className="px-5 group hover:bg-SecondaryColor-0">
-                        <Link to="#" className="py-2 block hover:ml-3 duration-300">
-                          Blog Details
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
                 </li>
                 <li>
                   <NavLink
                     className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
-                    to="#"
+                    to="/#contact-form"
                   >
                     Contact
                   </NavLink>
                 </li>
               </ul>
               <div className="hidden lg:flex items-center">
-                <Link to="#" className="header-btn">
+                <Link to="/#contact-form" className="header-btn">
                   Get Free Quote
                 </Link>
               </div>

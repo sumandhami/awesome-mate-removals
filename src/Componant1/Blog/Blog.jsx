@@ -47,7 +47,7 @@ const blogData = [
 
 const Blog = () => {
   return (
-    <section className="performance-section py-28">
+    <section id="blog" className="performance-section py-28 scroll-mt-[120px]">
       <div className="Container">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:items-center">
           <div>
