@@ -20,25 +20,17 @@ export default function Step2({
       return undefined;
     }
 
-    // Load reCAPTCHA script
+    // Load the reCAPTCHA v3 script early so submit can request a token immediately.
     if (!window.grecaptcha && !recaptchaLoaded.current) {
       const script = document.createElement('script');
-      script.src = 'https://www.google.com/recaptcha/api.js';
+      script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
       script.async = true;
       script.defer = true;
       document.head.appendChild(script);
       recaptchaLoaded.current = true;
     }
 
-    // Register callback function expected by reCAPTCHA widget
-    window.onRecaptchaSuccess = (token) => {
-      const event = new CustomEvent('recaptchaToken', { detail: token });
-      document.dispatchEvent(event);
-    };
-
-    return () => {
-      delete window.onRecaptchaSuccess;
-    };
+    return undefined;
   }, [recaptchaEnabled]);
 
   return (
@@ -245,25 +237,7 @@ export default function Step2({
         )}
       />
 
-      {/* reCAPTCHA */}
-      {recaptchaEnabled ? (
-        <Controller
-          name="recaptchaToken"
-          control={control}
-          render={() => (
-            <div>
-              <div
-                className="g-recaptcha"
-                data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                data-callback="onRecaptchaSuccess"
-              />
-              {errors.recaptchaToken && (
-                <p className="text-red-600 text-sm mt-1">{errors.recaptchaToken.message}</p>
-              )}
-            </div>
-          )}
-        />
-      ) : null}
+      {/* reCAPTCHA v3 loads invisibly on submit; no widget is rendered here. */}
 
       {/* Buttons */}
       <div className="flex gap-3 pt-4">

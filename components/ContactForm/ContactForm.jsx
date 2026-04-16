@@ -7,6 +7,52 @@ import { contactFormSchema, contactStep1Schema } from '@/lib/schemas/contactSche
 import Step1 from './Step1';
 import Step2 from './Step2';
 
+const RECAPTCHA_SCRIPT_ID = 'recaptcha-v3-script';
+
+function loadRecaptchaV3(siteKey) {
+  return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined') {
+      reject(new Error('reCAPTCHA can only run in the browser'));
+      return;
+    }
+
+    if (window.grecaptcha?.execute) {
+      resolve(window.grecaptcha);
+      return;
+    }
+
+    const existingScript = document.getElementById(RECAPTCHA_SCRIPT_ID);
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.id = RECAPTCHA_SCRIPT_ID;
+      script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        if (window.grecaptcha) {
+          resolve(window.grecaptcha);
+        } else {
+          reject(new Error('reCAPTCHA failed to initialize'));
+        }
+      };
+      script.onerror = () => reject(new Error('reCAPTCHA script failed to load'));
+      document.head.appendChild(script);
+      return;
+    }
+
+    const waitForGrecaptcha = () => {
+      if (window.grecaptcha?.execute) {
+        resolve(window.grecaptcha);
+        return;
+      }
+
+      window.setTimeout(waitForGrecaptcha, 50);
+    };
+
+    waitForGrecaptcha();
+  });
+}
+
 export default function ContactForm() {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -91,16 +137,25 @@ export default function ContactForm() {
   };
 
   const onSubmit = async (data) => {
-    if (isRecaptchaEnabled && !recaptchaToken) {
-      setErrorMessage('Please complete the reCAPTCHA verification');
-      return;
-    }
-
     setIsSubmitting(true);
     setErrorMessage('');
     setSuccessMessage('');
 
     try {
+      let submissionToken = recaptchaToken;
+
+      if (isRecaptchaEnabled) {
+        const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+        if (!siteKey) {
+          throw new Error('reCAPTCHA site key is missing');
+        }
+
+        const grecaptcha = await loadRecaptchaV3(siteKey);
+        await new Promise((resolve) => grecaptcha.ready(resolve));
+        submissionToken = await grecaptcha.execute(siteKey, { action: 'contact_form' });
+        setRecaptchaToken(submissionToken);
+      }
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -108,7 +163,7 @@ export default function ContactForm() {
         },
         body: JSON.stringify({
           ...data,
-          recaptchaToken: recaptchaToken || '',
+          recaptchaToken: submissionToken || '',
         }),
       });
 
