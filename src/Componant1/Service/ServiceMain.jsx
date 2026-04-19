@@ -8,12 +8,12 @@ import {
   FiTrash2,
   FiPackage,
 } from "react-icons/fi";
-import serviceThumb from "/images/gallery/residential.png";
-import serviceThumb2 from "/images/gallery/furniture packing (1).png";
+import serviceThumb from "/images/gallery/services/residential.png";
+import serviceThumb2 from "/images/gallery/services/furniture.png";
 import serviceThumb3 from "/images/gallery/commercial.png";
 import serviceThumb4 from "/images/gallery/truck-1 (1).png";
 import serviceThumb5 from "/images/gallery/junk.png";
-import serviceThumb6 from "/images/gallery/special (1).png";
+import serviceThumb6 from "/images/gallery/services/special.png";
 import serviceShape from "/images/service-shape.png";
 import ServiceCard from "./ServiceCard";
 

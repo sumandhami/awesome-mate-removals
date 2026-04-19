@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { FaArrowRightLong } from "react-icons/fa6";
-import blogThumb from "/images/gallery/truck-1.png";
-import blogThumb2 from "/images/gallery/truck-1.png";
-import blogThumb3 from "/images/gallery/truck-1.png";
+import blogThumb from "/images/gallery/truck-1.jpeg";
 import BlogCard from "./BlogCard";
 import { Link } from "react-router-dom";
 
@@ -10,36 +8,12 @@ const blogData = [
   {
     id: 1,
     blogThumb: blogThumb,
-    thumbDate: "02",
-    thumbMonth: "MAY",
-    blogUrl: "/blog_details",
-    blogTitle: "Perth Moving Checklist: 30 Days to Moving Day",
-    blogDesc:
-      "Plan utilities, boxes, and booking timelines with a proven local checklist.",
-    btnContent: "Read More",
-    btnIcon: <FaArrowRightLong />,
-  },
-  {
-    id: 2,
-    blogThumb: blogThumb2,
     thumbDate: "12",
     thumbMonth: "MAY",
-    blogUrl: "/blog_details",
+    blogUrl: "/blog/how-to-move-heavy-furniture-without-damage",
     blogTitle: "How to Move Heavy Furniture Without Damage",
     blogDesc:
       "Learn practical packing and lifting methods used by professional movers.",
-    btnContent: "Read More",
-    btnIcon: <FaArrowRightLong />,
-  },
-  {
-    id: 3,
-    blogThumb: blogThumb3,
-    thumbDate: "25",
-    thumbMonth: "MAY",
-    blogUrl: "/blog_details",
-    blogTitle: "Office Relocation Tips to Reduce Downtime",
-    blogDesc:
-      "Smart sequencing and packing strategies for faster commercial moves.",
     btnContent: "Read More",
     btnIcon: <FaArrowRightLong />,
   },
@@ -68,7 +42,7 @@ const Blog = () => {
           </div>
         </div>
         <div className="mt-[60px]">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          <div className="max-w-[430px] mx-auto">
             {blogData.map(
               ({
                 id,

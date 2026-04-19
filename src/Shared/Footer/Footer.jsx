@@ -20,27 +20,36 @@ const Footer = () => {
         <img src={footerShape?.src || footerShape} alt="" loading="lazy" decoding="async" />
       </div>
       <div className="Container px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-0">
-        <div className="grid grid-cols-1 lg:grid-cols-3 lg:items-center bg-[url('/images/subscribe-bg.png')] bg-bottom sm:bg-right lg:bg-center md:gap-7 lg:gap-0 bg-cover bg-no-repeat py-[30px] px-5 sm:px-10 rounded-b-3xl mb-[120px]">
-          <div className="col-span-1">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-              <div className="w-[70px] h-[70px] rounded-full flex items-center justify-center bg-white">
-                <img src={callImg?.src || callImg} alt="Call us" loading="lazy" decoding="async" />
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.45fr)] lg:items-center bg-[url('/images/subscribe-bg.png')] bg-bottom sm:bg-right lg:bg-center bg-cover bg-no-repeat py-[28px] px-4 sm:px-8 md:px-10 lg:px-12 rounded-b-3xl mb-[100px] sm:mb-[120px]">
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+              <div className="w-[52px] h-[52px] sm:w-[64px] sm:h-[64px] md:w-[70px] md:h-[70px] rounded-full flex items-center justify-center bg-white shrink-0">
+                <img
+                  src={callImg?.src || callImg}
+                  alt="Call us"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-7 h-7 sm:w-9 sm:h-9 object-contain"
+                />
               </div>
               <div className="flex-1">
                 <p className="text-HeadingColor-0 font-Poppins font-light text-[15px]">
                   Need Moving Help?
                 </p>
-                <a href="tel:041207264" className="font-Inter text-left font-semibold text-HeadingColor-0 text-[22px] mt-1 inline-block">
+                <a
+                  href="tel:041207264"
+                  className="font-Inter text-left font-semibold text-HeadingColor-0 text-[19px] leading-7 sm:text-[22px] mt-1 inline-block"
+                >
                   Call Us Now: 041207264
                 </a>
               </div>
             </div>
           </div>
-          <div className="col-span-2 text-left lg:text-right flex flex-col lg:flex-row gap-7 lg:gap-4 xl:gap-[70px] justify-end lg:items-center">
-            <h4 className="font-Inter font-semibold text-white text-[28px]">
+          <div className="text-left flex flex-col lg:flex-row gap-6 lg:gap-4 xl:gap-12 justify-start lg:justify-between lg:items-center lg:pl-10 xl:pl-16">
+            <h4 className="font-Inter font-semibold text-white text-[24px] sm:text-[28px]">
               Get a Quote Update
             </h4>
-            <form action="/api/forms" method="post" className="relative">
+            <form action="/api/forms" method="post" className="relative w-full lg:max-w-[500px]">
               <input type="hidden" name="formType" value="newsletter" />
               <input
                 type="text"
@@ -55,12 +64,12 @@ const Footer = () => {
                 id="email"
                 placeholder="Enter your email"
                 required
-                className="w-full lg:w-[300px] 2xl:w-[394px] h-[56px] rounded-md bg-white text-TextColor-0 placeholder:text-TextColor-0 px-5 py-2"
+                className="w-full h-[54px] sm:h-[56px] rounded-md bg-white text-TextColor-0 placeholder:text-TextColor-0 px-5 py-2 pr-[130px]"
               />
               <div className="absolute right-0 top-0">
                 <button
                   type="submit"
-                  className="w-[122px] h-[56px] bg-HeadingColor-0 font-medium font-Inter text-white border-none outline-0 rounded-r-md flex items-center justify-center gap-2 relative z-10 overflow-hidden before:absolute before:top-0 before:right-0 before:w-0 before:h-full before:bg-PrimaryColor-0 before:-z-10 before:transition-all before:duration-500 hover:before:w-full hover:before:left-0"
+                  className="w-[112px] sm:w-[122px] h-[54px] sm:h-[56px] bg-HeadingColor-0 font-medium font-Inter text-white border-none outline-0 rounded-r-md flex items-center justify-center gap-2 relative z-10 overflow-hidden before:absolute before:top-0 before:right-0 before:w-0 before:h-full before:bg-PrimaryColor-0 before:-z-10 before:transition-all before:duration-500 hover:before:w-full hover:before:left-0"
                 >
                   Subscribe
                 </button>

@@ -16,7 +16,7 @@ const routes = [
   "/appointment",
   "/blog/grid",
   "/blog/list",
-  "/blog/details",
+  "/blog/how-to-move-heavy-furniture-without-damage",
   "/contact",
   "/privacy-policy",
   "/terms-and-conditions",

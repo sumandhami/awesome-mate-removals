@@ -8,16 +8,16 @@ import {
   FaXTwitter,
 } from "react-icons/fa6";
 import Logo from "/images/logo final.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { IoMdCall, IoMdClose } from "react-icons/io";
 import { VscHeart } from "react-icons/vsc";
 import { BsEnvelope } from "react-icons/bs";
 import { IoLocationOutline } from "react-icons/io5";
 
 const Navbar = () => {
-  let rafId = null;
-  
-  function isSticky() {
+  const rafIdRef = useRef(null);
+
+  const isSticky = useCallback(() => {
     const header = document.querySelector(".header-section");
     const scrollTop = window.scrollY;
     if (!header) {
@@ -29,15 +29,15 @@ const Navbar = () => {
     } else {
       header.classList.remove("is-sticky");
     }
-  }
+  }, []);
 
   // RAF-debounced scroll handler for better performance
-  function handleScroll() {
-    if (rafId) {
-      cancelAnimationFrame(rafId);
+  const handleScroll = useCallback(() => {
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
     }
-    rafId = requestAnimationFrame(isSticky);
-  }
+    rafIdRef.current = requestAnimationFrame(isSticky);
+  }, [isSticky]);
 
   //sticky
 
@@ -45,11 +45,12 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (rafId) {
-        cancelAnimationFrame(rafId);
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
       }
     };
-  }, []);
+  }, [handleScroll]);
 
   // modal openar
 
@@ -205,7 +206,7 @@ const Navbar = () => {
                 <li>
                   <NavLink
                     className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
-                    to="/#services"
+                    to="/services"
                   >
                     Our Services
                   </NavLink>

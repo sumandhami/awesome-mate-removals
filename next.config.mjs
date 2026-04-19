@@ -107,7 +107,12 @@ const nextConfig = {
       },
       {
         source: "/blog_details",
-        destination: "/blog/details",
+        destination: "/blog/how-to-move-heavy-furniture-without-damage",
+        permanent: true,
+      },
+      {
+        source: "/blog/details",
+        destination: "/blog/how-to-move-heavy-furniture-without-damage",
         permanent: true,
       },
     ];
