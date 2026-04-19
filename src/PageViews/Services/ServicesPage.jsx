@@ -42,7 +42,7 @@ const ServicesPage = () => {
       </section>
 
       <Service />
-      <Support matchServiceAreasStyle />
+      <Support />
     </>
   );
 };

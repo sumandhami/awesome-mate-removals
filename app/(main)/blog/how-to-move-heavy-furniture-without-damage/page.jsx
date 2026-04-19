@@ -31,7 +31,7 @@ export default function Page() {
     datePublished: "2026-05-12",
     dateModified: "2026-05-12",
     mainEntityOfPage: articleUrl,
-    image: [`${siteUrl}/images/gallery/truck-1.jpeg`],
+    image: [`${siteUrl}/images/gallery/truck-1.png`],
     author: {
       "@type": "Organization",
       name: "Awesome Mate Removals",
@@ -64,7 +64,7 @@ export default function Page() {
 
             <div className="relative mt-8 sm:mt-10 rounded-md overflow-hidden aspect-[16/9]">
               <Image
-                src="/images/gallery/truck-1.jpeg"
+                src="/images/gallery/truck-1.png"
                 alt="Furniture loaded safely inside a moving truck in Perth"
                 fill
                 priority
@@ -93,7 +93,7 @@ export default function Page() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 sm:mt-10">
               <div className="relative rounded-md overflow-hidden aspect-[4/3]">
                 <Image
-                  src="/images/gallery/furniture.jpg"
+                  src="/images/gallery/furniture.png"
                   alt="Furniture wrapped and prepared before loading"
                   fill
                   loading="lazy"
@@ -103,7 +103,7 @@ export default function Page() {
               </div>
               <div className="relative rounded-md overflow-hidden aspect-[4/3]">
                 <Image
-                  src="/images/gallery/commercial.jpg"
+                  src="/images/gallery/commercial.png"
                   alt="Organized loading area for a professional move"
                   fill
                   loading="lazy"

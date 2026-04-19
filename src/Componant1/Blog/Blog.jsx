@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { FaArrowRightLong } from "react-icons/fa6";
-import blogThumb from "/images/gallery/truck-1.jpeg";
+import blogThumb from "/images/gallery/truck-1.png";
 import BlogCard from "./BlogCard";
 import { Link } from "react-router-dom";
 

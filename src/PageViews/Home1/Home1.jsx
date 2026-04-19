@@ -47,7 +47,7 @@ const Home1 = () => {
       <Testimonial />
       <Portfolio />
       <HomeFaq />
-      <Support matchServiceAreasStyle />
+      <Support />
     </>
   );
 };

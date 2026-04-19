@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { FaArrowRight, FaArrowRightLong, FaLocationDot } from "react-icons/fa6";
-import portfolioThumb from "/images/gallery/truck-1.png";
-import portfolioThumb2 from "/images/gallery/truck-1.png";
-import portfolioThumb3 from "/images/gallery/truck-1.png";
-import portfolioThumb4 from "/images/gallery/truck-1.png";
-import portfolioThumb5 from "/images/gallery/truck-1.png";
-import portfolioThumb6 from "/images/gallery/truck-1.png";
-import portfolioThumb7 from "/images/gallery/truck-1.png";
+import portfolioThumb from "/images/gallery/services/residential.png";
+import portfolioThumb2 from "/images/gallery/services/furniture.png";
+import portfolioThumb3 from "/images/gallery/commercial.png";
+import portfolioThumb4 from "/images/gallery/services/residential.png";
+import portfolioThumb5 from "/images/gallery/junk.png";
+import portfolioThumb6 from "/images/gallery/truck-1 (1).png";
+import portfolioThumb7 from "/images/gallery/services/special.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -22,7 +22,7 @@ const PortfolioData = [
     portfolioLocateIcon: <FaLocationDot />,
     portfolioLocation: "Perth, WA",
     portfolioTitle: "Family Home Relocation",
-    portfolioUrl: "/project_details",
+    portfolioUrl: "#",
     portfolioIcon: <FaArrowRight />,
   },
   {
@@ -32,7 +32,7 @@ const PortfolioData = [
     portfolioLocateIcon: <FaLocationDot />,
     portfolioLocation: "Joondalup, WA",
     portfolioTitle: "Heavy Furniture Transfer",
-    portfolioUrl: "/project_details",
+    portfolioUrl: "#",
     portfolioIcon: <FaArrowRight />,
   },
   {
@@ -42,7 +42,7 @@ const PortfolioData = [
     portfolioLocateIcon: <FaLocationDot />,
     portfolioLocation: "Subiaco, WA",
     portfolioTitle: "Commercial Office Relocation",
-    portfolioUrl: "/project_details",
+    portfolioUrl: "#",
     portfolioIcon: <FaArrowRight />,
   },
   {
@@ -52,7 +52,7 @@ const PortfolioData = [
     portfolioLocateIcon: <FaLocationDot />,
     portfolioLocation: "Fremantle, WA",
     portfolioTitle: "Apartment Transition Move",
-    portfolioUrl: "/project_details",
+    portfolioUrl: "#",
     portfolioIcon: <FaArrowRight />,
   },
   {
@@ -62,7 +62,7 @@ const PortfolioData = [
     portfolioLocateIcon: <FaLocationDot />,
     portfolioLocation: "Midland, WA",
     portfolioTitle: "Short-Term Storage Transfer",
-    portfolioUrl: "/project_details",
+    portfolioUrl: "#",
     portfolioIcon: <FaArrowRight />,
   },
   {
@@ -72,7 +72,7 @@ const PortfolioData = [
     portfolioLocateIcon: <FaLocationDot />,
     portfolioLocation: "Perth to Adelaide",
     portfolioTitle: "Long-Distance House Move",
-    portfolioUrl: "/project_details",
+    portfolioUrl: "#",
     portfolioIcon: <FaArrowRight />,
   },
   {
@@ -82,7 +82,7 @@ const PortfolioData = [
     portfolioLocateIcon: <FaLocationDot />,
     portfolioLocation: "Canning Vale, WA",
     portfolioTitle: "Full Packing and Loading",
-    portfolioUrl: "/project_details",
+    portfolioUrl: "#",
     portfolioIcon: <FaArrowRight />,
   },
 ];
