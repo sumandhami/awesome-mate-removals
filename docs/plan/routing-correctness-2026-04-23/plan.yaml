@@ -1,0 +1,190 @@
+plan_id: routing-correctness-2026-04-23
+objective: Phase 1 routing correctness plan for active routes and route-impacting components
+created_at: 2026-04-23T00:00:00Z
+created_by: gem-planner (GPT-5.3-Codex)
+status: completed
+research_confidence: high
+
+tldr: |
+  Deliver routing correctness in three commit-sized changes limited to active route flows.
+  First convert shared navigation primitives used by active pages to Next-compatible behavior,
+  then convert homepage/services card links, then validate and correct internal links in
+  blog/article and not-found surfaces. No unrelated refactors or non-active-route expansion.
+open_questions:
+  - Should footer placeholder links currently using # be kept as placeholders or converted to active-route-safe targets only in this phase?
+
+pre_mortem:
+  overall_risk_level: medium
+  critical_failure_modes:
+    - scenario: Shared navigation conversion changes hash-link behavior and breaks section jumps on homepage.
+      likelihood: medium
+      impact: medium
+      mitigation: Preserve hash href semantics and verify #about, #blog, and #contact-form jumps on / after conversion.
+    - scenario: Card link conversion introduces incorrect href values for service/blog cards and creates route 404 regressions.
+      likelihood: medium
+      impact: high
+      mitigation: Restrict card hrefs to /, /services, and /blog/how-to-move-heavy-furniture-without-damage for this phase and validate all rendered card links.
+    - scenario: Not-found or article internal links remain legacy or malformed and create inconsistent navigation fallback.
+      likelihood: low
+      impact: medium
+      mitigation: Add route checks for 404 home link and article CTA links under Next routing.
+  assumptions:
+    - Active production routes for this phase are only /, /services, and /blog/how-to-move-heavy-furniture-without-damage.
+    - react-router-dom compatibility alias remains in place until all route-impacting links in scope are converted.
+    - This plan excludes styling redesign and non-routing behavioral changes.
+
+implementation_specification:
+  code_structure: Keep existing App Router and src component structure; perform minimal link primitive conversion and href normalization only in files that affect active route navigation.
+  affected_areas:
+    - app/(main)/layout.jsx
+    - src/Layouts/MainShell.jsx
+    - src/Shared/Navbar/Navbar.jsx
+    - src/Shared/Footer/Footer.jsx
+    - src/Componant1/Service/ServiceCard.jsx
+    - src/Componant1/Blog/BlogCard.jsx
+    - src/PageViews/Home1/Home1.jsx
+    - src/PageViews/Services/ServicesPage.jsx
+    - app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx
+    - app/not-found.jsx
+    - src/Shared/ErrorPage/ErrorPage.jsx
+  component_details:
+    - component: Shared navigation shell
+      responsibility: Ensure top-level navbar/footer and shell-level internal navigation use Next-compatible link behavior for active routes and on-page anchors.
+      interfaces:
+        - Navbar internal links to /, /services, and homepage anchors
+        - Footer quick/internal links that point to active routes
+    - component: Homepage and services card links
+      responsibility: Ensure card CTAs used on homepage/services resolve to valid active routes with no legacy router dependency.
+      interfaces:
+        - ServiceCard CTA destination
+        - BlogCard title and CTA destination
+    - component: Blog and fallback link integrity
+      responsibility: Ensure article CTA and 404 recovery links resolve correctly and do not rely on legacy routing primitives.
+      interfaces:
+        - Article in-page CTA links (tel/internal)
+        - Not-found Go Home link behavior
+  dependencies:
+    - component: Homepage and services card links
+      relationship: Depends on shared navigation shell conversion for consistent route primitive usage.
+    - component: Blog and fallback link integrity
+      relationship: Depends on prior link primitive/href normalization to validate end-to-end active-route integrity.
+  integration_points:
+    - Main layout wrapper via app/(main)/layout.jsx and src/Layouts/MainShell.jsx
+    - Shared route entry navigation in src/Shared/Navbar/Navbar.jsx and src/Shared/Footer/Footer.jsx
+    - Card-driven navigation in src/Componant1/Service/ServiceCard.jsx and src/Componant1/Blog/BlogCard.jsx
+    - Fallback routing surface via app/not-found.jsx and src/Shared/ErrorPage/ErrorPage.jsx
+
+tasks:
+  - id: task-101
+    title: Core shared navigation conversion
+    description: |
+      Convert shared navigation primitives that impact active routes from legacy react-router-dom usage
+      to Next-compatible routing behavior, limited to shell/navigation files only. Preserve existing UX
+      and hash scrolling behavior on homepage anchors while ensuring active-route links resolve through
+      App Router expectations.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies: []
+    context_files:
+      - src/Shared/Navbar/Navbar.jsx: Replace route-impacting Link/NavLink usage with Next-compatible primitives for / and /services plus homepage hash anchors.
+      - src/Shared/Footer/Footer.jsx: Normalize quick/internal links that affect active routes and avoid legacy router mismatch.
+      - src/Layouts/MainShell.jsx: Confirm shell remains client-compatible for converted nav components.
+    estimated_effort: medium
+    estimated_files: 3
+    estimated_lines: 180
+    focus_area: shared navigation correctness
+    verification:
+      - Manually navigate from navbar/footer to / and /services; confirm no full-page reload anomalies or broken transitions.
+      - Verify homepage hash anchors from navbar (#about, #blog, #contact-form) scroll correctly on /.
+      - Run npm run build to confirm no routing primitive import errors.
+    acceptance_criteria:
+      - Shared navigation for active routes no longer depends on legacy react-router-dom behavior.
+      - Navbar and footer links targeting active routes resolve correctly under App Router.
+      - No unrelated style/layout refactor is included in the same commit.
+    failure_modes:
+      - scenario: Anchor links lose smooth-scroll behavior after primitive conversion.
+        likelihood: medium
+        impact: medium
+        mitigation: Keep href hash targets unchanged and validate scroll behavior with existing Home1 hash handler.
+    tech_stack:
+      - Next.js App Router
+      - next/link
+      - React client components
+    test_coverage: Route smoke validation for shared nav links on active routes.
+
+  - id: task-102
+    title: Homepage/services cards link conversion
+    description: |
+      Convert route-impacting card links used by homepage and services composition to Next-compatible
+      internal links and normalize href targets so card CTAs only resolve to implemented active routes
+      in this phase. Keep component output and styling unchanged.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies:
+      - task-101
+    context_files:
+      - src/Componant1/Service/ServiceCard.jsx: Replace legacy link primitive and validate serviceUrl handling for active-route-safe destinations.
+      - src/Componant1/Blog/BlogCard.jsx: Replace legacy link primitive for blog card title/CTA links.
+      - src/PageViews/Home1/Home1.jsx: Validate consuming sections still render and navigate correctly after card link conversion.
+    estimated_effort: small
+    estimated_files: 3
+    estimated_lines: 120
+    focus_area: card-driven routing
+    verification:
+      - From /, click service and blog cards and verify destinations are valid active routes.
+      - From /services, verify any card CTAs return valid active-route transitions.
+      - Run npm run build and lint to confirm no unresolved imports or prop regressions.
+    acceptance_criteria:
+      - Service and blog card links in active-route flows use Next-compatible link behavior.
+      - Card CTA targets in scope resolve to /, /services, or /blog/how-to-move-heavy-furniture-without-damage only.
+      - No content/styling redesign is introduced.
+    failure_modes:
+      - scenario: Existing card data contains legacy URLs that now resolve to non-implemented routes.
+        likelihood: medium
+        impact: high
+        mitigation: Add temporary href normalization guard for active-route-only targets during this phase.
+    tech_stack:
+      - Next.js App Router
+      - next/link
+      - React component props
+    test_coverage: Click-through checks for homepage/services cards mapped to active routes.
+
+  - id: task-103
+    title: Blog/article/not-found internal link integrity
+    description: |
+      Validate and correct internal links on the active article page and not-found fallback surface so
+      all in-scope internal navigation resolves correctly under App Router, without expanding beyond
+      the active route set. Include integrity checks for recovery path from 404 to home.
+    agent: gem-implementer
+    priority: medium
+    status: completed
+    dependencies:
+      - task-102
+    context_files:
+      - app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx: Validate internal CTA/link targets and keep only active-route-safe internal links.
+      - app/not-found.jsx: Ensure fallback remains wired to Next app not-found flow.
+      - src/Shared/ErrorPage/ErrorPage.jsx: Convert home recovery link to Next-compatible internal navigation.
+    estimated_effort: small
+    estimated_files: 3
+    estimated_lines: 90
+    focus_area: fallback and article link integrity
+    verification:
+      - Open /blog/how-to-move-heavy-furniture-without-damage and validate all internal links/CTAs resolve correctly.
+      - Trigger a non-existent route and confirm 404 page Go Home returns to /.
+      - Run npm run build and perform manual route sweep for /, /services, and article route.
+    acceptance_criteria:
+      - Article and 404 surfaces contain no legacy internal link primitive mismatch.
+      - 404 recovery link reliably navigates to /.
+      - Active-route internal linking remains consistent with PRD Phase 1 scope.
+    failure_modes:
+      - scenario: Not-found conversion accidentally breaks SSR/client rendering boundary for error page component.
+        likelihood: low
+        impact: medium
+        mitigation: Keep not-found contract unchanged and only swap internal link primitive in existing client-safe component.
+    tech_stack:
+      - Next.js App Router
+      - next/link
+      - Route-level error handling
+    test_coverage: Manual integrity checklist for article and not-found internal links.

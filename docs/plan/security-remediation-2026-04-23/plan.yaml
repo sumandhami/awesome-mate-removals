@@ -1,0 +1,230 @@
+plan_id: security-remediation-2026-04-23
+objective: Phase 0 security hardening execution plan for immediate remediation tasks in PRD
+created_at: 2026-04-23T00:00:00Z
+created_by: gem-planner (GPT-5.3-Codex)
+status: completed
+research_confidence: medium
+
+tldr: |
+  Execute four commit-sized, low-blast-radius security remediations in strict sequence:
+  sanitize environment template placeholders, close form redirect abuse vectors,
+  harden contact endpoint validation and email output escaping, then tighten CSP
+  while preserving reCAPTCHA functionality.
+open_questions:
+  - Which production origins should be allowlisted for post-submit redirects, if any beyond the canonical site origin?
+  - Is strict rejection (HTTP 400) preferred over fallback-to-home behavior when redirect origin validation fails?
+  - Should CSP permit both reCAPTCHA v2 iframe and v3 script-only flows, or v3 only?
+
+pre_mortem:
+  overall_risk_level: medium
+  critical_failure_modes:
+    - scenario: CSP tightening blocks reCAPTCHA bootstrap script or iframe, causing silent form submission failures.
+      likelihood: medium
+      impact: high
+      mitigation: Add explicit google.com/gstatic reCAPTCHA directives, validate form flow in browser, and stage CSP in one isolated commit.
+    - scenario: Redirect hardening incorrectly rejects legitimate same-origin paths due to proxy header mismatch.
+      likelihood: medium
+      impact: medium
+      mitigation: Validate against request origin and normalized URL parsing only; include tests for canonical same-origin referers.
+    - scenario: Output escaping changes alter email readability or template formatting unexpectedly.
+      likelihood: low
+      impact: medium
+      mitigation: Use deterministic escaping for user-supplied fields only and validate rendered email snapshot content.
+  assumptions:
+    - Phase 0 work is restricted to security-only changes with no unrelated refactor.
+    - Existing CI can run lint and build checks for verification.
+    - reCAPTCHA remains a required production dependency and cannot be removed.
+
+implementation_specification:
+  code_structure: Keep existing API route modules and next config structure; apply additive helper functions and minimal logic rewrites scoped to each task file.
+  affected_areas:
+    - .env.example
+    - app/api/forms/route.js
+    - app/api/contact/route.js
+    - next.config.mjs
+  component_details:
+    - component: Environment template policy
+      responsibility: Replace secret-like defaults with non-sensitive placeholders and enforce explicit operator-supplied values.
+      interfaces:
+        - .env.example key/value placeholders only
+    - component: Forms redirect gate
+      responsibility: Accept only safe same-origin redirect targets and deny-by-default unsafe referer/origin input.
+      interfaces:
+        - POST app/api/forms/route.js redirect response behavior
+    - component: Contact input and output safety
+      responsibility: Strengthen server-side validation and ensure HTML-escaped interpolation for all user-controlled email template fields.
+      interfaces:
+        - POST app/api/contact/route.js JSON responses and email composition
+    - component: Browser policy headers
+      responsibility: Tighten Content-Security-Policy while allowing required reCAPTCHA resources.
+      interfaces:
+        - next.config.mjs headers() security headers
+  dependencies:
+    - component: Forms redirect gate
+      relationship: Independent runtime hardening; can be released before contact API changes.
+    - component: Contact input and output safety
+      relationship: Depends on established placeholder hygiene to avoid accidental credential leakage in logs and templates.
+    - component: Browser policy headers
+      relationship: Must be validated against deployed frontend behavior that includes reCAPTCHA scripts/frames.
+  integration_points:
+    - App Router API endpoint handling in app/api/forms/route.js
+    - App Router API endpoint handling in app/api/contact/route.js
+    - Global security response headers via Next.js configuration
+
+tasks:
+  - id: task-001
+    title: Sanitize .env.example secret placeholders
+    description: |
+      Replace sensitive-looking or real secret values in .env.example with explicit placeholder text.
+      Keep variable names unchanged to avoid runtime key drift, but ensure all secrets are non-live template values.
+      Add a short inline policy comment indicating placeholders only.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies: []
+    context_files:
+      - .env.example: Remove any real tokens and standardize non-secret placeholders.
+    estimated_effort: small
+    estimated_files: 1
+    estimated_lines: 20
+    focus_area: credential hygiene
+    verification:
+      - Confirm .env.example contains no production-like token prefixes or live credentials.
+      - Run repository search for known leaked token substring to ensure removal.
+      - Run npm run lint to ensure no formatting or config regression.
+    acceptance_criteria:
+      - .env.example values for secrets use placeholder tokens only (for example CHANGE_ME).
+      - No committed credential-like secret remains in .env.example.
+      - Environment variable keys remain backward compatible.
+    rollback_note: |
+      Revert only the .env.example commit if deployment tooling depends on old placeholder names or onboarding docs break unexpectedly.
+      Safe rollback command at PR level: git revert <task-001-commit-sha>.
+    failure_modes:
+      - scenario: Placeholder rename accidentally changes env key names, breaking runtime lookups.
+        likelihood: low
+        impact: medium
+        mitigation: Keep keys identical; only replace values and optional comments.
+    tech_stack:
+      - Next.js
+      - Node.js
+      - dotenv conventions
+    test_coverage: null
+
+  - id: task-002
+    title: Harden open redirect logic in app/api/forms/route.js
+    description: |
+      Refactor redirect construction to deny-by-default: only allow same-origin redirects and safe path/query targets.
+      Ignore or neutralize untrusted referer/origin values and fall back to a fixed safe route when validation fails.
+      Preserve existing HTML vs JSON response branching behavior.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies:
+      - task-001
+    context_files:
+      - app/api/forms/route.js: Replace permissive referer-based redirect assembly with strict URL validation.
+    estimated_effort: small
+    estimated_files: 1
+    estimated_lines: 60
+    focus_area: redirect abuse prevention
+    verification:
+      - Add and run endpoint tests for same-origin referer (allowed) and cross-origin referer (denied/fallback).
+      - Manually submit HTML form with spoofed referer and verify redirect lands only on safe local URL.
+      - Run npm run build to confirm route compiles cleanly.
+    acceptance_criteria:
+      - Redirect destination cannot be set to external origin by header manipulation.
+      - Invalid or missing referer/origin always resolves to fixed safe local redirect.
+      - No regression in JSON success/error response behavior for API clients.
+    rollback_note: |
+      Revert this single route hardening commit if legitimate same-origin redirects are incorrectly blocked in production.
+      Restore previous behavior only temporarily while patched validation is reworked in a follow-up hotfix.
+    failure_modes:
+      - scenario: Strict parser rejects valid proxied host patterns and causes user-visible redirect loops.
+        likelihood: medium
+        impact: medium
+        mitigation: Use normalized URL(origin) comparisons from request.url and include proxy-aware host handling tests.
+    tech_stack:
+      - Next.js Route Handlers
+      - WHATWG URL API
+      - Zod
+    test_coverage: Add targeted route handler tests for redirect safety matrix.
+
+  - id: task-003
+    title: Strengthen validation/output escaping in app/api/contact/route.js
+    description: |
+      Tighten contact payload validation boundaries and normalize input handling to reject malformed fields earlier.
+      Introduce robust HTML escaping for all user-controlled values inserted into email template output,
+      including multi-line message handling without raw HTML injection risk.
+      Keep response contracts stable for existing frontend integration.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies:
+      - task-002
+    context_files:
+      - app/api/contact/route.js: Harden schema/sanitization path and encode template interpolations.
+      - lib/schemas/contactSchema.js: Update schema constraints only if required for consistent server-side enforcement.
+    estimated_effort: medium
+    estimated_files: 2
+    estimated_lines: 140
+    focus_area: input validation and output encoding
+    verification:
+      - Add test cases for malicious HTML payloads in name/message/additionalDetails and assert escaped email output.
+      - Validate API returns structured 400 responses for malformed payloads and 200 for valid payloads.
+      - Run npm run lint and npm run build.
+    acceptance_criteria:
+      - No unescaped user input is interpolated directly into generated HTML email content.
+      - Validation rejects malformed payloads with deterministic error responses.
+      - Existing successful submission flow remains functional for valid requests.
+    rollback_note: |
+      Revert contact route hardening commit if production mail rendering degrades or submission success rate regresses.
+      Keep rollback isolated to contact endpoint files and immediately reopen remediation issue with failing payload samples.
+    failure_modes:
+      - scenario: Overly strict validation rejects valid real-world customer input formats.
+        likelihood: medium
+        impact: medium
+        mitigation: Add representative positive fixtures from current forms and adjust schema with explicit allowlist patterns.
+    tech_stack:
+      - Next.js Route Handlers
+      - Zod
+      - Resend SDK
+    test_coverage: Add malicious payload and valid payload regression tests for contact POST handler.
+
+  - id: task-004
+    title: Tighten CSP in next.config.mjs without breaking recaptcha
+    description: |
+      Replace broad CSP allowances (unsafe-eval and broad unsafe-inline usage where possible) with tighter directives.
+      Explicitly permit only required reCAPTCHA script/frame/connect endpoints and maintain existing font/style/image needs.
+      Keep header logic centralized in next.config.mjs with no unrelated redirect or webpack edits.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies:
+      - task-003
+    context_files:
+      - next.config.mjs: Update Content-Security-Policy directive values and preserve other security headers.
+    estimated_effort: medium
+    estimated_files: 1
+    estimated_lines: 40
+    focus_area: browser runtime policy hardening
+    verification:
+      - Validate CSP header in local response and confirm directive set excludes unsafe-eval.
+      - Exercise reCAPTCHA-enabled form flow in browser and confirm challenge/script loads without CSP violations.
+      - Run npm run build to verify Next config validity.
+    acceptance_criteria:
+      - CSP no longer relies on unsafe-eval.
+      - reCAPTCHA resources required by current implementation are explicitly allowlisted and functioning.
+      - No new CSP console violations for core implemented routes under normal usage.
+    rollback_note: |
+      Revert only CSP commit if reCAPTCHA or critical frontend scripts fail in production.
+      Use emergency rollback while capturing blocked-uri violation reports to produce a minimal corrective CSP patch.
+    failure_modes:
+      - scenario: Removing unsafe-inline in script directives breaks third-party recaptcha bootstrap.
+        likelihood: medium
+        impact: high
+        mitigation: Apply nonce/hash strategy in follow-up if needed; for this phase, retain minimal targeted compatibility allowances and verify in-browser.
+    tech_stack:
+      - Next.js configuration
+      - HTTP security headers
+      - CSP Level 3 directives
+    test_coverage: Manual browser validation plus integration smoke check for protected form submission.
