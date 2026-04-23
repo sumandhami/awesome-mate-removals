@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const ErrorPage = () => {
   return (
@@ -10,7 +10,7 @@ const ErrorPage = () => {
         Page Not Found
       </div>
       <Link
-        to="/"
+        href="/"
         className="relative inline-block text-sm font-medium text-PrimaryColor-0 group active:text-PrimaryColor-0 focus:outline-none focus:ring mt-5"
       >
         <span className="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-PrimaryColor-0 group-hover:translate-y-0 group-hover:translate-x-0"></span>
