@@ -47,9 +47,10 @@ function sanitizePayload(payload) {
 
   for (const [key, value] of Object.entries(payload)) {
     if (typeof value === 'string') {
-      cleaned[key] = value.replace(/[<>]/g, '').trim();
+      // Normalize whitespace without mutating semantic content.
+      cleaned[key] = value.trim();
     } else if (Array.isArray(value)) {
-      cleaned[key] = value.map((v) => (typeof v === 'string' ? v.replace(/[<>]/g, '').trim() : v));
+      cleaned[key] = value.map((v) => (typeof v === 'string' ? v.trim() : v));
     } else {
       cleaned[key] = value;
     }
@@ -119,24 +120,59 @@ function formatFormData(data) {
     e_bikes: 'E-Bikes',
   };
 
-  let conditionalInfo = '';
+  let conditionalLabel = '';
+  let conditionalValue = '';
   if (data.propertyType === 'house' && data.multiStoryHouse) {
-    conditionalInfo = `Multi-Story House: ${data.multiStoryHouse === 'yes' ? 'Yes' : 'No'}`;
+    conditionalLabel = 'Multi-Story House';
+    conditionalValue = data.multiStoryHouse === 'yes' ? 'Yes' : 'No';
   } else if (data.propertyType === 'apartment' && data.buildingLift) {
-    conditionalInfo = `Building Has Lift: ${data.buildingLift === 'yes' ? 'Yes' : 'No'}`;
+    conditionalLabel = 'Building Has Lift';
+    conditionalValue = data.buildingLift === 'yes' ? 'Yes' : 'No';
   } else if (data.propertyType === 'villa' && data.itemTypes?.length) {
     const items = data.itemTypes.map((item) => itemTypeLabels[item]).join(', ');
-    conditionalInfo = `Special Items: ${items}`;
+    conditionalLabel = 'Special Items';
+    conditionalValue = items;
   }
 
   return {
     propertyTypeLabel: propertyTypeLabels[data.propertyType],
     serviceTypeLabel: serviceTypeLabels[data.serviceType],
-    conditionalInfo,
+    conditionalLabel,
+    conditionalValue,
   };
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escapeMultilineHtml(value) {
+  return escapeHtml(value).replace(/\r?\n/g, '<br>');
+}
+
 function generateEmailHtml(data, formatted) {
+  const safeData = {
+    name: escapeHtml(data.name),
+    email: escapeHtml(data.email),
+    preferredDate: escapeHtml(data.preferredDate),
+    preferredTime: escapeHtml(data.preferredTime),
+    movingFrom: escapeHtml(data.movingFrom),
+    movingTo: escapeHtml(data.movingTo),
+    additionalDetails: data.additionalDetails ? escapeMultilineHtml(data.additionalDetails) : '',
+  };
+
+  const safeFormatted = {
+    serviceTypeLabel: escapeHtml(formatted.serviceTypeLabel),
+    propertyTypeLabel: escapeHtml(formatted.propertyTypeLabel),
+    conditionalLabel: escapeHtml(formatted.conditionalLabel),
+    conditionalValue: escapeHtml(formatted.conditionalValue),
+  };
+
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -164,11 +200,11 @@ function generateEmailHtml(data, formatted) {
       <h2>Personal Information</h2>
       <div class="field">
         <span class="field-label">Name:</span>
-        <span class="field-value">${data.name}</span>
+        <span class="field-value">${safeData.name}</span>
       </div>
       <div class="field">
         <span class="field-label">Email:</span>
-        <span class="field-value">${data.email}</span>
+        <span class="field-value">${safeData.email}</span>
       </div>
     </div>
 
@@ -176,15 +212,15 @@ function generateEmailHtml(data, formatted) {
       <h2>Service Details</h2>
       <div class="field">
         <span class="field-label">Service Type:</span>
-        <span class="field-value">${formatted.serviceTypeLabel}</span>
+        <span class="field-value">${safeFormatted.serviceTypeLabel}</span>
       </div>
       <div class="field">
         <span class="field-label">Property Type:</span>
-        <span class="field-value">${formatted.propertyTypeLabel}</span>
+        <span class="field-value">${safeFormatted.propertyTypeLabel}</span>
       </div>
-      ${formatted.conditionalInfo ? `<div class="field">
-        <span class="field-label">${formatted.conditionalInfo.split(':')[0]}:</span>
-        <span class="field-value">${formatted.conditionalInfo.split(':')[1].trim()}</span>
+      ${safeFormatted.conditionalLabel && safeFormatted.conditionalValue ? `<div class="field">
+        <span class="field-label">${safeFormatted.conditionalLabel}:</span>
+        <span class="field-value">${safeFormatted.conditionalValue}</span>
       </div>` : ''}
     </div>
 
@@ -192,11 +228,11 @@ function generateEmailHtml(data, formatted) {
       <h2>Preferred Schedule</h2>
       <div class="field">
         <span class="field-label">Preferred Date:</span>
-        <span class="field-value">${data.preferredDate}</span>
+        <span class="field-value">${safeData.preferredDate}</span>
       </div>
       <div class="field">
         <span class="field-label">Preferred Time:</span>
-        <span class="field-value">${data.preferredTime}</span>
+        <span class="field-value">${safeData.preferredTime}</span>
       </div>
     </div>
 
@@ -204,15 +240,15 @@ function generateEmailHtml(data, formatted) {
       <h2>Moving Details</h2>
       <div class="field">
         <span class="field-label">Moving From:</span>
-        <span class="field-value">${data.movingFrom}</span>
+        <span class="field-value">${safeData.movingFrom}</span>
       </div>
       <div class="field">
         <span class="field-label">Moving To:</span>
-        <span class="field-value">${data.movingTo}</span>
+        <span class="field-value">${safeData.movingTo}</span>
       </div>
-      ${data.additionalDetails ? `<div class="field">
+      ${safeData.additionalDetails ? `<div class="field">
         <span class="field-label">Additional Details:</span>
-        <span class="field-value">${data.additionalDetails.replace(/\n/g, '<br>')}</span>
+        <span class="field-value">${safeData.additionalDetails}</span>
       </div>` : ''}
     </div>
 
@@ -237,6 +273,13 @@ export async function POST(request) {
 
   try {
     const body = await request.json();
+
+    if (!body || typeof body !== 'object' || Array.isArray(body)) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: { form: ['Invalid request payload'] } },
+        { status: 400 }
+      );
+    }
 
     // Verify reCAPTCHA
     const recaptchaValid = await verifyRecaptcha(body.recaptchaToken);
