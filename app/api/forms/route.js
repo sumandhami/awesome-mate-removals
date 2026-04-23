@@ -59,19 +59,37 @@ function sanitizePayload(payload) {
   return cleaned;
 }
 
+function buildFallbackRedirect(request, queryKey) {
+  const requestUrl = new URL(request.url);
+  const fallback = new URL("/", requestUrl.origin);
+  fallback.searchParams.set(queryKey, "1");
+  return fallback;
+}
+
 function getRedirectUrl(request, queryKey) {
   const referer = request.headers.get("referer");
+  const requestUrl = new URL(request.url);
 
   if (!referer) {
-    return new URL(`/?${queryKey}=1`, request.url);
+    return buildFallbackRedirect(request, queryKey);
   }
 
   try {
-    const url = new URL(referer);
-    url.searchParams.set(queryKey, "1");
-    return url;
+    const refererUrl = new URL(referer);
+
+    // Deny-by-default: only allow redirects that stay on this request origin.
+    if (refererUrl.origin !== requestUrl.origin) {
+      return buildFallbackRedirect(request, queryKey);
+    }
+
+    const safeUrl = new URL(
+      `${refererUrl.pathname}${refererUrl.search}${refererUrl.hash}`,
+      requestUrl.origin,
+    );
+    safeUrl.searchParams.set(queryKey, "1");
+    return safeUrl;
   } catch {
-    return new URL(`/?${queryKey}=1`, request.url);
+    return buildFallbackRedirect(request, queryKey);
   }
 }
 
