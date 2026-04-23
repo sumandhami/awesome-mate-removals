@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { Link, NavLink } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   FaBars,
   FaFacebookF,
@@ -16,6 +17,8 @@ import { IoLocationOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const rafIdRef = useRef(null);
+  const pathname = usePathname();
+  const [currentHash, setCurrentHash] = useState("");
 
   const isSticky = useCallback(() => {
     const header = document.querySelector(".header-section");
@@ -52,6 +55,19 @@ const Navbar = () => {
     };
   }, [handleScroll]);
 
+  useEffect(() => {
+    const updateHash = () => {
+      setCurrentHash(window.location.hash || "");
+    };
+
+    updateHash();
+    window.addEventListener("hashchange", updateHash);
+
+    return () => {
+      window.removeEventListener("hashchange", updateHash);
+    };
+  }, [pathname]);
+
   // modal openar
 
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +89,7 @@ const Navbar = () => {
               Unit 5/207 Waterloo Street, Tuart Hill WA 6060
             </p>
             <Link
-              to={"/"}
+              href="/"
               className="font-Poppins text-[15px] text-white sm:flex items-center gap-2 hidden"
             >
               <BsEnvelope size={"18"} />
@@ -146,7 +162,7 @@ const Navbar = () => {
           <div className="flex flex-col lg:flex-row items-center justify-between lg:h-[100px]">
             {/* website Logo */}
             <div className=" w-48 lg:w-52">
-              <Link to="/">
+              <Link href="/">
                 <img
                   src={Logo?.src || Logo}
                   className="hidden lg:block w-full"
@@ -157,7 +173,7 @@ const Navbar = () => {
             {/* small screen size */}
             <div className="px-3 w-full lg:hidden flex justify-between bg-khaki h-[70px] items-center p-3">
               <div className="w-28">
-                <Link to="/">
+                <Link href="/">
                   <img
                     src={Logo?.src || Logo}
                     className="block lg:hidden "
@@ -188,48 +204,48 @@ const Navbar = () => {
                 } text-right lg:w-fit ease-in-out flex-1 lg:flex space-y-2 lg:space-y-0 space-x-0 flex flex-col lg:flex-row capitalize text-base lg:bg-transparent py-3 lg:py-0 font-Poppins font-medium text-white transition-all duration-500`}
               >
                 <li>
-                  <NavLink
-                    to="/#home"
-                    className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
+                  <Link
+                    href="/#home"
+                    className={`${pathname === "/" && (currentHash === "" || currentHash === "#home") ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
                   >
                     Home
-                  </NavLink>
+                  </Link>
                 </li>
                 <li>
-                  <NavLink
-                    className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
-                    to="/#about"
+                  <Link
+                    className={`${pathname === "/" && currentHash === "#about" ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
+                    href="/#about"
                   >
                     About Us
-                  </NavLink>
+                  </Link>
                 </li>
                 <li>
-                  <NavLink
-                    className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
-                    to="/services"
+                  <Link
+                    className={`${pathname === "/services" ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
+                    href="/services"
                   >
                     Our Services
-                  </NavLink>
+                  </Link>
                 </li>
                 <li>
-                  <NavLink
-                    className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
-                    to="/#blog"
+                  <Link
+                    className={`${pathname === "/" && currentHash === "#blog" ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
+                    href="/#blog"
                   >
                     Blog
-                  </NavLink>
+                  </Link>
                 </li>
                 <li>
-                  <NavLink
-                    className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""} text-HeadingColor-0 text-left lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
-                    to="/#contact-form"
+                  <Link
+                    className={`${pathname === "/" && currentHash === "#contact-form" ? "active" : ""} text-HeadingColor-0 text-left lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
+                    href="/#contact-form"
                   >
                     Contact
-                  </NavLink>
+                  </Link>
                 </li>
               </ul>
               <div className="hidden lg:flex items-center">
-                <Link to="/#contact-form" className="header-btn">
+                <Link href="/#contact-form" className="header-btn">
                   Get Free Quote
                 </Link>
               </div>

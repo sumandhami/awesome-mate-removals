@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import callImg from "/images/subscribe-icon.png";
 import footerLogo from "/images/footer-logo.jpg";
 import footerShape from "/images/footer-shape.png";
@@ -113,31 +113,31 @@ const Footer = () => {
             </h4>
             <ul>
               <li>
-                <Link to="/" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link href="/" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     Home
                 </Link>
               </li>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link href="/#about" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     About Us
                 </Link>
               </li>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link href="/services" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     Our Services
                 </Link>
               </li>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link href="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     Projects
                 </Link>
               </li>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1">
+                <Link href="/#contact-form" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1">
                     <FaChevronRight className="text-sm opacity-50" />
                     Contact
                 </Link>
@@ -150,43 +150,43 @@ const Footer = () => {
             </h4>
             <ul>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link href="/services" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     All Services
                 </Link>
               </li>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link href="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     Residential Moving
                 </Link>
               </li>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link href="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     Furniture Removals
                 </Link>
               </li>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link href="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     Commercial Relocation
                 </Link>
               </li>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link href="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     Interstate Removals
                 </Link>
               </li>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
+                <Link href="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
                     <FaChevronRight className="text-sm opacity-50" />
                     Specialty Item Moves
                 </Link>
               </li>
               <li>
-                <Link to="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1">
+                <Link href="#" className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1">
                     <FaChevronRight className="text-sm opacity-50" />
                     Packing and Kitchen Moves
                 </Link>
@@ -279,10 +279,10 @@ const Footer = () => {
             </a>
           </p>
           <div className="flex justify-center gap-6 mt-3">
-            <Link to="#" className="font-Poppins text-[#B9BBD2] hover:text-PrimaryColor-0 transition-all duration-300">
+            <Link href="#" className="font-Poppins text-[#B9BBD2] hover:text-PrimaryColor-0 transition-all duration-300">
               Privacy Policy
             </Link>
-            <Link to="#" className="font-Poppins text-[#B9BBD2] hover:text-PrimaryColor-0 transition-all duration-300">
+            <Link href="#" className="font-Poppins text-[#B9BBD2] hover:text-PrimaryColor-0 transition-all duration-300">
               Terms
             </Link>
           </div>
