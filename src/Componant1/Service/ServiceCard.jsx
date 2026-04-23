@@ -1,5 +1,25 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import Link from "next/link";
+
+const ACTIVE_ROUTE_HREFS = new Set([
+  "/",
+  "/services",
+  "/blog/how-to-move-heavy-furniture-without-damage",
+]);
+
+const normalizeActiveRouteHref = (href, fallbackHref) => {
+  if (typeof href !== "string" || !href.trim()) {
+    return fallbackHref;
+  }
+
+  try {
+    const parsedUrl = new URL(href.trim(), "https://local.internal");
+    const normalizedPath = parsedUrl.pathname.replace(/\/+$/, "") || "/";
+    return ACTIVE_ROUTE_HREFS.has(normalizedPath) ? normalizedPath : fallbackHref;
+  } catch {
+    return fallbackHref;
+  }
+};
 
 const ServiceCard = ({
   serviceThumb,
@@ -13,6 +33,8 @@ const ServiceCard = ({
   buttonContent,
   buttonIcon,
 }) => {
+  const normalizedServiceHref = normalizeActiveRouteHref(serviceUrl, "/services");
+
   return (
     <div className="group">
       <div>
@@ -45,7 +67,7 @@ const ServiceCard = ({
             </li>
           ) : null}
         </ul>
-        <Link to={serviceUrl} className="text-white font-medium font-Inter flex items-center gap-2">
+        <Link href={normalizedServiceHref} className="text-white font-medium font-Inter flex items-center gap-2">
             {buttonContent}
             {buttonIcon}
         </Link>
