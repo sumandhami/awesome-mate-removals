@@ -1,0 +1,187 @@
+plan_id: scalability-governance-2026-04-24
+objective: Phase 3 scalability and governance focused on SEO parity and delivery governance only
+created_at: 2026-04-24T00:00:00Z
+created_by: gem-planner (GPT-5.3-Codex)
+status: completed
+research_confidence: high
+
+tldr: |
+  Deliver Phase 3 as three narrow, commit-sized tasks limited to SEO parity and PR delivery governance.
+  Scope is strictly restricted to implemented canonical routes only: /, /services,
+  and /blog/how-to-move-heavy-furniture-without-damage.
+  Explicit rule for all tasks: no unrelated refactors, no functional expansion, and no out-of-scope route edits.
+open_questions:
+  - Should governance checklist adoption be required for all future remediation PRs or only migration-labeled PRs?
+
+pre_mortem:
+  overall_risk_level: low
+  critical_failure_modes:
+    - scenario: Sitemap and metadata edits accidentally include non-implemented routes, reintroducing SEO drift.
+      likelihood: medium
+      impact: high
+      mitigation: Enforce implemented-route allowlist checks in task acceptance and PR checklist.
+    - scenario: PR governance template is added but not consistently used by contributors.
+      likelihood: medium
+      impact: medium
+      mitigation: Add explicit required checklist items and review gate language in template.
+  assumptions:
+    - Active implemented route set remains unchanged for this phase: /, /services, /blog/how-to-move-heavy-furniture-without-damage.
+    - Prior phases (security, routing, performance) are already complete and stable.
+    - This phase must not introduce route features, redesigns, or structural refactors.
+
+implementation_specification:
+  code_structure: Keep existing App Router structure and perform minimal, safe content/governance adjustments only in sitemap, metadata surfaces, and PR template files.
+  affected_areas:
+    - app/sitemap.js
+    - app/layout.jsx
+    - app/(main)/layout.jsx
+    - app/(main)/page.jsx
+    - app/(main)/services/page.jsx
+    - app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx
+    - .github/PULL_REQUEST_TEMPLATE.md
+  component_details:
+    - component: Sitemap canonical route source
+      responsibility: Ensure sitemap output includes only implemented canonical routes and excludes non-implemented paths.
+      interfaces:
+        - app/sitemap.js route entries and metadata fields
+    - component: Route metadata parity
+      responsibility: Standardize title/description/canonical semantics across implemented routes with minimal safe updates only.
+      interfaces:
+        - Metadata declarations in active route pages/layouts
+    - component: PR governance checklist
+      responsibility: Enforce narrow scope, acceptance checks, rollback notes, and explicit prohibition of unrelated refactors.
+      interfaces:
+        - .github/PULL_REQUEST_TEMPLATE.md checklist and reviewer gate text
+  dependencies:
+    - component: Route metadata parity
+      relationship: Depends on sitemap canonical route alignment so metadata standardization references the same implemented route set.
+    - component: PR governance checklist
+      relationship: Depends on finalized SEO parity conventions to encode the exact guardrails in PR workflow.
+  integration_points:
+    - Sitemap generation entry point in app/sitemap.js
+    - Route-level metadata declarations for /, /services, and /blog/how-to-move-heavy-furniture-without-damage
+    - Repository PR process via .github/PULL_REQUEST_TEMPLATE.md
+
+tasks:
+  - id: task-301
+    title: Align sitemap to implemented canonical routes only
+    description: |
+      Update sitemap generation to include only implemented canonical routes and remove any non-implemented route entries.
+      Scope is strictly limited to the active canonical route allowlist: /, /services,
+      and /blog/how-to-move-heavy-furniture-without-damage.
+      Explicit rule: no unrelated refactors, no additional route generation logic, and no content redesign.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies: []
+    context_files:
+      - app/sitemap.js: Restrict sitemap entries to implemented canonical routes only.
+      - app/(main)/page.jsx: Validate homepage route presence in canonical allowlist.
+      - app/(main)/services/page.jsx: Validate services route presence in canonical allowlist.
+    estimated_effort: small
+    estimated_files: 2
+    estimated_lines: 80
+    focus_area: sitemap SEO parity
+    verification:
+      - Confirm sitemap output contains exactly three URLs for implemented canonical routes.
+      - Confirm no non-implemented routes appear in sitemap output.
+      - Run npm run build and validate sitemap route generation remains functional.
+    acceptance_criteria:
+      - Sitemap includes only /, /services, and /blog/how-to-move-heavy-furniture-without-damage.
+      - Sitemap canonical entries align with currently implemented and indexable routes.
+      - No unrelated refactors are present in the commit.
+    rollback_note: |
+      Revert only the sitemap-alignment commit if search console or crawl validation indicates missing canonical route coverage.
+      Rollback trigger: incorrect sitemap output or route omission for any implemented canonical route.
+    failure_modes:
+      - scenario: Route filtering logic removes a valid implemented route due to path normalization mismatch.
+        likelihood: medium
+        impact: high
+        mitigation: Use an explicit static allowlist for this phase and verify generated output before merge.
+    tech_stack:
+      - Next.js App Router
+      - Sitemap route handler conventions
+    test_coverage: Sitemap output verification and build smoke check.
+
+  - id: task-302
+    title: Standardize metadata consistency for implemented routes with minimal safe updates
+    description: |
+      Apply minimal safe metadata updates so implemented routes share consistent title, description,
+      and canonical semantics across /, /services, and /blog/how-to-move-heavy-furniture-without-damage.
+      Do not alter route behavior, page composition, or unrelated content fields.
+      Explicit rule: no unrelated refactors, no global metadata redesign, and no out-of-scope route edits.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies:
+      - task-301
+    context_files:
+      - app/layout.jsx: Validate global metadata defaults do not conflict with route-level canonical semantics.
+      - app/(main)/services/page.jsx: Standardize route metadata fields to parity baseline.
+      - app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx: Standardize route metadata fields to parity baseline.
+    estimated_effort: small
+    estimated_files: 3
+    estimated_lines: 120
+    focus_area: route metadata parity
+    verification:
+      - Confirm each implemented route has consistent title/description/canonical semantics.
+      - Confirm canonical values resolve to implemented route URLs only.
+      - Run npm run build and perform manual head metadata spot checks on all three routes.
+    acceptance_criteria:
+      - Metadata for /, /services, and /blog/how-to-move-heavy-furniture-without-damage is consistent and complete.
+      - Canonical semantics are aligned to implemented routes without duplicate indexing signals.
+      - No unrelated refactors are present in the commit.
+    rollback_note: |
+      Revert only the metadata-standardization commit if metadata regressions affect indexing signals or route head rendering.
+      Rollback trigger: incorrect canonical tags, missing essential metadata, or build/runtime metadata errors.
+    failure_modes:
+      - scenario: Metadata merge precedence causes route-level values to be overridden by layout defaults.
+        likelihood: medium
+        impact: medium
+        mitigation: Verify final rendered metadata per route and keep changes minimal to explicit route-level fields.
+    tech_stack:
+      - Next.js Metadata API
+      - App Router layouts/pages
+    test_coverage: Build verification plus manual route-level metadata checks for the three implemented routes.
+
+  - id: task-303
+    title: Add PR governance checklist template enforcing narrow scope and no unrelated refactors
+    description: |
+      Add or update PR checklist template to enforce governance for remediation delivery.
+      Checklist must require: narrow single-purpose scope, explicit acceptance checks,
+      rollback notes, and explicit confirmation that no unrelated refactors are included.
+      Scope is governance-only and must not include code behavior changes.
+    agent: gem-documentation-writer
+    priority: medium
+    status: completed
+    dependencies:
+      - task-302
+    context_files:
+      - .github/PULL_REQUEST_TEMPLATE.md: Add required governance checklist and reviewer gate statements.
+      - .github/PRD.md: Align checklist language with FR-010 and NFR-005 delivery governance requirements.
+    estimated_effort: small
+    estimated_files: 1
+    estimated_lines: 70
+    focus_area: delivery governance guardrails
+    verification:
+      - Confirm template includes required items for scope boundary, acceptance checks, rollback notes, and no unrelated refactors.
+      - Confirm checklist language is specific to implemented-route remediation workflow.
+      - Validate template renders correctly in GitHub PR creation flow.
+    acceptance_criteria:
+      - PR template contains a mandatory checklist with explicit no unrelated refactor rule.
+      - Checklist requires contributors to document acceptance checks and rollback notes.
+      - Governance template change contains no unrelated project file modifications.
+    rollback_note: |
+      Revert only the PR-template governance commit if workflow friction blocks emergency fixes,
+      then reintroduce a simplified checklist in a follow-up governance-only commit.
+    failure_modes:
+      - scenario: Checklist language is too generic and fails to enforce narrow scope in practice.
+        likelihood: medium
+        impact: medium
+        mitigation: Use explicit yes/no checklist items tied to implemented-route scope and reviewer rejection conditions.
+    audience: developers
+    coverage_matrix:
+      - Scope boundary declaration (single-purpose PR)
+      - Acceptance checks provided and reproducible
+      - Rollback notes included
+      - Explicit no unrelated refactors attestation
