@@ -23,6 +23,21 @@ npm run lint:strict
 npm run ci
 ```
 
+## Lighthouse (Production-Only)
+
+Run Lighthouse audits against a production build only (never `next dev`):
+
+```bash
+npm run lighthouse:prod:desktop
+npm run lighthouse:prod:mobile
+```
+
+Run both in sequence:
+
+```bash
+npm run lighthouse:prod
+```
+
 ## Environment Variables
 
 Use these environment file rules to avoid deployment and security issues:

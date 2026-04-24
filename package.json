@@ -11,6 +11,9 @@
     "lint:strict": "eslint . --max-warnings 0",
     "audit": "npm audit --audit-level=high",
     "lhci": "lhci autorun --config=./lighthouserc.json",
+    "lighthouse:prod:desktop": "npm run build && start-server-and-test \"npm run start\" http://127.0.0.1:3000 \"npx lighthouse http://127.0.0.1:3000 --preset=desktop --output=json --output-path=./lighthouse-report-desktop.json --quiet --chrome-flags='--headless'\"",
+    "lighthouse:prod:mobile": "npm run build && start-server-and-test \"npm run start\" http://127.0.0.1:3000 \"npx lighthouse http://127.0.0.1:3000 --output=json --output-path=./lighthouse-report-mobile.json --quiet --chrome-flags='--headless'\"",
+    "lighthouse:prod": "npm run lighthouse:prod:desktop && npm run lighthouse:prod:mobile",
     "ci": "npm run lint:strict && npm run build && npm run audit"
   },
   "dependencies": {
