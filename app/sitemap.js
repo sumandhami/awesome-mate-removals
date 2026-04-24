@@ -1,25 +1,7 @@
 const routes = [
   "",
-  "/about-us",
   "/services",
-  "/services/floor-cleaning",
-  "/services/house-cleaning",
-  "/services/office-cleaning",
-  "/services/cleaning-specialist",
-  "/services/window-cleaning",
-  "/services/kitchen-cleaning",
-  "/pricing",
-  "/projects",
-  "/projects/house-floor-cleaning",
-  "/team",
-  "/testimonials",
-  "/appointment",
-  "/blog/grid",
-  "/blog/list",
   "/blog/how-to-move-heavy-furniture-without-damage",
-  "/contact",
-  "/privacy-policy",
-  "/terms-and-conditions",
 ];
 
 export default function sitemap() {
