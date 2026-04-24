@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import Image from "next/image";
 import Link from "next/link";
 
 const ACTIVE_ROUTE_HREFS = new Set([
@@ -26,11 +27,20 @@ const BlogCard = ({blogThumb,thumbDate,thumbMonth,blogUrl,blogTitle,blogDesc,btn
       blogUrl,
       "/blog/how-to-move-heavy-furniture-without-damage",
     );
+    const blogThumbSrc = typeof blogThumb === "string" ? blogThumb : blogThumb?.src;
 
     return (
       <div className="bg-[#f3f4f8] group transition-all duration-500 hover:bg-white hover:shadow-cases rounded-md">
         <div className="relative overflow-hidden rounded-md aspect-[41/30]">
-          <img src={blogThumb?.src || blogThumb} className="transition-all duration-500 scale-100 group-hover:scale-110 w-full h-full object-cover" alt={blogTitle} loading="lazy" decoding="async" />
+          <Image
+            src={blogThumbSrc}
+            alt={blogTitle}
+            width={820}
+            height={600}
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 430px, 430px"
+            className="transition-all duration-500 scale-100 group-hover:scale-110 w-full h-full object-cover"
+          />
           <div className="absolute left-5 bottom-4">
             <h6 className="font-Inter font-semibold text-2xl text-center inline-block overflow-hidden rounded px-5 py-[10px] text-HeadingColor-0 transition-all duration-500 group-hover:text-white bg-PrimaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:-z-10 before:scale-0 group-hover:before:scale-100">
               {thumbDate}
