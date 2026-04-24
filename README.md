@@ -53,6 +53,7 @@ Current required variables are documented in `.env.example`.
 ## Security Notes
 
 - Do not hardcode secrets in source files.
+- CSP is environment-aware: development allows HMR requirements (`'unsafe-eval'`, `ws:`/`wss:`), while production keeps a strict CSP and does not allow `'unsafe-eval'`.
 - Form handling is implemented in `app/api/forms/route.js` with validation and rate limiting.
 - No middleware/proxy file is currently configured; access control is route-based.
 - Keep `.env`, `.env.local`, and `.env.test` out of version control.

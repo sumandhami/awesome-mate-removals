@@ -3,6 +3,28 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const isProduction = process.env.NODE_ENV === "production";
+
+const cspDirectives = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${
+    isProduction ? "" : " 'unsafe-eval'"
+  } https://www.google.com https://www.gstatic.com https://www.recaptcha.net`,
+  "script-src-elem 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://www.recaptcha.net",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data: https://fonts.gstatic.com",
+  `connect-src 'self'${
+    isProduction ? "" : " ws: wss:"
+  } https://www.google.com https://www.gstatic.com https://www.recaptcha.net`,
+  "frame-src https://www.google.com https://www.recaptcha.net",
+  "media-src 'self' data: https://commondatastorage.googleapis.com",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+];
+
+const csp = cspDirectives.join("; ");
 
 const securityHeaders = [
   {
@@ -23,8 +45,7 @@ const securityHeaders = [
   },
   {
     key: "Content-Security-Policy",
-    value:
-      "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://www.recaptcha.net; script-src-elem 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://www.recaptcha.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://www.google.com https://www.gstatic.com https://www.recaptcha.net; frame-src https://www.google.com https://www.recaptcha.net; media-src 'self' data: https://commondatastorage.googleapis.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+    value: csp,
   },
 ];
 
