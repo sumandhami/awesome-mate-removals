@@ -17,43 +17,50 @@ import { IoLocationOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const rafIdRef = useRef(null);
+  const stickyStateRef = useRef(false);
   const pathname = usePathname();
   const [currentHash, setCurrentHash] = useState("");
 
   const isSticky = useCallback(() => {
     const header = document.querySelector(".header-section");
-    const scrollTop = window.scrollY;
     if (!header) {
       return;
     }
 
-    if (scrollTop >= 250) {
-      header.classList.add("is-sticky");
-    } else {
-      header.classList.remove("is-sticky");
+    const nextStickyState = window.scrollY >= 250;
+    if (nextStickyState === stickyStateRef.current) {
+      return;
     }
+
+    stickyStateRef.current = nextStickyState;
+    header.classList.toggle("is-sticky", nextStickyState);
   }, []);
 
-  // RAF-debounced scroll handler for better performance
+  // Ensure only one scroll computation runs per animation frame.
   const handleScroll = useCallback(() => {
-    if (rafIdRef.current) {
-      cancelAnimationFrame(rafIdRef.current);
+    if (rafIdRef.current !== null) {
+      return;
     }
-    rafIdRef.current = requestAnimationFrame(isSticky);
+
+    rafIdRef.current = requestAnimationFrame(() => {
+      isSticky();
+      rafIdRef.current = null;
+    });
   }, [isSticky]);
 
   //sticky
 
   useEffect(() => {
+    isSticky();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (rafIdRef.current) {
+      if (rafIdRef.current !== null) {
         cancelAnimationFrame(rafIdRef.current);
         rafIdRef.current = null;
       }
     };
-  }, [handleScroll]);
+  }, [handleScroll, isSticky]);
 
   useEffect(() => {
     const updateHash = () => {

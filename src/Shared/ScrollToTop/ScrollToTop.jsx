@@ -1,23 +1,44 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { FaArrowUpLong } from "react-icons/fa6";
 
 const ScrollToTop = () => {
   const [showScroll, setShowScroll] = useState(false);
+  const rafIdRef = useRef(null);
+  const showScrollRef = useRef(false);
+
+  const updateScrollState = useCallback(() => {
+    const nextShowScroll = window.scrollY > 300;
+    if (nextShowScroll === showScrollRef.current) {
+      return;
+    }
+
+    showScrollRef.current = nextShowScroll;
+    setShowScroll(nextShowScroll);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowScroll(true);
-      } else {
-        setShowScroll(false);
+      if (rafIdRef.current !== null) {
+        return;
       }
+
+      rafIdRef.current = requestAnimationFrame(() => {
+        updateScrollState();
+        rafIdRef.current = null;
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
     };
-  }, []);
+  }, [updateScrollState]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
