@@ -16,6 +16,7 @@ export const metadata = {
     description: articleDescription,
     type: "article",
     url: `/blog/${slug}`,
+    siteName: "Awesome Mate Removals",
   },
 };
 

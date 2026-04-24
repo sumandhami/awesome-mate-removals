@@ -4,6 +4,16 @@ import { homeFaqs, homeReviews } from "@/src/data/homepageContent";
 export const metadata = {
   title: "Home",
   description: "Homepage for Awesome Mate Removals, Perth moving and relocation services.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Awesome Mate Removals",
+    description:
+      "Homepage for Awesome Mate Removals, Perth moving and relocation services.",
+    url: "/",
+    type: "website",
+  },
 };
 
 export default function MainLayout({ children }) {

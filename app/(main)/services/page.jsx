@@ -7,6 +7,13 @@ export const metadata = {
   alternates: {
     canonical: "/services",
   },
+  openGraph: {
+    title: "Our Services",
+    description:
+      "Explore Perth removalist services from Awesome Mate Removals including residential, furniture, commercial, interstate, and specialty item moves.",
+    url: "/services",
+    type: "website",
+  },
 };
 
 export default function Page() {
