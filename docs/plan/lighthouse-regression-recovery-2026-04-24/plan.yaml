@@ -1,0 +1,313 @@
+plan_id: lighthouse-regression-recovery-2026-04-24
+objective: Recover Lighthouse regressions with commit-sized, low-risk fixes and validated post-fix audit deltas.
+created_at: 2026-04-24T00:00:00Z
+created_by: gem-planner (GPT-5.3-Codex)
+status: completed
+research_confidence: high
+
+tldr: |
+  Execute five strictly ordered, commit-sized remediation tasks to recover severe Lighthouse regressions.
+  Each task is intentionally narrow, avoids unrelated refactors, and includes rollback guidance to prevent breakage.
+  Audits must run against production build/start only, never against development server.
+open_questions:
+  - None.
+
+pre_mortem:
+  overall_risk_level: medium
+  critical_failure_modes:
+    - scenario: Lighthouse runs continue against development server, producing noisy and non-actionable regressions.
+      likelihood: medium
+      impact: high
+      mitigation: Gate all audit scripts to require production start mode and document exact run sequence.
+    - scenario: CSP changes remove production protections while trying to suppress development HMR console noise.
+      likelihood: medium
+      impact: critical
+      mitigation: Make CSP explicitly environment-aware; keep strict production directives unchanged or tighter.
+    - scenario: Runtime guard changes alter user-visible behavior or silently disable integrations.
+      likelihood: low
+      impact: medium
+      mitigation: Limit changes to defensive guards around unsafe global accesses and verify core flows manually.
+  assumptions:
+    - Active route scope remains limited to /, /services, and /blog/how-to-move-heavy-furniture-without-damage.
+    - Existing severe baseline is represented by lighthouse-report-desktop.json and lighthouse-report-mobile.json.
+    - Remediation work follows one commit per task with no unrelated file churn.
+
+implementation_specification:
+  code_structure: Keep current architecture; apply minimal, isolated changes in scripts/config and active-route components only.
+  affected_areas:
+    - package.json
+    - next.config.mjs
+    - app/(main)/page.jsx
+    - app/(main)/services/page.jsx
+    - app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx
+    - src/Componant1
+    - docs/plan/lighthouse-regression-recovery-2026-04-24
+  component_details:
+    - component: Lighthouse audit workflow
+      responsibility: Ensure reproducible production-only Lighthouse execution and recorded evidence.
+      interfaces:
+        - npm scripts for build/start/audit sequence
+        - audit usage notes for repeatable local runs
+    - component: Environment-aware CSP
+      responsibility: Preserve strict production CSP while preventing expected development HMR CSP noise from polluting diagnostics.
+      interfaces:
+        - next.config.mjs headers/CSP policy generation logic
+    - component: Active-route runtime safety/performance guards
+      responsibility: Reduce event overhead and prevent client runtime crashes from unsafe window/document/recaptcha access.
+      interfaces:
+        - active-route client components using scroll listeners
+        - client-only integrations touching window, document, or grecaptcha
+  dependencies:
+    - component: Environment-aware CSP
+      relationship: Depends on stabilized Lighthouse methodology to ensure valid before/after comparisons.
+    - component: Active-route scroll overhead reduction
+      relationship: Depends on CSP/environment stabilization to avoid confounded runtime error signals.
+    - component: Client-only runtime guards
+      relationship: Depends on scroll overhead hardening to keep commits isolated and easy to revert.
+    - component: Post-fix Lighthouse rerun and delta summary
+      relationship: Depends on all remediation tasks completing in sequence.
+  integration_points:
+    - npm audit command flow in package scripts
+    - security headers generation in Next configuration
+    - active-route component lifecycle hooks and client-only code paths
+
+tasks:
+  - id: task-401
+    title: Stabilize Lighthouse audit methodology and scripts
+    description: |
+      Ensure all Lighthouse runs execute against production build/start and produce reproducible results.
+      Add or refine scripts and short documentation for exact run order so future audits are comparable.
+      Keep scope tight to audit methodology only.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies: []
+    context_files:
+      - package.json: Add or normalize scripts for build, start, and Lighthouse execution in production mode.
+      - README.md: Document exact audit sequence and required preconditions.
+      - lighthouse-report-mobile.json: Treat as baseline input reference for delta comparison.
+    estimated_effort: small
+    estimated_files: 3
+    estimated_lines: 120
+    focus_area: audit reproducibility
+    scope_files:
+      - package.json
+      - README.md
+      - lighthouse-report-desktop.json
+      - lighthouse-report-mobile.json
+    acceptance_checks:
+      - Lighthouse command fails fast or warns when development mode is used.
+      - Documented command sequence successfully produces production-mode reports.
+      - No runtime/application code changed outside audit scripts/docs.
+    verification:
+      - Run production build and start, then run Lighthouse scripts for desktop and mobile profiles.
+      - Confirm generated reports include expected URL/profile metadata and no dev-server markers.
+    acceptance_criteria:
+      - Team can execute a deterministic production-only Lighthouse flow from scripts/docs.
+      - Baseline reports remain traceable for later delta summaries.
+    rollback_note: |
+      If script changes break local workflow, revert this commit only and restore previous npm script definitions.
+      Do not revert later functional fixes when rolling back methodology edits.
+    commit_message_recommendation: "chore(lighthouse): enforce production-only audit workflow and document run sequence"
+    failure_modes:
+      - scenario: Script updates accidentally run against dev server due to fallback command behavior.
+        likelihood: medium
+        impact: high
+        mitigation: Explicitly chain build then start with environment checks and clear script naming.
+    tech_stack:
+      - Next.js
+      - Lighthouse CLI
+      - npm scripts
+    test_coverage: Manual audit execution sanity checks in production mode.
+
+  - id: task-402
+    title: Add environment-aware CSP for development and production
+    description: |
+      Implement CSP branching by environment so development can operate without noisy HMR CSP console errors,
+      while production remains strict and security-first.
+      Keep change limited to header policy generation logic.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies:
+      - task-401
+    context_files:
+      - next.config.mjs: Introduce environment-aware CSP generation for dev versus production.
+      - README.md: Add a brief policy note describing dev and prod CSP intent.
+      - lighthouse-report-desktop.json: Reference baseline context for post-change audit impact.
+    estimated_effort: small
+    estimated_files: 2
+    estimated_lines: 90
+    focus_area: CSP correctness by environment
+    scope_files:
+      - next.config.mjs
+      - README.md
+    acceptance_checks:
+      - Development server no longer emits avoidable CSP/HMR eval noise.
+      - Production CSP remains strict and does not widen script execution policy beyond required sources.
+      - Contact/recaptcha flow still loads in both development and production.
+    verification:
+      - Validate headers in development and production responses.
+      - Exercise contact form and recaptcha path in both environments.
+    acceptance_criteria:
+      - CSP behavior is explicitly environment-aware and secure by default in production.
+      - No unrelated security/header refactors are introduced.
+    rollback_note: |
+      If CSP causes blocked critical resources in production, revert this commit and restore prior CSP immediately,
+      then re-apply with narrower scoped adjustments.
+    commit_message_recommendation: "fix(security): make CSP environment-aware while preserving strict production policy"
+    failure_modes:
+      - scenario: Dev-focused allowance leaks into production header generation.
+        likelihood: medium
+        impact: critical
+        mitigation: Branch on NODE_ENV explicitly and verify production response headers before merge.
+    tech_stack:
+      - Next.js headers configuration
+      - CSP policy directives
+    test_coverage: Header inspection and contact-form runtime smoke checks.
+
+  - id: task-403
+    title: Reduce active-route runtime overhead from scroll listeners
+    description: |
+      Apply lightweight throttling/debouncing and minimal guardrails only where active-route components
+      attach scroll listeners. Keep behavior unchanged while lowering main-thread pressure.
+      No broad refactor of event architecture.
+    agent: gem-implementer
+    priority: medium
+    status: completed
+    dependencies:
+      - task-402
+    context_files:
+      - app/(main)/page.jsx: Verify active-route component mounting path for homepage listeners.
+      - app/(main)/services/page.jsx: Confirm services-route listener points.
+      - src/Componant1: Apply narrowly scoped listener overhead safeguards in active components.
+    estimated_effort: medium
+    estimated_files: 3
+    estimated_lines: 140
+    focus_area: main-thread runtime overhead
+    scope_files:
+      - app/(main)/page.jsx
+      - app/(main)/services/page.jsx
+      - src/Componant1/Support/Support.jsx
+      - src/Componant1/Navbar/Navbar.jsx
+    acceptance_checks:
+      - Scroll handlers on active routes run at reduced invocation frequency.
+      - No visible regressions in sticky/header/scroll-dependent UI behavior.
+      - No changes outside active-route components.
+    verification:
+      - Manual interaction checks for scroll-driven UI on homepage and services route.
+      - Compare profiler timeline or Lighthouse diagnostics for reduced long-task pressure.
+    acceptance_criteria:
+      - Active-route listener overhead is reduced with minimal code footprint.
+      - UX parity is preserved for all scroll-dependent interactions in scope.
+    rollback_note: |
+      If any scroll-driven UI behavior regresses, revert this commit only and restore prior listeners,
+      then reintroduce throttling with smaller targeted adjustments.
+    commit_message_recommendation: "perf(active-routes): throttle scroll listeners to reduce runtime overhead"
+    failure_modes:
+      - scenario: Debounce/throttle delay makes navigation/header behavior feel laggy.
+        likelihood: medium
+        impact: medium
+        mitigation: Use conservative intervals and verify interactive behavior before merge.
+    tech_stack:
+      - React hooks
+      - Browser event listeners
+      - Lighthouse diagnostics
+    test_coverage: Manual UI regression checks plus Lighthouse runtime metric comparison.
+
+  - id: task-404
+    title: Harden client-only guards around recaptcha and browser globals
+    description: |
+      Add defensive guards around recaptcha, window, and document access points that can throw runtime errors
+      during SSR/hydration or transient client states.
+      Keep behavior intact and avoid broad restructuring.
+    agent: gem-implementer
+    priority: medium
+    status: completed
+    dependencies:
+      - task-403
+    context_files:
+      - components/ContactForm/ContactForm.jsx: Guard recaptcha and global object access in client lifecycle.
+      - app/api/contact/route.js: Confirm client-side guard changes do not alter expected API contract.
+      - app/api/forms/route.js: Confirm no behavioral change in submission path assumptions.
+    estimated_effort: small
+    estimated_files: 3
+    estimated_lines: 110
+    focus_area: runtime safety
+    scope_files:
+      - components/ContactForm/ContactForm.jsx
+      - components/ContactForm/Step1.jsx
+      - components/ContactForm/Step2.jsx
+      - src/components/ContactForm/ContactForm.jsx
+    acceptance_checks:
+      - No runtime errors from undefined window/document/grecaptcha access during page load and form interaction.
+      - Recaptcha-protected submission path remains functional.
+      - No API schema or server route behavior changes introduced.
+    verification:
+      - Manual form submission attempt in development and production start.
+      - Console check confirms absence of global-access runtime exceptions.
+    acceptance_criteria:
+      - Client-only integrations fail safely instead of crashing.
+      - Functional behavior of contact flow is unchanged.
+    rollback_note: |
+      If form submission or recaptcha stops functioning, revert this commit only and restore prior guard logic,
+      then reapply with narrower conditional checks.
+    commit_message_recommendation: "fix(runtime): add safe client-only guards for recaptcha and browser globals"
+    failure_modes:
+      - scenario: Overly strict guards prevent recaptcha execution in valid client state.
+        likelihood: low
+        impact: medium
+        mitigation: Gate only on object availability and ready state, then validate with real form flow.
+    tech_stack:
+      - React client components
+      - reCAPTCHA client integration
+      - Next.js App Router
+    test_coverage: Contact-form smoke tests and runtime console validation.
+
+  - id: task-405
+    title: Run post-fix Lighthouse audits and publish delta summary
+    description: |
+      Execute desktop and mobile Lighthouse audits using the stabilized production-only method,
+      then record and summarize deltas against provided baseline targets from the current report set.
+      Keep this commit focused on evidence artifacts and summary only.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies:
+      - task-404
+    context_files:
+      - lighthouse-report-desktop.json: Baseline and post-fix comparison source.
+      - lighthouse-report-mobile.json: Baseline and post-fix comparison source.
+      - docs/plan/lighthouse-regression-recovery-2026-04-24/plan.yaml: Capture completion evidence references.
+    estimated_effort: small
+    estimated_files: 3
+    estimated_lines: 160
+    focus_area: objective verification
+    scope_files:
+      - lighthouse-report-desktop.json
+      - lighthouse-report-mobile.json
+      - docs/plan/lighthouse-regression-recovery-2026-04-24
+    acceptance_checks:
+      - New desktop and mobile reports are generated from production run path only.
+      - Delta summary clearly compares key metrics against provided baseline targets/values.
+      - Evidence indicates no functional breakage from tasks 401-404.
+    verification:
+      - Re-run Lighthouse for desktop and mobile profiles using production scripts.
+      - Produce concise metric table for LCP, FCP, TBT, TTI, CLS, and category scores.
+    acceptance_criteria:
+      - Post-fix evidence package is complete, reproducible, and attributable to scoped fixes.
+      - Regression recovery status is explicit, including remaining gaps if any.
+    rollback_note: |
+      If audit evidence is inconsistent or non-reproducible, revert this documentation/report commit only,
+      regenerate reports with the approved script flow, and recommit.
+    commit_message_recommendation: "chore(lighthouse): capture post-fix reports and summarize desktop/mobile deltas"
+    failure_modes:
+      - scenario: Post-fix audits use mixed environments and produce misleading deltas.
+        likelihood: medium
+        impact: high
+        mitigation: Enforce production-only runbook and record exact commands used in summary artifact.
+    tech_stack:
+      - Lighthouse CLI
+      - JSON report artifacts
+      - Markdown summary reporting
+    test_coverage: Reproducibility check by rerunning one profile with identical command sequence.
