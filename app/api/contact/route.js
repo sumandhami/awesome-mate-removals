@@ -6,7 +6,8 @@ const WINDOW_MS = 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 20;
 const ipRateMap = new Map();
 
-const CONTACT_EMAIL = 'info@awesomemateremovals.com.au';
+const CONTACT_EMAIL = process.env.CONTACT_EMAIL_TO || 'info@awesomemateremovals.com.au';
+const CONTACT_FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
 
 function shouldFailOpenOnEmailError() {
   if (process.env.CONTACT_EMAIL_FAIL_OPEN === 'true') {
@@ -342,7 +343,7 @@ export async function POST(request) {
     if (resend) {
       try {
         const emailResult = await resend.emails.send({
-          from: 'Contact Form <onboarding@resend.dev>',
+          from: `Contact Form <${CONTACT_FROM_EMAIL}>`,
           to: CONTACT_EMAIL,
           replyTo: sanitized.email,
           subject: `New Contact Form Submission from ${sanitized.name}`,
