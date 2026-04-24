@@ -1,7 +1,7 @@
 'use client';
 
 import { Controller } from 'react-hook-form';
-import { useEffect, useRef } from 'react';
+import Script from 'next/script';
 
 export default function Step2({
   control,
@@ -10,31 +10,10 @@ export default function Step2({
   onBack,
   onSubmit,
   isSubmitting,
-  recaptchaEnabled,
+  turnstileEnabled,
 }) {
-  const recaptchaLoaded = useRef(false);
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
   const propertyType = watch('propertyType');
-
-  useEffect(() => {
-    const canUseBrowserGlobals =
-      typeof window !== 'undefined' && typeof document !== 'undefined';
-
-    if (!recaptchaEnabled || !canUseBrowserGlobals) {
-      return undefined;
-    }
-
-    // Load the reCAPTCHA v3 script early so submit can request a token immediately.
-    if (!window.grecaptcha && !recaptchaLoaded.current) {
-      const script = document.createElement('script');
-      script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
-      script.async = true;
-      script.defer = true;
-      document.head.appendChild(script);
-      recaptchaLoaded.current = true;
-    }
-
-    return undefined;
-  }, [recaptchaEnabled]);
 
   return (
     <div className="space-y-4">
@@ -240,7 +219,25 @@ export default function Step2({
         )}
       />
 
-      {/* reCAPTCHA v3 loads invisibly on submit; no widget is rendered here. */}
+      {turnstileEnabled && turnstileSiteKey ? (
+        <>
+          <Script
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+            async
+            defer
+            strategy="afterInteractive"
+          />
+          <div className="flex justify-center pt-2">
+            <div
+              className="cf-turnstile"
+              data-sitekey={turnstileSiteKey}
+              data-callback="onTurnstileSuccess"
+              data-expired-callback="onTurnstileExpired"
+              data-error-callback="onTurnstileError"
+            />
+          </div>
+        </>
+      ) : null}
 
       {/* Buttons */}
       <div className="flex gap-3 pt-4">

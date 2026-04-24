@@ -6,7 +6,7 @@ const WINDOW_MS = 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 20;
 const ipRateMap = new Map();
 
-const CONTACT_EMAIL = 'sdhami934@gmail.com';
+const CONTACT_EMAIL = 'info@awesomemateremovals.com.au';
 
 // Initialize Resend client only when API key is available
 const getResendClient = () => {
@@ -59,38 +59,51 @@ function sanitizePayload(payload) {
   return cleaned;
 }
 
-async function verifyRecaptcha(token) {
-  const isRecaptchaRequired =
-    process.env.NODE_ENV === 'production' &&
-    process.env.RECAPTCHA_ENABLED === 'true';
+function getTurnstileSecret() {
+  return (
+    process.env.TURNSTILE_SECRET_KEY ||
+    process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY ||
+    process.env.Cloudflare_turnstile_secret_key ||
+    ''
+  );
+}
 
-  if (!isRecaptchaRequired) {
+async function verifyTurnstile(token, ip) {
+  const isTurnstileRequired =
+    process.env.NODE_ENV === 'production' &&
+    process.env.TURNSTILE_ENABLED === 'true';
+
+  if (!isTurnstileRequired) {
     return true;
   }
 
-  if (!process.env.RECAPTCHA_SECRET_KEY) {
-    console.error('reCAPTCHA is required in production but RECAPTCHA_SECRET_KEY is missing');
+  const turnstileSecret = getTurnstileSecret();
+  if (!turnstileSecret) {
+    console.error('Turnstile is required in production but TURNSTILE_SECRET_KEY is missing');
+    return false;
+  }
+
+  if (!token) {
     return false;
   }
 
   try {
-    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
+      body: new URLSearchParams({
+        secret: turnstileSecret,
+        response: token,
+        remoteip: ip,
+      }),
     });
 
     const data = await response.json();
-
-    if (data.score !== undefined) {
-      return data.score >= 0.5;
-    }
-
-    return data.success;
+    return Boolean(data.success);
   } catch (error) {
-    console.error('reCAPTCHA verification error:', error);
+    console.error('Turnstile verification error:', error);
     return false;
   }
 }
@@ -281,11 +294,11 @@ export async function POST(request) {
       );
     }
 
-    // Verify reCAPTCHA
-    const recaptchaValid = await verifyRecaptcha(body.recaptchaToken);
-    if (!recaptchaValid) {
+    // Verify Cloudflare Turnstile in production. Development bypass is intentional.
+    const turnstileValid = await verifyTurnstile(body.recaptchaToken, ip);
+    if (!turnstileValid) {
       return NextResponse.json(
-        { error: 'reCAPTCHA verification failed. Please try again.' },
+        { error: 'Turnstile verification failed. Please try again.' },
         { status: 400 }
       );
     }

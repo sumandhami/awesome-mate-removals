@@ -7,61 +7,15 @@ import { contactFormSchema, contactStep1Schema } from '@/lib/schemas/contactSche
 import Step1 from './Step1';
 import Step2 from './Step2';
 
-const RECAPTCHA_SCRIPT_ID = 'recaptcha-v3-script';
-
-function loadRecaptchaV3(siteKey) {
-  return new Promise((resolve, reject) => {
-    if (typeof window === 'undefined' || typeof document === 'undefined') {
-      reject(new Error('reCAPTCHA can only run in the browser'));
-      return;
-    }
-
-    if (window.grecaptcha?.execute) {
-      resolve(window.grecaptcha);
-      return;
-    }
-
-    const existingScript = document.getElementById(RECAPTCHA_SCRIPT_ID);
-    if (!existingScript) {
-      const script = document.createElement('script');
-      script.id = RECAPTCHA_SCRIPT_ID;
-      script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => {
-        if (window.grecaptcha) {
-          resolve(window.grecaptcha);
-        } else {
-          reject(new Error('reCAPTCHA failed to initialize'));
-        }
-      };
-      script.onerror = () => reject(new Error('reCAPTCHA script failed to load'));
-      document.head.appendChild(script);
-      return;
-    }
-
-    const waitForGrecaptcha = () => {
-      if (window.grecaptcha?.execute) {
-        resolve(window.grecaptcha);
-        return;
-      }
-
-      window.setTimeout(waitForGrecaptcha, 50);
-    };
-
-    waitForGrecaptcha();
-  });
-}
-
 export default function ContactForm() {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [recaptchaToken, setRecaptchaToken] = useState('');
-  const isRecaptchaEnabled =
+  const isTurnstileEnabled =
     process.env.NODE_ENV === 'production' &&
-    process.env.NEXT_PUBLIC_RECAPTCHA_ENABLED === 'true';
+    process.env.NEXT_PUBLIC_TURNSTILE_ENABLED === 'true';
 
   const {
     control,
@@ -92,18 +46,23 @@ export default function ContactForm() {
     },
   });
 
-  // Listen for reCAPTCHA token
+  // Listen for Turnstile token updates from the widget.
   useEffect(() => {
-    if (typeof document === 'undefined') {
+    if (typeof window === 'undefined') {
       return undefined;
     }
 
-    const handleRecaptchaToken = (e) => {
-      setRecaptchaToken(e.detail);
+    window.onTurnstileSuccess = (token) => {
+      setRecaptchaToken(token);
     };
+    window.onTurnstileExpired = () => setRecaptchaToken('');
+    window.onTurnstileError = () => setRecaptchaToken('');
 
-    document.addEventListener('recaptchaToken', handleRecaptchaToken);
-    return () => document.removeEventListener('recaptchaToken', handleRecaptchaToken);
+    return () => {
+      window.onTurnstileSuccess = undefined;
+      window.onTurnstileExpired = undefined;
+      window.onTurnstileError = undefined;
+    };
   }, []);
 
   const handleStep1Next = async () => {
@@ -147,17 +106,8 @@ export default function ContactForm() {
 
     try {
       let submissionToken = recaptchaToken;
-
-      if (isRecaptchaEnabled) {
-        const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-        if (!siteKey) {
-          throw new Error('reCAPTCHA site key is missing');
-        }
-
-        const grecaptcha = await loadRecaptchaV3(siteKey);
-        await new Promise((resolve) => grecaptcha.ready(resolve));
-        submissionToken = await grecaptcha.execute(siteKey, { action: 'contact_form' });
-        setRecaptchaToken(submissionToken);
+      if (isTurnstileEnabled && !submissionToken) {
+        throw new Error('Please complete the verification challenge and try again.');
       }
 
       const response = await fetch('/api/contact', {
@@ -244,7 +194,7 @@ export default function ContactForm() {
             onBack={handleStep2Back}
             onSubmit={handleSubmit(onSubmit)}
             isSubmitting={isSubmitting}
-            recaptchaEnabled={isRecaptchaEnabled}
+            turnstileEnabled={isTurnstileEnabled}
           />
         </form>
       )}
