@@ -177,7 +177,6 @@ const Navbar = () => {
                   alt="Awesome Mate Removals"
                   width={208}
                   height={54}
-                  priority
                 />
               </Link>
             </div>
@@ -191,7 +190,6 @@ const Navbar = () => {
                     alt="Awesome Mate Removals"
                     width={112}
                     height={29}
-                    priority
                   />
                 </Link>
               </div>
