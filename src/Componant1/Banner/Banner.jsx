@@ -6,11 +6,12 @@ const Banner = () => {
   return (
     <section id="home" className="min-h-[720px] sm:min-h-[820px] lg:min-h-[814px] pt-6 sm:pt-10 lg:pt-0 flex items-center overflow-hidden relative">
       <Image
-        src="/images/gallery/truck-6.png"
+        src="/images/gallery/truck-6.jpeg"
         alt=""
         fill
         priority
         sizes="100vw"
+        quality={60}
         className="object-cover object-center"
       />
       {/* Dark Overlay */}

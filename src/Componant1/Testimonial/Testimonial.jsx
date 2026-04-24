@@ -41,7 +41,7 @@ const testiData = [
 
 const Testimonial = () => {
   return (
-    <section className="performance-section bg-[url('/images/gallery/servicebg.png')] bg-cover bg-center bg-no-repeat py-28 relative z-10">
+    <section className="performance-section bg-[url('/images/service-bg.png')] bg-cover bg-center bg-no-repeat py-28 relative z-10">
       <div className="absolute inset-0 bg-black/35 z-0" />
       <div className="Container relative z-10">
         <div className="text-center">

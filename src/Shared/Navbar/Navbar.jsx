@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   FaBars,
@@ -170,10 +171,13 @@ const Navbar = () => {
             {/* website Logo */}
             <div className=" w-48 lg:w-52">
               <Link href="/">
-                <img
-                  src={Logo?.src || Logo}
-                  className="hidden lg:block w-full"
+                <Image
+                  src={Logo}
+                  className="hidden lg:block w-full h-auto"
                   alt="Awesome Mate Removals"
+                  width={208}
+                  height={54}
+                  priority
                 />
               </Link>
             </div>
@@ -181,10 +185,13 @@ const Navbar = () => {
             <div className="px-3 w-full lg:hidden flex justify-between bg-khaki h-[70px] items-center p-3">
               <div className="w-28">
                 <Link href="/">
-                  <img
-                    src={Logo?.src || Logo}
+                  <Image
+                    src={Logo}
                     className="block lg:hidden "
                     alt="Awesome Mate Removals"
+                    width={112}
+                    height={29}
+                    priority
                   />
                 </Link>
               </div>

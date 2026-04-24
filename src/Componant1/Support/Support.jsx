@@ -6,7 +6,7 @@ const Support = ({ matchServiceAreasStyle = false }) => {
     : "before:absolute before:top-0 before:left-0 before:bg-[#f3f4f8] before:w-full before:h-1/2 before:-z-10";
 
   const backgroundClass = matchServiceAreasStyle
-    ? "bg-[url('/images/gallery/servicebg.png')] bg-cover bg-center bg-no-repeat"
+    ? "bg-[url('/images/service-bg.png')] bg-cover bg-center bg-no-repeat"
     : "bg-[url('/images/address-bg.png')] bg-cover bg-center bg-no-repeat";
 
   return (

@@ -25,6 +25,11 @@ export const metadata = {
   description:
     "Awesome Mate Removals provides residential, office, furniture, and special-item moving services across Perth.",
   manifest: "/site.webmanifest",
+  icons: {
+    icon: "/images/fav-icon/icon.png",
+    shortcut: "/images/fav-icon/icon.png",
+    apple: "/images/fav-icon/icon.png",
+  },
   alternates: {
     canonical: "/",
   },

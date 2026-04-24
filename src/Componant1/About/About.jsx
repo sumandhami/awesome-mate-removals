@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 import { FaArrowRightLong, FaCircleCheck } from "react-icons/fa6";
 import aboutThumb from "/images/gallery/truck-1.png";
 import aboutShape from "/images/about-shape2.png";
@@ -14,7 +15,15 @@ const About = () => {
       <div className="Container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[92px] lg:gap-5 xl:gap-24 items-center">
           <div className="relative">
-            <img src={aboutThumb?.src || aboutThumb} alt="Truck on a Perth moving job" loading="lazy" decoding="async" />
+            <Image
+              src={aboutThumb}
+              alt="Truck on a Perth moving job"
+              width={396}
+              height={528}
+              loading="lazy"
+              sizes="(max-width: 1024px) 100vw, 396px"
+              className="h-auto w-full"
+            />
             <div className="absolute top-[4.5rem] right-[3rem]">
               <button
                 type="button"
@@ -27,12 +36,13 @@ const About = () => {
             </div>
           </div>
           <div className="relative">
-            <img
-              src={aboutShape?.src || aboutShape}
+            <Image
+              src={aboutShape}
               className="absolute -top-6 right-0 animate-rotational"
               alt=""
-              loading="lazy"
-              decoding="async"
+              width={120}
+              height={120}
+              aria-hidden="true"
             />
             <h5 className="font-Inter font-medium text-SecondaryColor-0">
               ABOUT US
@@ -67,7 +77,13 @@ const About = () => {
                 </Link>
               </div>
               <div className="bg-PrimaryColor-0 rounded-lg w-[192px] h-[192px] px-4 flex justify-center items-center flex-col">
-                <img src={icon?.src || icon} alt="Moving service counter icon" loading="lazy" decoding="async" />
+                <Image
+                  src={icon}
+                  alt="Moving service counter icon"
+                  width={44}
+                  height={44}
+                  loading="lazy"
+                />
                 <CountUp
                   start={-11}
                   end={12}
