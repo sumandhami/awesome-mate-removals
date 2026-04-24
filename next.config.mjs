@@ -20,7 +20,7 @@ const cspDirectives = [
   "font-src 'self' data: https://fonts.gstatic.com",
   
   // connect-src must include the challenge platform
-  `connect-src 'self' https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net`,
+  `connect-src 'self' https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://wa.me`,
   
   // frame-src is crucial for the iframe
   "frame-src 'self' https://challenges.cloudflare.com https://www.google.com https://www.recaptcha.net",

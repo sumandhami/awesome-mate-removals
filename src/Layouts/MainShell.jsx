@@ -3,6 +3,7 @@
 import Footer from "@/src/Shared/Footer/Footer";
 import Navbar from "@/src/Shared/Navbar/Navbar";
 import ScrollToTop from "@/src/Shared/ScrollToTop/ScrollToTop";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 export default function MainShell({ children }) {
   return (
@@ -12,6 +13,7 @@ export default function MainShell({ children }) {
       <main id="main-content" tabIndex={-1}>
         {children}
       </main>
+      <WhatsAppWidget />
       <Footer />
     </>
   );

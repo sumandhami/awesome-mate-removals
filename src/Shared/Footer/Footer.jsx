@@ -31,8 +31,8 @@ const Footer = () => {
   return (
     <footer className="bg-HeadingColor-0 relative z-10">
       <div className="Container px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-0">
-        <div className="pt-16 pb-10">
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-4">
+        <div className="py-12">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-4 items-start">
             <div className="min-w-0">
             <img src={footerLogo?.src || footerLogo} alt="Awesome Mate Removals" loading="lazy" decoding="async" />
             <p className="font-Poppins text-white mt-6 mb-6 max-w-sm leading-7">
@@ -116,17 +116,6 @@ const Footer = () => {
             </h4>
             <div className="flex gap-5 mb-5">
               <div className="h-[44px] w-[44px] min-w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white text-xl bg-[#183088]">
-                <IoLocationOutline />
-              </div>
-              <div className="flex-1 -mt-1">
-                <h6 className="font-Inter font-medium text-[17px] text-white">Name</h6>
-                <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  Awesome Mate Removals
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-5 mb-5">
-              <div className="h-[44px] w-[44px] min-w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white text-xl bg-[#183088]">
                 <FiPhoneCall />
               </div>
               <div className="flex-1 -mt-1">
@@ -158,22 +147,11 @@ const Footer = () => {
                 </p>
               </div>
             </div>
-            <div className="flex gap-5 mb-5">
-              <div className="h-[44px] w-[44px] min-w-[44px] rounded-full border border-dashed border-[#43559F] flex items-center justify-center text-white text-xl bg-[#183088]">
-                <FiPhoneCall />
-              </div>
-              <div className="flex-1 -mt-1">
-                <h6 className="font-Inter font-medium text-[17px] text-white">ABN</h6>
-                <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  42293475158
-                </p>
-              </div>
-            </div>
-            <div className="rounded-md overflow-hidden border border-[#334899] mt-2">
+            <div className="rounded-md overflow-hidden border border-[#334899] mt-2 max-w-full">
               <iframe
                 title="Awesome Mate Perth Service Area"
                 src="https://www.google.com/maps?q=Unit%205%2F207%20Waterloo%20Street%2C%20Tuart%20Hill%20WA%206060&output=embed"
-                className="w-full h-[170px]"
+                className="w-full h-[150px]"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
@@ -186,13 +164,21 @@ const Footer = () => {
             <p className="font-Poppins text-white text-sm md:text-base">
               © 2026 Awesome Mate Removals. All rights reserved.
             </p>
-            <div className="flex items-center gap-6">
-              <Link href="/privacy-policy" className="font-Poppins text-[#B9BBD2] hover:text-PrimaryColor-0 transition-all duration-300">
-                Privacy Policy
-              </Link>
-              <Link href="/terms-and-conditions" className="font-Poppins text-[#B9BBD2] hover:text-PrimaryColor-0 transition-all duration-300">
-                Terms & Conditions
-              </Link>
+            <div className="flex flex-wrap items-center gap-6">
+              <p className="font-Poppins text-[#B9BBD2] text-sm md:text-base">
+                ABN: 42293475158
+              </p>
+              <p className="font-Poppins text-[#B9BBD2] text-sm md:text-base">
+                Developed by{" "}
+                <a
+                  href="https://rootalpine.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-PrimaryColor-0 transition-all duration-300"
+                >
+                  AlpineRoot Technologies
+                </a>
+              </p>
             </div>
           </div>
         </div>
