@@ -141,8 +141,8 @@ export default function Page() {
               <p className="font-Poppins font-light text-TextColor-0 mt-3">
                 Awesome Mate Removals can handle heavy furniture with the right equipment, careful wrapping, and proven loading methods. Call our team for a fast quote and practical advice for your move.
               </p>
-              <a href="tel:041207264" className="primary-btn2 w-fit mt-6">
-                Call Us Now: 041207264
+              <a href="tel:0412007264" className="primary-btn2 w-fit mt-6">
+                Call Us Now: 0412007264
               </a>
             </div>
           </div>

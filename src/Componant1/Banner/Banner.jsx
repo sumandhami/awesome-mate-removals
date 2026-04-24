@@ -31,11 +31,11 @@ const Banner = () => {
             </p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="tel:041207264"
+                href="tel:0412007264"
                 className="primary-btn2"
-                aria-label="Call Awesome Mate Removals on 041207264"
+                aria-label="Call Awesome Mate Removals on 0412007264"
               >
-                Call Us Now: 041207264
+                Call Us Now: 0412007264
                 <FaPhone size={"18"} />
               </a>
             </div>

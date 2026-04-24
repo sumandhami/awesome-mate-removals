@@ -37,10 +37,10 @@ const Footer = () => {
                   Need Moving Help?
                 </p>
                 <a
-                  href="tel:041207264"
+                  href="tel:0412007264"
                   className="font-Inter text-left font-semibold text-HeadingColor-0 text-[19px] leading-7 sm:text-[22px] mt-1 inline-block"
                 >
-                  Call Us Now: 041207264
+                  Call Us Now: 0412007264
                 </a>
               </div>
             </div>
@@ -215,7 +215,7 @@ const Footer = () => {
               <div className="flex-1 -mt-1">
                 <h6 className="font-Inter font-medium text-[17px] text-white">Phone</h6>
                 <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  041207264
+                  0412007264
                 </p>
               </div>
             </div>
@@ -226,7 +226,7 @@ const Footer = () => {
               <div className="flex-1 -mt-1">
                 <h6 className="font-Inter font-medium text-[17px] text-white">Email</h6>
                 <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  awesomemateremovals@gmail.com
+                  info@awesomemateremovals.com.au
                 </p>
               </div>
             </div>

@@ -55,8 +55,8 @@ export default function RootLayout({ children }) {
     "@type": "LocalBusiness",
     name: "Awesome Mate Removals",
     url: siteUrl,
-    telephone: "041207264",
-    email: "awesomemateremovals@gmail.com",
+    telephone: "0412007264",
+    email: "info@awesomemateremovals.com.au",
     identifier: "ABN 42293475158",
     address: {
       "@type": "PostalAddress",

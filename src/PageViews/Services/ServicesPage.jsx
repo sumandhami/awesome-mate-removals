@@ -30,11 +30,11 @@ const ServicesPage = () => {
               Choose reliable moving support from a local Perth team. We plan every step with care so your move stays on schedule and your belongings arrive safely.
             </p>
             <a
-              href="tel:041207264"
+              href="tel:0412007264"
               className="primary-btn2 w-fit"
-              aria-label="Call Awesome Mate Removals on 041207264"
+              aria-label="Call Awesome Mate Removals on 0412007264"
             >
-              Call Us Now: 041207264
+              Call Us Now: 0412007264
               <FaPhone size={18} />
             </a>
           </div>

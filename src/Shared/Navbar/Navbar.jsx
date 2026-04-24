@@ -101,7 +101,7 @@ const Navbar = () => {
               className="font-Poppins text-[15px] text-white sm:flex items-center gap-2 hidden"
             >
               <BsEnvelope size={"18"} />
-              awesomemateremovals@gmail.com
+              info@awesomemateremovals.com.au
             </Link>
           </div>
           <div className="flex items-center gap-3 md:gap-6">
@@ -149,11 +149,11 @@ const Navbar = () => {
                 Call :
               </h6>
               <a
-                href="tel:041207264"
+                href="tel:0412007264"
                 className="font-Poppins font-medium text-sm text-white"
-                aria-label="Call 041207264"
+                aria-label="Call 0412007264"
               >
-                041207264
+                0412007264
               </a>
             </div>
           </div>

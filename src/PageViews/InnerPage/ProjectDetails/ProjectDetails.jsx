@@ -120,7 +120,7 @@ const ProjectDetails = () => {
                 <Link to={"/"}>
                   <button className="font-Inter text-white flex items-center gap-2 mt-4 mb-[52px]">
                     <MdEmail className="text-xl text-SecondaryColor-0" />
-                    example@gmail.com
+                    info@awesomemateremovals.com.au
                   </button>
                 </Link>
                 <Link to={"/"}>

@@ -152,7 +152,7 @@ const ServiceDetails2 = () => {
                 <Link to={"/"}>
                   <button className="font-Inter text-white flex items-center mt-4 mb-[52px]">
                     <MdEmail className="text-xl text-SecondaryColor-0" />
-                    example@gmail.com
+                    info@awesomemateremovals.com.au
                   </button>
                 </Link>
                 <Link to={"/"}>
