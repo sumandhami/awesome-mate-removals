@@ -9,7 +9,6 @@ import CountUp from "react-countup";
 import { CiPlay1 } from "react-icons/ci";
 
 const About = () => {
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
   return (
     <section id="about" className="performance-section py-[120px] scroll-mt-[120px]">
       <div className="Container">
@@ -24,16 +23,7 @@ const About = () => {
               sizes="(max-width: 1024px) 100vw, 396px"
               className="h-auto w-full"
             />
-            <div className="absolute top-[4.5rem] right-[3rem]">
-              <button
-                type="button"
-                aria-label="Play company introduction video"
-                className="h-[90px] w-[90px] rounded-full bg-SecondaryColor-0 border-4 border-white text-white flex justify-center items-center relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-SecondaryColor-0 before:opacity-50 before:-z-10 before:rounded-full before:animate-ping"
-                onClick={() => setIsVideoOpen(true)}
-              >
-                <CiPlay1 size={"30"} />
-              </button>
-            </div>
+            {/* Static image only, video removed as per requirements */}
           </div>
           <div className="relative">
             <Image
@@ -98,35 +88,7 @@ const About = () => {
           </div>
         </div>
       </div>
-      {isVideoOpen ? (
-        <div
-          className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/80 px-4"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Company introduction video"
-          onClick={() => setIsVideoOpen(false)}
-        >
-          <div
-            className="relative w-full max-w-4xl overflow-hidden rounded-2xl bg-black shadow-2xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              aria-label="Close video"
-              className="absolute right-4 top-4 z-10 rounded-full bg-white/90 px-3 py-2 text-sm font-semibold text-HeadingColor-0"
-              onClick={() => setIsVideoOpen(false)}
-            >
-              Close
-            </button>
-            <video className="w-full h-auto" controls autoPlay playsInline preload="none">
-              <source
-                src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                type="video/mp4"
-              />
-            </video>
-          </div>
-        </div>
-      ) : null}
+      {/* Video modal removed as per requirements. */}
     </section>
   );
 };

@@ -7,6 +7,25 @@ import { contactFormSchema } from '@/lib/schemas/contactSchema';
 import Step1 from './Step1';
 import Step2 from './Step2';
 
+function resolveApiUrl(path) {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const defaultBaseUrl =
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    process.env.NEXT_PUBLIC_API_URL ||
+    process.env.NEXT_PUBLIC_BACKEND_URL ||
+    '';
+  const envBaseUrl =
+    process.env.NODE_ENV === 'development'
+      ? process.env.NEXT_PUBLIC_DEV_API_BASE_URL || defaultBaseUrl
+      : defaultBaseUrl;
+
+  if (!envBaseUrl) {
+    return normalizedPath;
+  }
+
+  return `${envBaseUrl.replace(/\/$/, '')}${normalizedPath}`;
+}
+
 export default function ContactForm() {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -82,7 +101,7 @@ export default function ContactForm() {
     setSuccessMessage('');
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(resolveApiUrl('/api/contact'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

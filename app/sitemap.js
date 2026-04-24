@@ -2,6 +2,8 @@ const routes = [
   "",
   "/services",
   "/blog/how-to-move-heavy-furniture-without-damage",
+  "/privacy-policy",
+  "/terms-and-conditions",
 ];
 
 export default function sitemap() {
