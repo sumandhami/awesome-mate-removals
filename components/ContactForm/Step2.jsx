@@ -16,7 +16,10 @@ export default function Step2({
   const propertyType = watch('propertyType');
 
   useEffect(() => {
-    if (!recaptchaEnabled) {
+    const canUseBrowserGlobals =
+      typeof window !== 'undefined' && typeof document !== 'undefined';
+
+    if (!recaptchaEnabled || !canUseBrowserGlobals) {
       return undefined;
     }
 

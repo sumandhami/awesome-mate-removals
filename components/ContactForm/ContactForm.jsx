@@ -11,7 +11,7 @@ const RECAPTCHA_SCRIPT_ID = 'recaptcha-v3-script';
 
 function loadRecaptchaV3(siteKey) {
   return new Promise((resolve, reject) => {
-    if (typeof window === 'undefined') {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
       reject(new Error('reCAPTCHA can only run in the browser'));
       return;
     }
@@ -94,6 +94,10 @@ export default function ContactForm() {
 
   // Listen for reCAPTCHA token
   useEffect(() => {
+    if (typeof document === 'undefined') {
+      return undefined;
+    }
+
     const handleRecaptchaToken = (e) => {
       setRecaptchaToken(e.detail);
     };
