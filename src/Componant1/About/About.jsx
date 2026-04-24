@@ -1,12 +1,8 @@
-import { useState } from "react";
 import Image from "next/image";
 import { FaArrowRightLong, FaCircleCheck } from "react-icons/fa6";
 import aboutThumb from "/images/gallery/truck-1.png";
-import aboutShape from "/images/about-shape2.png";
 import icon from "/images/counter-icon.png";
 import Link from "next/link";
-import CountUp from "react-countup";
-import { CiPlay1 } from "react-icons/ci";
 
 const About = () => {
   return (
@@ -26,14 +22,6 @@ const About = () => {
             {/* Static image only, video removed as per requirements */}
           </div>
           <div className="relative">
-            <Image
-              src={aboutShape}
-              className="absolute -top-6 right-0 animate-rotational"
-              alt=""
-              width={120}
-              height={120}
-              aria-hidden="true"
-            />
             <h5 className="font-Inter font-medium text-SecondaryColor-0">
               ABOUT US
             </h5>
@@ -74,12 +62,9 @@ const About = () => {
                   height={44}
                   loading="lazy"
                 />
-                <CountUp
-                  start={-11}
-                  end={12}
-                  suffix="+"
-                  className="text-[36px] font-Inter font-bold text-HeadingColor-0"
-                />
+                <span className="text-[36px] font-Inter font-bold text-HeadingColor-0">
+                  12+
+                </span>
                 <p className="font-Poppins text-TextColor-0 font-light text-center">
                   Service Types Covered
                 </p>

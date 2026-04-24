@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import About from "../../Componant1/About/About";
 import Banner from "../../Componant1/Banner/Banner";
@@ -16,6 +16,46 @@ const Testimonial = dynamic(() => import("../../Componant1/Testimonial/Testimoni
 const Portfolio = dynamic(() => import("../../Componant1/Portfolio/Portfolio"));
 const HomeFaq = dynamic(() => import("../../Componant1/Faq/HomeFaq"));
 const Support = dynamic(() => import("../../Componant1/Support/Support"));
+
+const DeferredSection = ({ children, minHeight = 420 }) => {
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (isVisible) {
+      return;
+    }
+
+    const sectionElement = sectionRef.current;
+    if (!sectionElement || typeof IntersectionObserver === "undefined") {
+      const rafId = requestAnimationFrame(() => {
+        setIsVisible(true);
+      });
+
+      return () => cancelAnimationFrame(rafId);
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+
+    observer.observe(sectionElement);
+
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  return (
+    <div ref={sectionRef} style={isVisible ? undefined : { minHeight }}>
+      {isVisible ? children : null}
+    </div>
+  );
+};
 
 const Home1 = () => {
   useEffect(() => {
@@ -41,15 +81,31 @@ const Home1 = () => {
       <Feature />
       <About />
       <Service />
-      <ProcessCard />
-      <MovingCost />
-      <WhyChoose />
-      <ServiceAreas />
+      <DeferredSection minHeight={520}>
+        <ProcessCard />
+      </DeferredSection>
+      <DeferredSection minHeight={520}>
+        <MovingCost />
+      </DeferredSection>
+      <DeferredSection minHeight={520}>
+        <WhyChoose />
+      </DeferredSection>
+      <DeferredSection minHeight={520}>
+        <ServiceAreas />
+      </DeferredSection>
       <Blog />
-      <Testimonial />
-      <Portfolio />
-      <HomeFaq />
-      <Support />
+      <DeferredSection minHeight={520}>
+        <Testimonial />
+      </DeferredSection>
+      <DeferredSection minHeight={620}>
+        <Portfolio />
+      </DeferredSection>
+      <DeferredSection minHeight={420}>
+        <HomeFaq />
+      </DeferredSection>
+      <DeferredSection minHeight={360}>
+        <Support />
+      </DeferredSection>
     </>
   );
 };

@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import Image from "next/image";
+
 const TestimonialCard = ({
   testiImg,
   testiRatingIcon,
@@ -8,11 +10,20 @@ const TestimonialCard = ({
   testiDesc,
   testiIcon,
 }) => {
+  const testimonialImageSrc = typeof testiImg === "string" ? testiImg : testiImg?.src;
+  const testimonialIconSrc = typeof testiIcon === "string" ? testiIcon : testiIcon?.src;
+
   return (
     <div className="px-5 sm:px-10 relative bg-HoverColor-0 group rounded-xl z-10 overflow-hidden before:absolute before:top-0 before:left-1/2 before:w-0 before:h-full before:bg-SecondaryColor-0 before:-z-10 before:transition-all before:duration-500 hover:before:w-full hover:before:left-0">
       <div className="flex flex-col lg:flex-row lg:items-center gap-5 pt-14">
         <div>
-          <img src={testiImg?.src || testiImg} alt={`${testiName} review photo`} loading="lazy" decoding="async" />
+          <Image
+            src={testimonialImageSrc}
+            alt={`${testiName} review photo`}
+            width={88}
+            height={88}
+            loading="lazy"
+          />
         </div>
         <div>
           <ul className="flex gap-1 items-center text-xl text-PrimaryColor-0">
@@ -35,7 +46,13 @@ const TestimonialCard = ({
       </h6>
       <p className="font-Poppins text-white font-light pb-12">{testiDesc}</p>
       <div className="absolute top-[60px] right-10">
-        <img src={testiIcon?.src || testiIcon} alt="Testimonial quote icon" loading="lazy" decoding="async" />
+        <Image
+          src={testimonialIconSrc}
+          alt="Testimonial quote icon"
+          width={44}
+          height={44}
+          loading="lazy"
+        />
       </div>
     </div>
   );

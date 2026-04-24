@@ -7,7 +7,7 @@ const MAX_REQUESTS_PER_WINDOW = 20;
 const ipRateMap = new Map();
 
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL_TO || 'info@awesomemateremovals.com.au';
-const CONTACT_FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+const CONTACT_FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'noreply@awesomemateremovals.com.au';
 
 function shouldFailOpenOnEmailError() {
   if (process.env.CONTACT_EMAIL_FAIL_OPEN === 'true') {

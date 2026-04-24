@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import Link from "next/link";
+import Image from "next/image";
 
 const PortfolioCard = ({
   portfolioThumb,
@@ -10,10 +11,19 @@ const PortfolioCard = ({
   portfolioUrl,
   portfolioIcon,
 }) => {
+  const portfolioThumbSrc = typeof portfolioThumb === "string" ? portfolioThumb : portfolioThumb?.src;
+
   return (
     <div>
       <div className="relative z-10 overflow-hidden aspect-[7/5]">
-        <img src={portfolioThumb?.src || portfolioThumb} className="w-full h-full object-cover" alt={portfolioTitle} loading="lazy" decoding="async" />
+        <Image
+          src={portfolioThumbSrc}
+          alt={portfolioTitle}
+          fill
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="w-full h-full object-cover"
+        />
         <h6 className="font-Inter font-medium text-[15px] text-HeadingColor-0 px-[22px] py-2 rounded-full bg-PrimaryColor-0 inline-block absolute top-6 -left-full transition-all duration-500 opacity-0 portfolio-thumb-title">
           {thumbTitle}
         </h6>

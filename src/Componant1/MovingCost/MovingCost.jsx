@@ -1,16 +1,7 @@
-import serviceShape from "/images/service-shape-1.png";
-
 const MovingCost = () => {
   return (
     <section className="performance-section bg-[url('/images/service-bg.png')] bg-cover bg-center bg-no-repeat py-28 relative z-10">
       <div className="absolute inset-0 bg-black/35 z-0" />
-      <img
-        src={serviceShape?.src || serviceShape}
-        className="absolute top-0 left-0 right-0 animate-zoomInOut z-[1]"
-        alt=""
-        loading="lazy"
-        decoding="async"
-      />
       <div className="Container relative z-10">
         <div className="text-center">
           <h5 className="font-Inter font-medium text-PrimaryColor-0">MOVING PRICING GUIDE</h5>

@@ -14,7 +14,6 @@ import serviceThumb3 from "/images/gallery/commercial.png";
 import serviceThumb4 from "/images/gallery/truck-1 (1).png";
 import serviceThumb5 from "/images/gallery/junk.png";
 import serviceThumb6 from "/images/gallery/services/special.png";
-import serviceShape from "/images/service-shape.png";
 import ServiceCard from "./ServiceCard";
 
 const serviceData = [
@@ -22,7 +21,6 @@ const serviceData = [
     id: 1,
     serviceThumb: serviceThumb,
     serviceIcon: <FiHome size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
-    serviceShape: serviceShape,
     serviceTitle: `Residential Moving`,
     serviceListIcon: <FaCheck />,
     serviceListContent: `Safe packing, loading, and transport for homes and apartments.`,
@@ -35,7 +33,6 @@ const serviceData = [
     id: 2,
     serviceThumb: serviceThumb2,
     serviceIcon: <FiTruck size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
-    serviceShape: serviceShape,
     serviceTitle: `Furniture Removals`,
     serviceListIcon: <FaCheck />,
     serviceListContent: `Specialist handling for heavy, fragile, and high-value furniture items.`,
@@ -48,7 +45,6 @@ const serviceData = [
     id: 3,
     serviceThumb: serviceThumb3,
     serviceIcon: <FiBriefcase size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
-    serviceShape: serviceShape,
     serviceTitle: `Commercial Relocation`,
     serviceListIcon: <FaCheck />,
     serviceListContent: `Planned office and retail moves with minimal business disruption.`,
@@ -61,7 +57,6 @@ const serviceData = [
     id: 4,
     serviceThumb: serviceThumb4,
     serviceIcon: <FiMap size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
-    serviceShape: serviceShape,
     serviceTitle: `Interstate Removals`,
     serviceListIcon: <FaCheck />,
     serviceListContent: `End-to-end long-distance moving from Perth with secure transit.`,
@@ -74,7 +69,6 @@ const serviceData = [
     id: 5,
     serviceThumb: serviceThumb5,
     serviceIcon: <FiTrash2 size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
-    serviceShape: serviceShape,
     serviceTitle: `Junk Removals`,
     serviceListIcon: <FaCheck />,
     serviceListContent: `Fast and responsible removal of unwanted furniture, boxes, and general clutter.`,
@@ -87,7 +81,6 @@ const serviceData = [
     id: 6,
     serviceThumb: serviceThumb6,
     serviceIcon: <FiPackage size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
-    serviceShape: serviceShape,
     serviceTitle: `Special Items Moves`,
     serviceListIcon: <FaCheck />,
     serviceListContent: `Expert handling for pianos, statues, marble tables, pool tables, and fragile valuables.`,
@@ -117,7 +110,6 @@ const ServiceMain = () => {
                 id,
                 serviceThumb,
                 serviceIcon,
-                serviceShape,
                 serviceTitle,
                 serviceListIcon,
                 serviceListContent,
@@ -131,7 +123,6 @@ const ServiceMain = () => {
                     <ServiceCard
                       serviceThumb={serviceThumb}
                       serviceIcon={serviceIcon}
-                      serviceShape={serviceShape}
                       serviceTitle={serviceTitle}
                       serviceListIcon={serviceListIcon}
                       serviceListContent={serviceListContent}
