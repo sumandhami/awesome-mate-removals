@@ -1,0 +1,194 @@
+plan_id: performance-optimization-2026-04-24
+objective: Phase 2 performance optimization for active routes only
+created_at: 2026-04-24T00:00:00Z
+created_by: gem-planner (GPT-5.3-Codex)
+status: completed
+research_confidence: high
+
+tldr: |
+  Execute Phase 2 as three narrow, commit-sized optimizations limited to the active routes only:
+  /, /services, and /blog/how-to-move-heavy-furniture-without-damage.
+  Sequence is image optimization first, then homepage lazy loading/code-splitting,
+  then JS/import overhead trimming for active-route components.
+  No unrelated refactors are permitted in any task.
+open_questions:
+  - Should route-level Lighthouse acceptance be enforced on local only or local plus preview deployment for this phase gate?
+
+pre_mortem:
+  overall_risk_level: medium
+  critical_failure_modes:
+    - scenario: Hero/card image conversion causes layout shift or above-the-fold rendering delay on mobile.
+      likelihood: medium
+      impact: high
+      mitigation: Preserve explicit dimensions or fill container constraints, set priority only for true hero image, and verify CLS/LCP before merge.
+    - scenario: Lazy loading non-critical homepage sections defers content that is still needed for initial UX expectations.
+      likelihood: medium
+      impact: medium
+      mitigation: Limit lazy loading to below-the-fold sections, keep critical above-the-fold modules synchronous, and validate first-screen completeness.
+    - scenario: JS/import trimming removes modules with hidden side effects and breaks route rendering.
+      likelihood: low
+      impact: medium
+      mitigation: Restrict removals to obvious unused imports and dead route-local code paths, then run build and active-route smoke checks.
+  assumptions:
+    - Active route scope for this phase remains strictly: /, /services, /blog/how-to-move-heavy-furniture-without-damage.
+    - Prior security and routing phase outputs are already merged and stable.
+    - This plan is delivery-focused and excludes visual redesign or content rewrites.
+
+implementation_specification:
+  code_structure: Keep existing App Router and src composition architecture; implement minimal performance changes only in active-route entry composition and route-impacting components, with no unrelated refactors.
+  affected_areas:
+    - app/(main)/page.jsx
+    - app/(main)/services/page.jsx
+    - app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx
+    - src/Componant1
+    - src/PageViews/Home1/Home1.jsx
+    - public/images
+  component_details:
+    - component: Active-route hero and card imagery
+      responsibility: Convert critical active-route hero/card image rendering to Next.js optimized delivery with responsive sizing and modern formats where feasible.
+      interfaces:
+        - Homepage hero image render path
+        - Homepage/services/blog card image render paths used by active routes
+    - component: Homepage non-critical section loading
+      responsibility: Defer non-critical homepage sections with dynamic imports/lazy boundaries to reduce initial JS and improve interactivity.
+      interfaces:
+        - app/(main)/page.jsx section composition chain
+        - Home1 section exports consumed above and below the fold
+    - component: Active-route JS/import overhead
+      responsibility: Remove obvious unused imports and dead route-local JS overhead in components rendered on the three active routes.
+      interfaces:
+        - Route-level component import lists
+        - Active-route composition trees and shared dependencies
+  dependencies:
+    - component: Homepage non-critical section loading
+      relationship: Depends on image optimization baseline so performance attribution is isolated by optimization class.
+    - component: Active-route JS/import overhead
+      relationship: Depends on lazy-loading changes to avoid duplicate churn and to finalize payload trimming after split boundaries are in place.
+  integration_points:
+    - app/(main)/page.jsx homepage composition and section-loading behavior
+    - Active-route card components under src/Componant1 rendered from homepage/services/blog flows
+    - Route-level imports and render trees used by /, /services, and the active blog detail route
+
+tasks:
+  - id: task-201
+    title: Convert critical active-route hero and card images to optimized delivery
+    description: |
+      Implement critical image optimization conversion for hero and card images rendered on active routes only.
+      Replace critical-path img usage with Next.js image optimization patterns where technically feasible,
+      add responsive sizing hints, and ensure hero prioritization is applied only to above-the-fold media.
+      Keep visual output unchanged aside from performance improvements.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies: []
+    context_files:
+      - app/(main)/page.jsx: Identify homepage hero/card render entry points and image prop flow.
+      - app/(main)/services/page.jsx: Validate service-route card image paths included in scope.
+      - app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx: Validate in-scope article visual assets and card/related media references.
+    estimated_effort: medium
+    estimated_files: 3
+    estimated_lines: 220
+    focus_area: critical image optimization
+    verification:
+      - Capture before/after Lighthouse mobile metrics for / with LCP comparison evidence.
+      - Manually verify /, /services, and /blog/how-to-move-heavy-furniture-without-damage render images without breakage.
+      - Run npm run build to confirm Next image integration compiles cleanly.
+    acceptance_criteria:
+      - Critical hero and card images on active routes use optimized Next.js image delivery where feasible.
+      - Responsive sizing metadata is present for converted image instances.
+      - No unrelated refactors, style rewrites, or non-active-route changes are included.
+    rollback_note: |
+      Revert only this image-conversion commit if visual regressions, CLS spikes, or broken media rendering are detected.
+      Rollback trigger: significant LCP/CLS regression or broken hero/card rendering on active routes.
+    failure_modes:
+      - scenario: Improper sizing config introduces layout shift for card grids.
+        likelihood: medium
+        impact: high
+        mitigation: Use explicit width/height or stable container dimensions and verify CLS on mobile before merge.
+    tech_stack:
+      - Next.js App Router
+      - next/image
+      - Lighthouse
+    test_coverage: Route smoke checks plus before/after Lighthouse capture for active routes.
+
+  - id: task-202
+    title: Lazy load non-critical homepage sections via code-splitting
+    description: |
+      Introduce lazy loading/code-splitting for non-critical homepage sections only, scoped to /.
+      Keep critical first-screen sections synchronous and defer below-the-fold modules using dynamic import boundaries.
+      Ensure loading fallbacks are minimal and do not alter route semantics.
+    agent: gem-implementer
+    priority: high
+    status: completed
+    dependencies:
+      - task-201
+    context_files:
+      - app/(main)/page.jsx: Add dynamic import boundaries for non-critical homepage sections.
+      - src/PageViews/Home1/Home1.jsx: Confirm section ordering and critical vs non-critical split.
+      - src/Componant1: Scope dynamic import targets to homepage-only non-critical sections.
+    estimated_effort: medium
+    estimated_files: 3
+    estimated_lines: 180
+    focus_area: homepage code-splitting
+    verification:
+      - Build and inspect route payload changes for / to confirm non-critical chunks are deferred.
+      - Manually validate / first-screen content is complete without delayed critical UI.
+      - Re-run Lighthouse mobile on / and compare TBT/INP-related improvements.
+    acceptance_criteria:
+      - Non-critical homepage sections are lazy loaded with clear code-splitting boundaries.
+      - Above-the-fold homepage content remains immediately available without regression.
+      - No unrelated refactors, style rewrites, or non-active-route changes are included.
+    rollback_note: |
+      Revert only the lazy-loading commit if deferred rendering causes UX regressions or hydration/runtime issues.
+      Rollback trigger: broken first render, chunk load failures, or critical interaction delays on homepage.
+    failure_modes:
+      - scenario: Dynamic imports applied to critical sections degrade perceived load or cause hydration mismatch.
+        likelihood: medium
+        impact: medium
+        mitigation: Keep hero/navbar/primary CTA synchronous and limit lazy boundaries to below-the-fold modules.
+    tech_stack:
+      - Next.js dynamic import
+      - React Suspense/lazy boundaries
+      - Lighthouse
+    test_coverage: Manual homepage first-screen regression checks and route performance comparison.
+
+  - id: task-203
+    title: Audit and trim obvious unused JS/import overhead in active-route components
+    description: |
+      Audit active-route component trees and remove obvious unused JavaScript/import overhead
+      in components rendered by /, /services, and /blog/how-to-move-heavy-furniture-without-damage.
+      Limit changes to low-risk, clearly unused imports and route-local dead code paths only.
+    agent: gem-implementer
+    priority: medium
+    status: completed
+    dependencies:
+      - task-202
+    context_files:
+      - app/(main)/page.jsx: Trim unused imports and route-local dead composition paths.
+      - app/(main)/services/page.jsx: Remove obvious unused imports and dead component references.
+      - app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx: Trim obvious unused imports/JS overhead in article route composition.
+    estimated_effort: small
+    estimated_files: 3
+    estimated_lines: 120
+    focus_area: active-route payload trimming
+    verification:
+      - Run npm run lint and npm run build to validate import and runtime integrity.
+      - Confirm no route rendering regressions on /, /services, and /blog/how-to-move-heavy-furniture-without-damage.
+      - Compare homepage JS transfer size against phase baseline and document measurable reduction.
+    acceptance_criteria:
+      - Obvious unused imports and dead route-local JS overhead are removed from active-route components.
+      - Active-route functionality remains unchanged after trimming.
+      - No unrelated refactors, style rewrites, or non-active-route changes are included.
+    rollback_note: |
+      Revert only this JS-trim commit if missing side effects or runtime errors appear post-merge.
+      Rollback trigger: active-route render failures, missing behavior, or build/lint regressions tied to removals.
+    failure_modes:
+      - scenario: Removed import had implicit side effects required at runtime.
+        likelihood: low
+        impact: medium
+        mitigation: Restrict to clearly unused imports, verify runtime path behavior, and restore suspect imports immediately if regression appears.
+    tech_stack:
+      - Next.js App Router
+      - ESLint
+      - Lighthouse
+    test_coverage: Build/lint validation plus active-route manual smoke tests.
