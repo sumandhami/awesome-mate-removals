@@ -71,7 +71,7 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={`${inter.variable} ${poppins.variable}`}>
         <a href="#main-content" className="skip-link">
           Skip to main content
