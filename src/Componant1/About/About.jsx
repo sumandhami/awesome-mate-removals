@@ -3,7 +3,7 @@ import { FaArrowRightLong, FaCircleCheck } from "react-icons/fa6";
 import aboutThumb from "/images/gallery/truck-1.png";
 import aboutShape from "/images/about-shape2.png";
 import icon from "/images/counter-icon.png";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import CountUp from "react-countup";
 import { CiPlay1 } from "react-icons/ci";
 
@@ -59,7 +59,7 @@ const About = () => {
                     Business Address: Unit 5/207 Waterloo Street, Tuart Hill WA 6060.
                   </li>
                 </ul>
-                <Link to={"/about"}>
+                <Link href="/about">
                   <button className="primary-btn2 mt-9">
                     More About Us
                     <FaArrowRightLong size={"20"} />

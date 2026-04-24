@@ -11,7 +11,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
-import { Link } from "react-router-dom";
 import PortfolioCard from "./PortfolioCard";
 
 const PortfolioData = [
@@ -128,10 +127,10 @@ const Portfolio = () => {
             </h2>
           </div>
           <div>
-            <Link to="#" className="primary-btn">
+            <a href="#" className="primary-btn">
                 Veiw All Work
                 <FaArrowRightLong size={"20"} />
-            </Link>
+            </a>
           </div>
         </div>
       </div>

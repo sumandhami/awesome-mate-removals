@@ -1,5 +1,4 @@
 import { MdPhone } from "react-icons/md";
-import { Link } from "react-router-dom";
 
 const Support = ({ matchServiceAreasStyle = false }) => {
   const sectionDecorationClass = matchServiceAreasStyle
@@ -25,10 +24,10 @@ const Support = ({ matchServiceAreasStyle = false }) => {
             </h2>
           </div>
           <div className="flex lg:justify-end relative z-10">
-              <Link to="#" className="primary-btn w-full sm:w-auto justify-center">
+              <a href="#" className="primary-btn w-full sm:w-auto justify-center">
                 <MdPhone className="text-[18px] sm:text-[20px]" />
                   Get a Free Quote
-              </Link>
+              </a>
           </div>
         </div>
       </div>

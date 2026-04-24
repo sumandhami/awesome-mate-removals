@@ -2,7 +2,6 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import blogThumb from "/images/gallery/truck-1.png";
 import BlogCard from "./BlogCard";
-import { Link } from "react-router-dom";
 
 const blogData = [
   {
@@ -35,10 +34,10 @@ const Blog = () => {
             </div>
           </div>
           <div className="flex lg:justify-end">
-            <Link to="#" className="primary-btn">
+            <a href="#" className="primary-btn">
                 Veiw All Blog
                 <FaArrowRightLong size={"20"} />
-            </Link>
+            </a>
           </div>
         </div>
         <div className="mt-[60px]">

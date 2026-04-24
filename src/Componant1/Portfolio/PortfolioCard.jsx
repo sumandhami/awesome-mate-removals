@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const PortfolioCard = ({
   portfolioThumb,
@@ -23,11 +23,11 @@ const PortfolioCard = ({
               <span className="text-base">{portfolioLocateIcon}</span>
               {portfolioLocation}
             </p>
-            <Link to={portfolioUrl} className="font-Inter font-semibold text-xl lg:text-lg xl:text-[22px] 2xl:text-2xl text-white mt-4 text-left block">
+            <Link href={portfolioUrl} className="font-Inter font-semibold text-xl lg:text-lg xl:text-[22px] 2xl:text-2xl text-white mt-4 text-left block">
                 {portfolioTitle}
             </Link>
           </div>
-          <Link to={portfolioUrl} aria-label={`View ${portfolioTitle}`} className="w-[40px] h-[40px] rounded-full flex items-center justify-center text-HeadingColor-0 bg-PrimaryColor-0 -rotate-45">
+          <Link href={portfolioUrl} aria-label={`View ${portfolioTitle}`} className="w-[40px] h-[40px] rounded-full flex items-center justify-center text-HeadingColor-0 bg-PrimaryColor-0 -rotate-45">
               {portfolioIcon}
           </Link>
         </div>

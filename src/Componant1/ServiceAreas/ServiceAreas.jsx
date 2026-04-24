@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import serviceShape from "/images/service-shape-1.png";
 
 const suburbs = [
@@ -46,7 +46,7 @@ const ServiceAreas = () => {
           {suburbs.map((suburb) => (
             <Link
               key={suburb}
-              to={`/services?suburb=${toSlug(suburb)}`}
+              href={`/services?suburb=${toSlug(suburb)}`}
               className="font-Inter text-[15px] text-HeadingColor-0 text-center bg-BodyBg-0 rounded px-4 py-3 transition-all duration-300 hover:bg-SecondaryColor-0 hover:text-white"
             >
               {suburb}
