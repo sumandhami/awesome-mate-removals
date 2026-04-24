@@ -9,15 +9,15 @@ const cspDirectives = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${
     isProduction ? "" : " 'unsafe-eval'"
-  } https://www.google.com https://www.gstatic.com https://www.recaptcha.net`,
-  "script-src-elem 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://www.recaptcha.net",
+  } https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://challenges.cloudflare.com`,
+  "script-src-elem 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data: https://fonts.gstatic.com",
   `connect-src 'self'${
     isProduction ? "" : " ws: wss:"
   } https://www.google.com https://www.gstatic.com https://www.recaptcha.net`,
-  "frame-src https://www.google.com https://www.recaptcha.net",
+  "frame-src https://www.google.com https://www.recaptcha.net https://challenges.cloudflare.com",
   "media-src 'self' data: https://commondatastorage.googleapis.com",
   "base-uri 'self'",
   "form-action 'self'",
