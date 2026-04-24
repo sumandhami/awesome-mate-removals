@@ -38,7 +38,7 @@ const ServiceCard = ({
 
   return (
     <div className="group">
-      <div>
+      <div className="w-11/12">
         <Image
           src={serviceThumbSrc}
           alt={serviceTitle}
@@ -46,7 +46,7 @@ const ServiceCard = ({
           height={560}
           loading="lazy"
           sizes="(max-width: 640px) 100vw, (max-width: 1280px) 420px, 420px"
-          className="w-full aspect-[41/28] object-cover"
+          className="w-full h-[300px] object-cover object-center"
         />
       </div>
       <div className="w-11/12 bg-HoverColor-0 rounded-ee-md rounded-r-md rounded-b-md px-8 pb-6 -mt-8 relative z-10 before:absolute before:right-0 before:w-0 before:h-full before:rounded-ee-md before:rounded-r-md before:rounded-b-md before:bg-SecondaryColor-0 before:-z-10 before:transition-all before:duration-500 group-hover:before:w-full group-hover:before:left-0">

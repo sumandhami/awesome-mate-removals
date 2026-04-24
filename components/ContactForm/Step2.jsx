@@ -11,8 +11,8 @@ export default function Step2({
   onSubmit,
   isSubmitting,
   turnstileEnabled,
+  turnstileSiteKey,
 }) {
-  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
   const propertyType = watch('propertyType');
 
   return (

@@ -32,9 +32,11 @@ export default function ContactForm() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [recaptchaToken, setRecaptchaToken] = useState('');
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
   const isTurnstileEnabled =
     process.env.NODE_ENV === 'production' &&
-    process.env.NEXT_PUBLIC_TURNSTILE_ENABLED === 'true';
+    process.env.NEXT_PUBLIC_TURNSTILE_ENABLED === 'true' &&
+    Boolean(turnstileSiteKey);
 
   const {
     control,
@@ -125,6 +127,14 @@ export default function ContactForm() {
 
     try {
       let submissionToken = recaptchaToken;
+      if (!submissionToken && typeof document !== 'undefined') {
+        const hiddenInputToken = document.querySelector('[name="cf-turnstile-response"]')?.value;
+        if (typeof hiddenInputToken === 'string' && hiddenInputToken.trim()) {
+          submissionToken = hiddenInputToken.trim();
+          setRecaptchaToken(hiddenInputToken.trim());
+        }
+      }
+
       if (isTurnstileEnabled && !submissionToken) {
         throw new Error('Please complete the verification challenge and try again.');
       }
@@ -214,6 +224,7 @@ export default function ContactForm() {
             onSubmit={handleSubmit(onSubmit)}
             isSubmitting={isSubmitting}
             turnstileEnabled={isTurnstileEnabled}
+            turnstileSiteKey={turnstileSiteKey}
           />
         </form>
       )}
