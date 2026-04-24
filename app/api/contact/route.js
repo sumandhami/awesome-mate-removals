@@ -8,6 +8,18 @@ const ipRateMap = new Map();
 
 const CONTACT_EMAIL = 'info@awesomemateremovals.com.au';
 
+function shouldFailOpenOnEmailError() {
+  if (process.env.CONTACT_EMAIL_FAIL_OPEN === 'true') {
+    return true;
+  }
+
+  if (process.env.CONTACT_EMAIL_FAIL_OPEN === 'false') {
+    return false;
+  }
+
+  return process.env.NODE_ENV !== 'production';
+}
+
 // Initialize Resend client only when API key is available
 const getResendClient = () => {
   const apiKey = process.env.RESEND_API_KEY;
@@ -276,6 +288,7 @@ function generateEmailHtml(data, formatted) {
 
 export async function POST(request) {
   const ip = getClientIp(request);
+  const failOpenOnEmailError = shouldFailOpenOnEmailError();
 
   if (isRateLimited(ip)) {
     return NextResponse.json(
@@ -324,6 +337,8 @@ export async function POST(request) {
 
     // Send email via Resend (only if API key is configured)
     const resend = getResendClient();
+    let emailDelivered = false;
+
     if (resend) {
       try {
         const emailResult = await resend.emails.send({
@@ -336,17 +351,23 @@ export async function POST(request) {
 
         if (emailResult.error) {
           console.error('Email sending error:', emailResult.error);
-          return NextResponse.json(
-            { error: 'Failed to send email. Please try again later.' },
-            { status: 500 }
-          );
+          if (!failOpenOnEmailError) {
+            return NextResponse.json(
+              { error: 'Failed to send email. Please try again later.' },
+              { status: 500 }
+            );
+          }
+        } else {
+          emailDelivered = true;
         }
       } catch (emailError) {
         console.error('Email service error:', emailError);
-        return NextResponse.json(
-          { error: 'Email service temporarily unavailable. Please try again.' },
-          { status: 500 }
-        );
+        if (!failOpenOnEmailError) {
+          return NextResponse.json(
+            { error: 'Email service temporarily unavailable. Please try again.' },
+            { status: 500 }
+          );
+        }
       }
     } else {
       console.log('Email not sent - Resend API key not configured. Form data:', sanitized);
@@ -356,6 +377,7 @@ export async function POST(request) {
       {
         ok: true,
         message: 'Your message has been sent successfully',
+        emailDelivered,
         timestamp: new Date().toISOString(),
       },
       { status: 200 }
