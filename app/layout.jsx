@@ -1,5 +1,6 @@
 import "../src/index.css";
 import { Inter, Poppins } from "next/font/google";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -82,6 +83,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
         {children}
+        <WhatsAppWidget />
       </body>
     </html>
   );

@@ -41,7 +41,7 @@ const testiData = [
 
 const Testimonial = () => {
   return (
-    <section className="performance-section bg-[#d3d3d3] py-28 relative z-10">
+    <section className="performance-section bg-[#0D3270] py-28 relative z-10">
       <div className="Container relative z-10">
         <div className="text-center">
           <h5 className="font-Inter font-medium text-PrimaryColor-0">

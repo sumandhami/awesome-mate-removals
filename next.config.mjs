@@ -9,9 +9,9 @@ const cspDirectives = [
   "default-src 'self'",
   // Allow 'unsafe-inline' for scripts to fix the inline script execution error
   // Allow 'unsafe-eval' specifically for Cloudflare's challenge platform if needed
-  `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net`,
+  `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://wa.me`,
   
-  "script-src-elem 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net",
+  "script-src-elem 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://wa.me",
   
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   
