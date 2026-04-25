@@ -120,10 +120,10 @@ const Portfolio = () => {
         <div className="flex flex-col md:flex-row gap-7 md:items-center justify-between">
           <div>
             <h5 className="font-Inter font-medium text-SecondaryColor-0">
-              CLEENY PORTFOLIO
+              AWESOME MATE PORTFOLIO
             </h5>
             <h2 className="font-Inter font-bold text-[22px] leading-8 sm:text-[38px] sm:leading-[48px] md:text-[44px] md:leading-[54px] lg:text-[32px] lg:leading-[42px] xl:text-[35px] xl:leading-[45px] 2xl:text-[44px] 2xl:leading-[54px] text-HeadingColor-0 mt-3">
-              Latest cleeny Portfolio <br /> from Work Galary
+              Latest Awesome Mate Portfolio <br /> from Work Galary
             </h2>
           </div>
           <div>

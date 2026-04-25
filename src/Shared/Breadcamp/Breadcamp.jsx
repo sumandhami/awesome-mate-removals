@@ -27,7 +27,7 @@ const Breadcamp = ({
           <li>
             <Link to={"/"}>
               <button className="font-Inter text-white flex items-center gap-2 transition-all duration-500 hover:text-PrimaryColor-0">
-                <IoHome className="text-PrimaryColor-0" /> Cleeny
+                <IoHome className="text-PrimaryColor-0" /> Awesome Mate
               </button>
             </Link>
           </li>

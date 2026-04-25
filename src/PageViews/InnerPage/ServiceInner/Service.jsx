@@ -60,7 +60,7 @@ const Service = () => {
             OUR SERVICES
           </h5>
           <h1 className="font-Inter font-bold text-[20px] leading-8 sm:text-[36px] sm:leading-[48px] md:text-[44px] md:leading-[54px] lg:text-[32px] lg:leading-[42px] xl:text-[35px] xl:leading-[45px] 2xl:text-[44px] 2xl:leading-[54px] text-white mt-3">
-            Professional cleeny Services <br />
+            Professional Removal Services <br />
             What we Provide
           </h1>
         </div>

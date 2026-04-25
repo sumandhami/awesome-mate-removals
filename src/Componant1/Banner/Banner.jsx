@@ -40,7 +40,7 @@ const Banner = () => {
               </a>
             </div>
           </div>
-          <div id="contact-form" className="relative w-full max-w-[420px] mx-auto lg:max-w-[420px] lg:ml-auto lg:mr-0 lg:mt-0 lg:mb-28 xl:mb-32 self-end">
+          <div id="contact-form" className="relative w-full max-w-[420px] mx-auto mt-[10px] lg:max-w-[420px] lg:ml-auto lg:mr-0 lg:mt-[10px] lg:mb-28 xl:mb-32 self-end">
             {/* Contact Form Component */}
             <div className="bg-white bg-opacity-95 p-5 md:p-6 rounded-lg shadow-lg">
               <ContactForm />

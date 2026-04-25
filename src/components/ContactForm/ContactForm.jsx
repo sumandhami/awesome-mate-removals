@@ -46,6 +46,7 @@ export default function ContactForm() {
     defaultValues: {
       name: '',
       email: '',
+      phone: '',
       preferredDate: '',
       preferredTime: '',
       serviceType: '',
@@ -75,6 +76,7 @@ export default function ContactForm() {
     const isValid = await trigger([
       'name',
       'email',
+      'phone',
       'preferredDate',
       'preferredTime',
       'serviceType',

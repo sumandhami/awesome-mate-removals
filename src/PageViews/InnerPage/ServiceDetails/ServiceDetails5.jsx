@@ -215,7 +215,7 @@ const ServiceDetails5 = () => {
                   </div>
                   <div className="flex-1">
                     <h6 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">
-                      Proper cleeny
+                      Proper Removal
                     </h6>
                     <p className="font-Poppins font-light text-TextColor-0 mt-3">
                       Ethical network environmental architect go forward opportu

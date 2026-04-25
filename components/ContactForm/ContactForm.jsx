@@ -53,6 +53,7 @@ export default function ContactForm() {
     defaultValues: {
       name: '',
       email: '',
+      phone: '',
       preferredDate: '',
       preferredTime: '',
       serviceType: '',
@@ -88,11 +89,12 @@ export default function ContactForm() {
 
   const handleStep1Next = async () => {
     setErrorMessage('');
-    clearErrors(['name', 'email', 'preferredDate', 'preferredTime', 'serviceType']);
+    clearErrors(['name', 'email', 'phone', 'preferredDate', 'preferredTime', 'serviceType']);
 
     const step1Payload = {
       name: getValues('name'),
       email: getValues('email'),
+      phone: getValues('phone'),
       preferredDate: getValues('preferredDate'),
       preferredTime: getValues('preferredTime'),
       serviceType: getValues('serviceType'),

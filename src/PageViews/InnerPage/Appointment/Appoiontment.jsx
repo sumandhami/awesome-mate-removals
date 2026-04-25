@@ -25,7 +25,7 @@ const Appointment = () => {
               </div>
               <div className="flex-1">
                 <h5 className="font-Inter font-semibold text-[22px] text-HeadingColor-0">
-                  House cleeny
+                  House Removal
                 </h5>
                 <p className="font-Poppins text-TextColor-0 opacity-70 mt-3">
                   Competently repurpose go forward benefits

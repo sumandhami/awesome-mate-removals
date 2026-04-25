@@ -185,6 +185,7 @@ function generateEmailHtml(data, formatted) {
   const safeData = {
     name: escapeHtml(data.name),
     email: escapeHtml(data.email),
+    phone: escapeHtml(data.phone),
     preferredDate: escapeHtml(data.preferredDate),
     preferredTime: escapeHtml(data.preferredTime),
     movingFrom: escapeHtml(data.movingFrom),
@@ -231,6 +232,10 @@ function generateEmailHtml(data, formatted) {
       <div class="field">
         <span class="field-label">Email:</span>
         <span class="field-value">${safeData.email}</span>
+      </div>
+      <div class="field">
+        <span class="field-label">Phone:</span>
+        <span class="field-value">${safeData.phone}</span>
       </div>
     </div>
 

@@ -9,7 +9,7 @@ export default function Step1({
   isSubmitting,
 }) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mt-[10px]">
       <h3 className="text-xl font-bold text-gray-800 mb-6">Your Information</h3>
 
       <Controller
@@ -57,6 +57,28 @@ export default function Step1({
       />
 
       <Controller
+        name="phone"
+        control={control}
+        render={({ field }) => (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Phone Number *
+            </label>
+            <input
+              {...field}
+              type="tel"
+              placeholder="0412 007 264"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled={isSubmitting}
+            />
+            {errors.phone && (
+              <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>
+            )}
+          </div>
+        )}
+      />
+
+      <Controller
         name="preferredDate"
         control={control}
         render={({ field }) => (
@@ -85,23 +107,13 @@ export default function Step1({
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Preferred Time *
             </label>
-            <select
+            <input
               {...field}
+              type="text"
+              placeholder="Eg: 8 am, 1pm, or 13:00/15:00"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               disabled={isSubmitting}
-            >
-              <option value="">Select a time</option>
-              {Array.from({ length: 17 }, (_, i) => {
-                const hours = 9 + Math.floor(i / 2);
-                const minutes = (i % 2) * 30;
-                const time = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-                return (
-                  <option key={time} value={time}>
-                    {time}
-                  </option>
-                );
-              })}
-            </select>
+            />
             {errors.preferredTime && (
               <p className="text-red-600 text-sm mt-1">{errors.preferredTime.message}</p>
             )}
