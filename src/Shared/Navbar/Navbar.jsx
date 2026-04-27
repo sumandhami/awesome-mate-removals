@@ -5,9 +5,8 @@ import { usePathname } from "next/navigation";
 import {
   FaBars,
   FaFacebookF,
-  FaLinkedinIn,
-  FaPinterestP,
-  FaXTwitter,
+  FaInstagram,
+  FaTiktok,
 } from "react-icons/fa6";
 import Logo from "/images/logo final.png";
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -108,8 +107,10 @@ const Navbar = () => {
             <ul className="flex items-center">
               <li>
                 <a
-                  href="#"
+                  href="https://share.google/FxlSYzFTSUeiy0eoF"
                   aria-label="Facebook"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-sm flex justify-center items-center h-[50px] w-[35px] bg-[#1773ea] transition-all duration-500 text-white hover:text-PrimaryColor-0"
                 >
                   <FaFacebookF />
@@ -117,29 +118,24 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  href="#"
-                  aria-label="X"
-                  className="text-sm flex justify-center items-center h-[50px] w-[35px] bg-[#2ca5da] transition-all duration-500 text-white hover:text-PrimaryColor-0"
+                  href="https://share.google/KR5gm4sMGbYIO7JUA"
+                  aria-label="Instagram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm flex justify-center items-center h-[50px] w-[35px] bg-[#E1306C] transition-all duration-500 text-white hover:text-PrimaryColor-0"
                 >
-                  <FaXTwitter />
+                  <FaInstagram />
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
-                  aria-label="LinkedIn"
-                  className="text-sm flex justify-center items-center h-[50px] w-[35px] bg-[#0073b1] transition-all duration-500 text-white hover:text-PrimaryColor-0"
+                  href="https://share.google/56KlLkrd5Mi41pzM7"
+                  aria-label="TikTok"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm flex justify-center items-center h-[50px] w-[35px] bg-[#111111] transition-all duration-500 text-white hover:text-PrimaryColor-0"
                 >
-                  <FaLinkedinIn />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  aria-label="Pinterest"
-                  className="text-sm flex justify-center items-center h-[50px] w-[35px] bg-[#e11a21] transition-all duration-500 text-white hover:text-PrimaryColor-0"
-                >
-                  <FaPinterestP />
+                  <FaTiktok />
                 </a>
               </li>
             </ul>
