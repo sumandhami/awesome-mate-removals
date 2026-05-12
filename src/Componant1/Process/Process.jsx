@@ -1,35 +1,20 @@
-/* eslint-disable no-unused-vars */
 import boxShape from "/images/work-shape.png";
 import { FiClipboard, FiPackage, FiTruck } from "react-icons/fi";
 import ProcessCard from "./ProcessCard";
 
-const processData = [
-  {
-    id: 1,
-    processIcon: <FiClipboard size={42} />,
-    boxNumber: "1",
-    boxShape: boxShape,
-    processTitle: "Get a Free Quote",
-    processDesc: "Share your moving details and receive a fast, transparent quote in under 60 seconds.",
-  },
-  {
-    id: 2,
-    processIcon: <FiPackage size={42} />,
-    boxNumber: "2",
-    boxShape: boxShape,
-    processTitle: "We Pack and Load",
-    processDesc: "Our local team carefully packs, protects, and loads your items with proven moving systems.",
-  },
-  {
-    id: 3,
-    processIcon: <FiTruck size={42} />,
-    boxNumber: "3",
-    processTitle: "Safe Delivery",
-    processDesc: "We transport and unload your belongings securely, on-time, and exactly where you need them.",
-  },
+const fallbackSteps = [
+  { id: 1, processIcon: <FiClipboard size={42} />, boxNumber: "1", processTitle: "Get a Free Quote", processDesc: "Share your moving details and receive a fast, transparent quote in under 60 seconds." },
+  { id: 2, processIcon: <FiPackage size={42} />, boxNumber: "2", processTitle: "We Pack and Load", processDesc: "Our local team carefully packs, protects, and loads your items with proven moving systems." },
+  { id: 3, processIcon: <FiTruck size={42} />, boxNumber: "3", processTitle: "Safe Delivery", processDesc: "We transport and unload your belongings securely, on-time, and exactly where you need them." },
 ];
 
-const Process = () => {
+const icons = [<FiClipboard size={42} />, <FiPackage size={42} />, <FiTruck size={42} />];
+
+const Process = ({ processSteps = null }) => {
+  const items = processSteps && processSteps.length > 0
+    ? processSteps.map((s, i) => ({ id: i, processIcon: icons[i] ?? icons[0], boxNumber: String(s.stepNumber ?? i + 1), processTitle: s.title, processDesc: s.description }))
+    : fallbackSteps;
+
   return (
     <section className="performance-section pt-28 pb-10 relative">
       <div className="Container">
@@ -48,28 +33,17 @@ const Process = () => {
         </div>
         <div className="pb-16 mt-[60px]">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
-            {processData.map(
-              ({
-                id,
-                processIcon,
-                processTitle,
-                boxNumber,
-                processDesc,
-                boxShape,
-              }) => {
-                return (
-                  <div key={id}>
-                    <ProcessCard
-                      processIcon={processIcon}
-                      boxNumber={boxNumber}
-                      boxShape={boxShape}
-                      processTitle={processTitle}
-                      processDesc={processDesc}
-                    />
-                  </div>
-                );
-              }
-            )}
+            {items.map(({ id, processIcon, processTitle, boxNumber, processDesc }) => (
+              <div key={id}>
+                <ProcessCard
+                  processIcon={processIcon}
+                  boxNumber={boxNumber}
+                  boxShape={boxShape}
+                  processTitle={processTitle}
+                  processDesc={processDesc}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -1,45 +1,17 @@
-/* eslint-disable no-unused-vars */
 import testiImg from "/images/gallery/happy.png";
-import testiImg2 from "/images/gallery/happy.png";
 import testiIcon from "/images/testi-icon.png";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import TestimonialCard from "./TestimonialCard";
-import { homeReviews } from "@/src/data/homepageContent";
 
-const testiData = [
-  {
-    id: 1,
-    testiImg: testiImg,
-    testiRatingIcon: <MdOutlineStarPurple500 />,
-    testiName: homeReviews[0].name,
-    testiDesignation: homeReviews[0].suburb,
-    testiTitle: homeReviews[0].title,
-    testiDesc: `"${homeReviews[0].description}"`,
-    testiIcon: testiIcon,
-  },
-  {
-    id: 2,
-    testiImg: testiImg2,
-    testiRatingIcon: <MdOutlineStarPurple500 />,
-    testiName: homeReviews[1].name,
-    testiDesignation: homeReviews[1].suburb,
-    testiTitle: homeReviews[1].title,
-    testiDesc: `"${homeReviews[1].description}"`,
-    testiIcon: testiIcon,
-  },
-  {
-    id: 3,
-    testiImg: testiImg,
-    testiRatingIcon: <MdOutlineStarPurple500 />,
-    testiName: homeReviews[2].name,
-    testiDesignation: homeReviews[2].suburb,
-    testiTitle: homeReviews[2].title,
-    testiDesc: `"${homeReviews[2].description}"`,
-    testiIcon: testiIcon,
-  },
+const fallbackReviews = [
+  { _id: "1", name: "Liam Parker", suburb: "Perth CBD", title: "Smooth Residential Move", description: "The team arrived on time, packed everything carefully, and delivered without a single scratch. Excellent communication from start to finish." },
+  { _id: "2", name: "Sophie Nguyen", suburb: "Joondalup", title: "Fast Furniture Removal", description: "We needed a same-week furniture move and they handled it perfectly. Friendly movers, clean truck, and very professional service." },
+  { _id: "3", name: "James Fletcher", suburb: "Fremantle", title: "Reliable Office Relocation", description: "Our office relocation was completed safely and on schedule. The crew coordinated everything well and minimized downtime for our business." },
 ];
 
-const Testimonial = () => {
+const Testimonial = ({ reviews = null }) => {
+  const data = (reviews && reviews.length > 0 ? reviews : fallbackReviews).slice(0, 3);
+
   return (
     <section className="performance-section bg-[#0D3270] py-28 relative z-10">
       <div className="Container relative z-10">
@@ -52,32 +24,19 @@ const Testimonial = () => {
           </h2>
         </div>
         <div className="mt-[40px] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
-          {testiData.map(
-            ({
-              id,
-              testiImg,
-              testiRatingIcon,
-              testiName,
-              testiDesignation,
-              testiTitle,
-              testiDesc,
-              testiIcon,
-            }) => {
-              return (
-                <div key={id}>
-                  <TestimonialCard
-                    testiImg={testiImg}
-                    testiRatingIcon={testiRatingIcon}
-                    testiName={testiName}
-                    testiDesignation={testiDesignation}
-                    testiTilte={testiTitle}
-                    testiDesc={testiDesc}
-                    testiIcon={testiIcon}
-                  />
-                </div>
-              );
-            }
-          )}
+          {data.map((review) => (
+            <div key={review._id}>
+              <TestimonialCard
+                testiImg={testiImg}
+                testiRatingIcon={<MdOutlineStarPurple500 />}
+                testiName={review.name}
+                testiDesignation={review.suburb}
+                testiTilte={review.title}
+                testiDesc={`"${review.description}"`}
+                testiIcon={testiIcon}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

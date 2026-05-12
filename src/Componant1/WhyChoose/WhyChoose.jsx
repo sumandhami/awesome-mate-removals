@@ -1,33 +1,19 @@
 import { FaMoneyCheckDollar, FaShieldHalved, FaTruckFast, FaUsers } from "react-icons/fa6";
 
-const whyChooseData = [
-  {
-    id: 1,
-    icon: <FaShieldHalved />,
-    title: "Fully Insured",
-    desc: "Comprehensive move protection for household, office, and furniture removals.",
-  },
-  {
-    id: 2,
-    icon: <FaUsers />,
-    title: "Experienced Local Team",
-    desc: "Skilled Perth movers who know local streets, apartments, and loading access points.",
-  },
-  {
-    id: 3,
-    icon: <FaMoneyCheckDollar />,
-    title: "Transparent Pricing",
-    desc: "Clear quotes with no hidden surprises, so you can plan your move with confidence.",
-  },
-  {
-    id: 4,
-    icon: <FaTruckFast />,
-    title: "GPS-Tracked Fleet",
-    desc: "Modern trucks with route tracking for reliable scheduling and safe delivery windows.",
-  },
+const icons = [<FaShieldHalved />, <FaUsers />, <FaMoneyCheckDollar />, <FaTruckFast />];
+
+const fallbackItems = [
+  { id: 1, icon: icons[0], title: "Fully Insured", desc: "Comprehensive move protection for household, office, and furniture removals." },
+  { id: 2, icon: icons[1], title: "Experienced Local Team", desc: "Skilled Perth movers who know local streets, apartments, and loading access points." },
+  { id: 3, icon: icons[2], title: "Transparent Pricing", desc: "Clear quotes with no hidden surprises, so you can plan your move with confidence." },
+  { id: 4, icon: icons[3], title: "GPS-Tracked Fleet", desc: "Modern trucks with route tracking for reliable scheduling and safe delivery windows." },
 ];
 
-const WhyChoose = () => {
+const WhyChoose = ({ whyChooseItems = null }) => {
+  const items = whyChooseItems && whyChooseItems.length > 0
+    ? whyChooseItems.map((w, i) => ({ id: i, icon: icons[i] ?? icons[0], title: w.title, desc: w.description }))
+    : fallbackItems;
+
   return (
     <section className="performance-section py-28">
       <div className="Container">
@@ -38,7 +24,7 @@ const WhyChoose = () => {
           </h2>
         </div>
         <div className="mt-[60px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
-          {whyChooseData.map(({ id, icon, title, desc }) => (
+          {items.map(({ id, icon, title, desc }) => (
             <div
               key={id}
               className="bg-BodyBg-0 px-7 py-8 rounded relative overflow-hidden before:absolute before:bottom-0 before:left-1/2 before:w-0 before:h-1 before:bg-SecondaryColor-0 before:transition-all before:duration-500 hover:before:left-0 hover:before:w-full"

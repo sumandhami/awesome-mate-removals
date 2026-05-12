@@ -19,8 +19,8 @@ const cspDirectives = [
   "img-src 'self' data: blob: https:",
   "font-src 'self' data: https://fonts.gstatic.com",
   
-  // connect-src must include the challenge platform
-  `connect-src 'self' https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://wa.me`,
+  // connect-src must include the challenge platform and Sanity API
+  `connect-src 'self' https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://wa.me https://*.sanity.io wss://*.sanity.io`,
   
   // frame-src is crucial for the iframe
   "frame-src 'self' https://challenges.cloudflare.com https://www.google.com https://www.recaptcha.net",
@@ -66,6 +66,12 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [60, 70, 72, 75],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+    ],
   },
   async headers() {
     return [

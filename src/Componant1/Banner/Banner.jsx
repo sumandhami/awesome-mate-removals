@@ -2,11 +2,15 @@ import Image from "next/image";
 import { FaPhone } from "react-icons/fa6";
 import ContactForm from "@/components/ContactForm/ContactForm";
 
-const Banner = () => {
+const Banner = ({ hero = null }) => {
+  const headline = hero?.headline ?? "Trusted Movers in Perth - Residential, Commercial & Furniture Removals";
+  const subheadline = hero?.subheadline ?? "Fully insured, local Perth moving company. Get your free instant quote in 60 seconds.";
+  const bgSrc = hero?.backgroundImage?.asset?.url ?? "/images/gallery/truck-6.jpeg";
+
   return (
     <section id="home" className="min-h-[720px] sm:min-h-[820px] lg:min-h-[814px] pt-6 sm:pt-10 lg:pt-0 flex items-center overflow-hidden relative">
       <Image
-        src="/images/gallery/truck-6.jpeg"
+        src={bgSrc}
         alt=""
         fill
         priority
@@ -16,7 +20,7 @@ const Banner = () => {
       />
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/30 z-0" />
-      
+
       <div className="Container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-12 sm:gap-16 lg:gap-0 lg:items-end">
           <div className="flex flex-col justify-end lg:min-h-[610px] lg:pb-28 xl:pb-32">
@@ -24,10 +28,10 @@ const Banner = () => {
               LOCAL PERTH MOVING COMPANY
             </h5>
             <h1 className="font-Inter font-extrabold text-white text-[27px] leading-[38px] sm:text-[53px] sm:leading-[63px] lg:text-[51px] xl:text-[55px] 2xl:text-[58px] 2xl:leading-[65px] mt-6 mb-6">
-              Trusted Movers in Perth - Residential, Commercial & Furniture Removals
+              {headline}
             </h1>
             <p className="font-Poppins text-white opacity-80 mb-9 w-full sm:w-10/12">
-              Fully insured, local Perth moving company. Get your free instant quote in 60 seconds.
+              {subheadline}
             </p>
             <div className="flex flex-wrap gap-4">
               <a

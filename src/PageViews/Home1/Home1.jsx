@@ -57,7 +57,15 @@ const DeferredSection = ({ children, minHeight = 420 }) => {
   );
 };
 
-const Home1 = () => {
+const Home1 = ({ posts = [], homepage = null, reviews = [], faqs = [], services = [] }) => {
+  const hero = homepage?.hero ?? null;
+  const about = homepage?.about ?? null;
+  const features = homepage?.features ?? null;
+  const processSteps = homepage?.processSteps ?? null;
+  const whyChooseItems = homepage?.whyChooseItems ?? null;
+  const serviceAreas = homepage?.serviceAreas ?? null;
+  const movingCost = homepage?.movingCost ?? null;
+  const portfolio = homepage?.portfolio ?? null;
   useEffect(() => {
     const scrollToHash = () => {
       const hash = window.location.hash.slice(1);
@@ -77,31 +85,31 @@ const Home1 = () => {
 
   return (
     <>
-      <Banner />
-      <Feature />
-      <About />
-      <Service />
+      <Banner hero={hero} />
+      <Feature features={features} />
+      <About about={about} />
+      <Service services={services} />
       <DeferredSection minHeight={520}>
-        <ProcessCard />
+        <ProcessCard processSteps={processSteps} />
       </DeferredSection>
       <DeferredSection minHeight={520}>
-        <MovingCost />
+        <MovingCost movingCost={movingCost} />
       </DeferredSection>
       <DeferredSection minHeight={520}>
-        <WhyChoose />
+        <WhyChoose whyChooseItems={whyChooseItems} />
       </DeferredSection>
       <DeferredSection minHeight={520}>
-        <ServiceAreas />
+        <ServiceAreas serviceAreas={serviceAreas} />
       </DeferredSection>
-      <Blog />
+      <Blog posts={posts} />
       <DeferredSection minHeight={520}>
-        <Testimonial />
+        <Testimonial reviews={reviews} />
       </DeferredSection>
       <DeferredSection minHeight={620}>
-        <Portfolio />
+        <Portfolio portfolio={portfolio} />
       </DeferredSection>
       <DeferredSection minHeight={420}>
-        <HomeFaq />
+        <HomeFaq faqs={faqs} />
       </DeferredSection>
       <DeferredSection minHeight={360}>
         <Support />

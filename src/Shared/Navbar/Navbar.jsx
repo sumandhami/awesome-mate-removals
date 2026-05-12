@@ -15,7 +15,16 @@ import { VscHeart } from "react-icons/vsc";
 import { BsEnvelope } from "react-icons/bs";
 import { IoLocationOutline } from "react-icons/io5";
 
-const Navbar = () => {
+const Navbar = ({ settings }) => {
+  const phone = settings?.phone ?? "0412007264";
+  const email = settings?.email ?? "info@awesomemateremovals.com.au";
+  const addr = settings?.address;
+  const address = addr
+    ? `${addr.street}, ${addr.suburb} ${addr.state} ${addr.postcode}`
+    : "Unit 5/207 Waterloo Street, Tuart Hill WA 6060";
+  const fbHref = settings?.social?.facebook ?? "https://share.google/FxlSYzFTSUeiy0eoF";
+  const igHref = settings?.social?.instagram ?? "https://share.google/KR5gm4sMGbYIO7JUA";
+  const ttHref = settings?.social?.tiktok ?? "https://share.google/56KlLkrd5Mi41pzM7";
   const rafIdRef = useRef(null);
   const stickyStateRef = useRef(false);
   const pathname = usePathname();
@@ -93,21 +102,21 @@ const Navbar = () => {
           <div className="flex items-center gap-6 md:gap-10">
             <p className="font-Poppins text-[15px] text-white md:flex items-center gap-1 relative before:absolute before:top-1/2 before:right-0 before:w-[1px] before:h-5 before:bg-BorderColor-0 before-:translate-1/2 hidden">
               <IoLocationOutline className="text-xl relative bottom-[2px]" />
-              Unit 5/207 Waterloo Street, Tuart Hill WA 6060
+              {address}
             </p>
-            <Link
-              href="/"
+            <a
+              href={`mailto:${email}`}
               className="font-Poppins text-[15px] text-white sm:flex items-center gap-2 hidden"
             >
               <BsEnvelope size={"18"} />
-              info@awesomemateremovals.com.au
-            </Link>
+              {email}
+            </a>
           </div>
           <div className="flex items-center gap-3 md:gap-6">
             <ul className="flex items-center">
               <li>
                 <a
-                  href="https://share.google/FxlSYzFTSUeiy0eoF"
+                  href={fbHref}
                   aria-label="Facebook"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -118,7 +127,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  href="https://share.google/KR5gm4sMGbYIO7JUA"
+                  href={igHref}
                   aria-label="Instagram"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -129,7 +138,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  href="https://share.google/56KlLkrd5Mi41pzM7"
+                  href={ttHref}
                   aria-label="TikTok"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -145,11 +154,11 @@ const Navbar = () => {
                 Call :
               </h6>
               <a
-                href="tel:0412007264"
+                href={`tel:${phone}`}
                 className="font-Poppins font-medium text-sm text-white"
-                aria-label="Call 0412007264"
+                aria-label={`Call ${phone}`}
               >
-                0412007264
+                {phone}
               </a>
             </div>
           </div>

@@ -8,6 +8,7 @@ import {
   FiTrash2,
   FiPackage,
 } from "react-icons/fi";
+import { urlFor } from "@/sanity/lib/image";
 import serviceThumb from "/images/gallery/services/residential.png";
 import serviceThumb2 from "/images/gallery/services/furniture.png";
 import serviceThumb3 from "/images/gallery/commercial.png";
@@ -16,82 +17,66 @@ import serviceThumb5 from "/images/gallery/junk.png";
 import serviceThumb6 from "/images/gallery/services/special.png";
 import ServiceCard from "./ServiceCard";
 
-const serviceData = [
+// Icons are permanently hardcoded and matched by array index position.
+// The CMS has no icon fields for services — same approach as Feature/Process/WhyChoose.
+const serviceIcons = [
+  <FiHome key="home" size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
+  <FiTruck key="truck" size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
+  <FiBriefcase key="briefcase" size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
+  <FiMap key="map" size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
+  <FiTrash2 key="trash" size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
+  <FiPackage key="package" size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
+];
+
+const fallbackData = [
   {
     id: 1,
     serviceThumb: serviceThumb,
-    serviceIcon: <FiHome size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
     serviceTitle: `Residential Moving`,
-    serviceListIcon: <FaCheck />,
     serviceListContent: `Safe packing, loading, and transport for homes and apartments.`,
-    serviceListContent2: null,
     serviceUrl: "#",
-    buttonContent: `Learn More`,
-    buttonIcon: <FaArrowRightLong />,
   },
   {
     id: 2,
     serviceThumb: serviceThumb2,
-    serviceIcon: <FiTruck size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
     serviceTitle: `Furniture Removals`,
-    serviceListIcon: <FaCheck />,
     serviceListContent: `Specialist handling for heavy, fragile, and high-value furniture items.`,
-    serviceListContent2: null,
     serviceUrl: "#",
-    buttonContent: `Learn More`,
-    buttonIcon: <FaArrowRightLong />,
   },
   {
     id: 3,
     serviceThumb: serviceThumb3,
-    serviceIcon: <FiBriefcase size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
     serviceTitle: `Commercial Relocation`,
-    serviceListIcon: <FaCheck />,
     serviceListContent: `Planned office and retail moves with minimal business disruption.`,
-    serviceListContent2: null,
     serviceUrl: "#",
-    buttonContent: `Learn More`,
-    buttonIcon: <FaArrowRightLong />,
   },
   {
     id: 4,
     serviceThumb: serviceThumb4,
-    serviceIcon: <FiMap size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
     serviceTitle: `Interstate Removals`,
-    serviceListIcon: <FaCheck />,
     serviceListContent: `End-to-end long-distance moving from Perth with secure transit.`,
-    serviceListContent2: null,
     serviceUrl: "#",
-    buttonContent: `Learn More`,
-    buttonIcon: <FaArrowRightLong />,
   },
   {
     id: 5,
     serviceThumb: serviceThumb5,
-    serviceIcon: <FiTrash2 size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
     serviceTitle: `Junk Removals`,
-    serviceListIcon: <FaCheck />,
     serviceListContent: `Fast and responsible removal of unwanted furniture, boxes, and general clutter.`,
-    serviceListContent2: null,
     serviceUrl: "#",
-    buttonContent: `Learn More`,
-    buttonIcon: <FaArrowRightLong />,
   },
   {
     id: 6,
     serviceThumb: serviceThumb6,
-    serviceIcon: <FiPackage size={34} className="text-HoverColor-0 group-hover:text-white transition-all duration-500" />,
     serviceTitle: `Special Items Moves`,
-    serviceListIcon: <FaCheck />,
     serviceListContent: `Expert handling for pianos, statues, marble tables, pool tables, and fragile valuables.`,
-    serviceListContent2: null,
     serviceUrl: "#",
-    buttonContent: `Learn More`,
-    buttonIcon: <FaArrowRightLong />,
   },
 ];
 
-const ServiceMain = () => {
+const ServiceMain = ({ services }) => {
+  const isCms = services && services.length > 0;
+  const data = isCms ? services : fallbackData;
+
   return (
     <section>
       <div className="Container">
@@ -105,36 +90,27 @@ const ServiceMain = () => {
         </div>
         <div className="mt-[60px]">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
-            {serviceData.map(
-              ({
-                id,
-                serviceThumb,
-                serviceIcon,
-                serviceTitle,
-                serviceListIcon,
-                serviceListContent,
-                serviceListContent2,
-                serviceUrl,
-                buttonContent,
-                buttonIcon,
-              }) => {
-                return (
-                  <div key={id}>
-                    <ServiceCard
-                      serviceThumb={serviceThumb}
-                      serviceIcon={serviceIcon}
-                      serviceTitle={serviceTitle}
-                      serviceListIcon={serviceListIcon}
-                      serviceListContent={serviceListContent}
-                      serviceListContent2={serviceListContent2}
-                      serviceUrl={serviceUrl}
-                      buttonContent={buttonContent}
-                      buttonIcon={buttonIcon}
-                    />
-                  </div>
-                );
-              }
-            )}
+            {data.map((item, index) => {
+              const thumb = isCms && item.thumbnail?.asset
+                ? urlFor(item.thumbnail).width(820).auto("format").url()
+                : item.serviceThumb;
+
+              return (
+                <div key={item._id || item.id}>
+                  <ServiceCard
+                    serviceThumb={thumb}
+                    serviceIcon={serviceIcons[index] ?? serviceIcons[0]}
+                    serviceTitle={isCms ? item.title : item.serviceTitle}
+                    serviceListIcon={<FaCheck />}
+                    serviceListContent={isCms ? item.shortDescription : item.serviceListContent}
+                    serviceListContent2={null}
+                    serviceUrl={item.serviceUrl ?? "#"}
+                    buttonContent="Learn More"
+                    buttonIcon={<FaArrowRightLong />}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

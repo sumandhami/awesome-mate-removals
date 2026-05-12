@@ -1,0 +1,906 @@
+TABLE OF CONTENTS
+1. PROJECT OVERVIEW ................................................ line 16
+2. FULL DIRECTORY TREE (ANNOTATED) .................................. line 26
+3. RUNTIME ARCHITECTURE ............................................ line 316
+4. ROUTING MAP ..................................................... line 325
+5. DATA FLOW AND STATE ............................................. line 340
+6. API ENDPOINTS AND SERVER LOGIC .................................. line 348
+7. CONTENT INVENTORY (PAGES + COMPONENTS) .......................... line 363
+8. CMS MODELING BLUEPRINT (SNAKE_CASE FIELDS) ...................... line 684
+9. ASSETS AND MEDIA INVENTORY ...................................... line 780
+10. SEO, METADATA, AND ANALYTICS ................................... line 851
+11. SECURITY, PRIVACY, AND COMPLIANCE .............................. line 858
+12. TOOLING, BUILD, AND DEPENDENCIES ............................... line 865
+13. RISKS, GAPS, AND RECOMMENDATIONS ............................... line 900
+
+=== 1. PROJECT OVERVIEW
+  - project_name: "Awesome Mate Removals" [STATIC_FILE]
+  - framework: Next.js 16.2.2 (App Router) [STATIC_FILE]
+  - ui_layer: React 19.2.4 + Tailwind CSS 3.4.17 [STATIC_FILE]
+  - structure: app/ contains active routes; src/ contains legacy/template views [POTENTIALLY DEAD CODE]
+  - data_sources: static arrays in src/data/homepageContent.js; no database [STATIC_FILE]
+  - forms: multi-step contact form with Turnstile verification; sends to /api/contact [DYNAMIC]
+  - analytics: @vercel/analytics + @vercel/speed-insights [STATIC_FILE]
+  - core_routes: /, /services, /privacy-policy, /terms-and-conditions, /blog/how-to-move-heavy-furniture-without-damage [STATIC_FILE]
+
+=== 2. FULL DIRECTORY TREE (ANNOTATED)
+  / (repo root)
+    .env.example - environment variable template [STATIC_FILE]
+    .eslintrc.cjs - legacy ESLint config (Vite-era) [POTENTIALLY DEAD CODE]
+    .git/ - Git metadata [AUTO-GENERATED]
+    .github/
+      PRD.md - internal requirements doc for migration [STATIC_FILE]
+      PULL_REQUEST_TEMPLATE.md - PR checklist [STATIC_FILE]
+      workflows/
+        ci.yml - CI pipeline (install, lint, build, LHCI) [STATIC_FILE]
+    .gitignore - git ignore rules [STATIC_FILE]
+    .next/ - Next.js build output [AUTO-GENERATED]
+    app/
+      (main)/
+        blog/
+          how-to-move-heavy-furniture-without-damage/
+            page.jsx - blog article page [STATIC_FILE]
+        layout.jsx - main layout with JSON-LD for reviews/FAQ [STATIC_FILE]
+        page.jsx - homepage route (renders Home1) [STATIC_FILE]
+        privacy-policy/
+          page.jsx - privacy policy page [STATIC_FILE]
+        services/
+          page.jsx - services page route [STATIC_FILE]
+        terms-and-conditions/
+          page.jsx - terms page [STATIC_FILE]
+      api/
+        contact/
+          route.js - contact form API (Resend + Turnstile) [STATIC_FILE]
+        forms/
+          route.js - generic form API (webhook + safe redirect) [STATIC_FILE]
+      error.jsx - error boundary page [STATIC_FILE]
+      layout.jsx - root HTML layout + metadata + LocalBusiness schema [STATIC_FILE]
+      not-found.jsx - 404 page [STATIC_FILE]
+      robots.js - robots.txt generator [STATIC_FILE]
+      sitemap.js - sitemap generator [STATIC_FILE]
+    components/
+      ContactForm/
+        ContactForm.jsx - multi-step contact form wrapper [STATIC_FILE]
+        Step1.jsx - contact form step 1 [STATIC_FILE]
+        Step2.jsx - contact form step 2 (Turnstile) [STATIC_FILE]
+      WhatsAppWidget.tsx - WhatsApp floating button [STATIC_FILE]
+    docs/
+      plan/
+        lighthouse-regression-recovery-2026-04-24/
+          delta-summary.md - Lighthouse regression summary [STATIC_FILE]
+          plan.yaml - Lighthouse recovery plan [STATIC_FILE]
+        performance-optimization-2026-04-24/
+          plan.yaml - performance plan [STATIC_FILE]
+        routing-correctness-2026-04-23/
+          plan.yaml - routing plan [STATIC_FILE]
+        scalability-governance-2026-04-24/
+          plan.yaml - scalability plan [STATIC_FILE]
+        security-remediation-2026-04-23/
+          plan.yaml - security plan [STATIC_FILE]
+    eslint.config.mjs - current ESLint config [STATIC_FILE]
+    HOMEPAGE_MEDIA_UPDATE_GUIDE.txt - media update instructions [STATIC_FILE]
+    jsconfig.json - module alias config [STATIC_FILE]
+    lh-blog-heavy-furniture.json - Lighthouse artifact [STATIC_FILE]
+    lh-home-current.json - Lighthouse artifact [STATIC_FILE]
+    lh-services.json - Lighthouse artifact [STATIC_FILE]
+    lib/
+      schemas/
+        contactSchema.js - Zod schema for contact form [STATIC_FILE]
+    lighthouse-report-desktop-after.json - Lighthouse artifact [STATIC_FILE]
+    lighthouse-report-desktop.json - Lighthouse artifact [STATIC_FILE]
+    lighthouse-report-mobile-after.json - Lighthouse artifact [STATIC_FILE]
+    lighthouse-report-mobile.json - Lighthouse artifact [STATIC_FILE]
+    next.config.mjs - Next config (headers, redirects, webpack alias) [STATIC_FILE]
+    NEXTJS_MIGRATION_COMPLETION_REPORT.txt - migration report [STATIC_FILE]
+    NEXTJS_MIGRATION_PROGRESS.txt - migration progress [STATIC_FILE]
+    node_modules/ - dependencies [AUTO-GENERATED]
+    package.json - scripts and deps [STATIC_FILE]
+    package-lock.json - dependency lockfile [STATIC_FILE]
+    postcss.config.js - PostCSS config [STATIC_FILE]
+    public/
+      site.webmanifest - PWA manifest [STATIC_FILE]
+      images/
+        fav-icon/
+          icon.png - favicon/app icon [STATIC_FILE]
+        address-bg.png - background image [STATIC_FILE]
+        about-icon2.png - unused asset [POTENTIALLY DEAD CODE]
+        about-shape4.png - unused asset [POTENTIALLY DEAD CODE]
+        about-thumb.png - unused asset [POTENTIALLY DEAD CODE]
+        about-thumb3.png - unused asset [POTENTIALLY DEAD CODE]
+        blog-thumb.png - blog grid thumb [STATIC_FILE]
+        blog-thumb2.png - blog grid thumb [STATIC_FILE]
+        blog-thumb3.png - blog grid thumb [STATIC_FILE]
+        blog-thumb7.png - blog grid thumb [STATIC_FILE]
+        blog-thumb8.png - blog grid/blog details thumb [STATIC_FILE]
+        blog-thumb9.png - blog grid/blog details thumb [STATIC_FILE]
+        blog-thumb10.png - blog grid thumb [STATIC_FILE]
+        blog-thumb11.png - blog grid thumb [STATIC_FILE]
+        blog-thumb13.png - blog list thumb [STATIC_FILE]
+        blog-thumb14.png - blog list thumb [STATIC_FILE]
+        blog-thumb15.png - blog list thumb [STATIC_FILE]
+        blog-thumb16.png - blog list thumb [STATIC_FILE]
+        brand-img.png - brand logo [STATIC_FILE]
+        brand-img2.png - brand logo [STATIC_FILE]
+        brand-img3.png - brand logo [STATIC_FILE]
+        brand-img4.png - brand logo [STATIC_FILE]
+        brand-img5.png - brand logo [STATIC_FILE]
+        breatcome-bg.png - breadcamp background [STATIC_FILE]
+        breatcome-shape.png - breadcamp overlay [STATIC_FILE]
+        contact-icon.png - appointment icon [STATIC_FILE]
+        contact-icon2.png - appointment icon [STATIC_FILE]
+        contact-shape.png - appointment decoration [STATIC_FILE]
+        counter-icon.png - about counter icon [STATIC_FILE]
+        counter-icon2.png - unused asset [POTENTIALLY DEAD CODE]
+        counter-icon3.png - unused asset [POTENTIALLY DEAD CODE]
+        faq-thumb.png - pricing FAQ thumb [STATIC_FILE]
+        feature-icon2.png - unused asset [POTENTIALLY DEAD CODE]
+        feature-icon3.png - unused asset [POTENTIALLY DEAD CODE]
+        feature-icon-6.png - unused asset [POTENTIALLY DEAD CODE]
+        footer-logo.jpg - footer logo [STATIC_FILE]
+        footer-logo.png - unused asset [POTENTIALLY DEAD CODE]
+        hero-bg.png - unused asset [POTENTIALLY DEAD CODE]
+        logo final.png - navbar logo [STATIC_FILE]
+        logo.png - unused asset [POTENTIALLY DEAD CODE]
+        portfolio-bg.png - portfolio background [STATIC_FILE]
+        portfolio-img.png - unused asset [POTENTIALLY DEAD CODE]
+        portfolio-img5.png - unused asset [POTENTIALLY DEAD CODE]
+        post1.png - blog list/sidebar thumb [STATIC_FILE]
+        post2.png - blog list/sidebar thumb [STATIC_FILE]
+        post3.png - blog list/sidebar thumb [STATIC_FILE]
+        pricing-shape.png - pricing card decoration [STATIC_FILE]
+        project-det-team-thumb.png - project details profile thumb [STATIC_FILE]
+        project-det-thumb.png - project details thumb [STATIC_FILE]
+        project-img.png - project grid thumb [STATIC_FILE]
+        project-img2.png - project grid thumb [STATIC_FILE]
+        project-img3.png - project grid thumb [STATIC_FILE]
+        project-img4.png - project grid thumb [STATIC_FILE]
+        project-img5.png - project grid thumb [STATIC_FILE]
+        project-img6.png - project grid thumb [STATIC_FILE]
+        service-bg.png - support background [STATIC_FILE]
+        service-bg2.png - service inner background [STATIC_FILE]
+        service-icon.png - service inner icon [STATIC_FILE]
+        service-icon2.png - service inner icon [STATIC_FILE]
+        service-icon3.png - service inner icon [STATIC_FILE]
+        service-icon7.png - unused asset [POTENTIALLY DEAD CODE]
+        service-icon14.png - service inner icon [STATIC_FILE]
+        service-icon15.png - service inner icon [STATIC_FILE]
+        service-icon16.png - service inner icon [STATIC_FILE]
+        service-img.png - service inner thumb [STATIC_FILE]
+        service-img2.png - service inner thumb [STATIC_FILE]
+        service-img3.png - service inner thumb [STATIC_FILE]
+        service-img4.png - service inner thumb [STATIC_FILE]
+        service-img5.png - service inner thumb [STATIC_FILE]
+        service-img6.png - service inner thumb [STATIC_FILE]
+        service-img7.png - service inner thumb [STATIC_FILE]
+        service-img8.png - service inner thumb [STATIC_FILE]
+        service-img9.png - service inner thumb [STATIC_FILE]
+        service-shape.png - service decoration [STATIC_FILE]
+        sidber-icon.png - service/project sidebar icon [STATIC_FILE]
+        sidber-icon2.png - service/project sidebar icon [STATIC_FILE]
+        sidber-img.png - service/project sidebar image [STATIC_FILE]
+        sidber-img2.png - service compare image [STATIC_FILE]
+        sidber-thumb.png - service/blog sidebar thumb [STATIC_FILE]
+        team-thumb3.png - unused asset [POTENTIALLY DEAD CODE]
+        team-thumb4.png - unused asset [POTENTIALLY DEAD CODE]
+        team-thumb5.png - unused asset [POTENTIALLY DEAD CODE]
+        team-thumb6.png - unused asset [POTENTIALLY DEAD CODE]
+        team-thumb7.png - unused asset [POTENTIALLY DEAD CODE]
+        team-thumb8.png - unused asset [POTENTIALLY DEAD CODE]
+        team-thumb9.png - team inner thumb [STATIC_FILE]
+        team-thumb10.png - team inner thumb [STATIC_FILE]
+        team-thumb11.png - team inner thumb [STATIC_FILE]
+        team-thumb12.png - team inner thumb [STATIC_FILE]
+        team-thumb13.png - team inner thumb [STATIC_FILE]
+        team-thumb14.png - team inner thumb [STATIC_FILE]
+        testimonial-bg-four.png - testimonial inner background [STATIC_FILE]
+        testi-icon.png - testimonial quote icon [STATIC_FILE]
+        testi-shape4.png - unused asset [POTENTIALLY DEAD CODE]
+        testi-thumb.png - testimonial inner thumb [STATIC_FILE]
+        testi-thumb-2.png - testimonial inner thumb [STATIC_FILE]
+        testi-thumb-6.png - testimonial inner thumb [STATIC_FILE]
+        testi-thumb-7.png - testimonial inner thumb [STATIC_FILE]
+        testi-thumb-8.png - testimonial inner thumb [STATIC_FILE]
+        testi-thumb-9.png - testimonial inner thumb [STATIC_FILE]
+        testi-thumb-10.png - testimonial inner thumb [STATIC_FILE]
+        testi-thumb-11.png - testimonial inner thumb [STATIC_FILE]
+        testi-thumb-12.png - testimonial inner thumb [STATIC_FILE]
+        widget-icon.png - widget icon [STATIC_FILE]
+        widget-thumb.png - widget background [STATIC_FILE]
+        work-icon2.png - unused asset [POTENTIALLY DEAD CODE]
+        work-icon3.png - unused asset [POTENTIALLY DEAD CODE]
+        work-shape.png - process decoration [STATIC_FILE]
+        work-shape4.png - unused asset [POTENTIALLY DEAD CODE]
+        gallery/
+          commercial.jpg - unused asset [POTENTIALLY DEAD CODE]
+          commercial.png - used (blog/portfolio/service) [STATIC_FILE]
+          furniture.jpg - unused asset [POTENTIALLY DEAD CODE]
+          furniture.png - used (blog) [STATIC_FILE]
+          happy.png - used (testimonials) [STATIC_FILE]
+          junk.png - used (portfolio/service) [STATIC_FILE]
+          truck-1.png - used (about/blog) [STATIC_FILE]
+          truck-1.jpeg - unused asset [POTENTIALLY DEAD CODE]
+          truck-1 (1).png - used (portfolio/service) [STATIC_FILE]
+          truck-6.png - unused asset [POTENTIALLY DEAD CODE]
+          truck-6.jpeg - used (banner/services hero) [STATIC_FILE]
+          video 1.mp4 - unused asset [POTENTIALLY DEAD CODE]
+          video 2.mp4 - unused asset [POTENTIALLY DEAD CODE]
+          video 3.mp4 - unused asset [POTENTIALLY DEAD CODE]
+          services/
+            furniture.png - used (portfolio/service) [STATIC_FILE]
+            residential.png - used (portfolio/service) [STATIC_FILE]
+            special.png - used (portfolio/service) [STATIC_FILE]
+    README.md - project usage notes [STATIC_FILE]
+    src/
+      index.css - global styles and Tailwind utilities [STATIC_FILE]
+      Componant1/
+        About/About.jsx - home about section [STATIC_FILE]
+        Banner/Banner.jsx - home hero + contact form [STATIC_FILE]
+        Blog/Blog.jsx - home blog section [STATIC_FILE]
+        Blog/BlogCard.jsx - blog card [STATIC_FILE]
+        Brand/Brand.jsx - brand logo carousel [STATIC_FILE]
+        Faq/HomeFaq.jsx - FAQ accordion (home) [STATIC_FILE]
+        Feature/Feature.jsx - trust strip [STATIC_FILE]
+        MovingCost/MovingCost.jsx - pricing guide section [STATIC_FILE]
+        Portfolio/Portfolio.jsx - portfolio carousel [STATIC_FILE]
+        Portfolio/PortfolioCard.jsx - portfolio card [STATIC_FILE]
+        Pricing/Pricing.jsx - pricing cards (legacy cleaning copy) [POTENTIALLY DEAD CODE]
+        Pricing/PricingCard.jsx - pricing card [POTENTIALLY DEAD CODE]
+        Process/Process.jsx - process steps section [STATIC_FILE]
+        Process/ProcessCard.jsx - process card [STATIC_FILE]
+        Service/Appoinment.jsx - appointment form (legacy) [POTENTIALLY DEAD CODE]
+        Service/Service.jsx - services wrapper [STATIC_FILE]
+        Service/ServiceCard.jsx - service card [STATIC_FILE]
+        Service/ServiceMain.jsx - service grid [STATIC_FILE]
+        ServiceAreas/ServiceAreas.jsx - suburbs grid [STATIC_FILE]
+        Support/Support.jsx - support CTA [STATIC_FILE]
+        Testimonial/Testimonial.jsx - testimonials section [STATIC_FILE]
+        Testimonial/TestimonialCard.jsx - testimonial card [STATIC_FILE]
+        WhyChoose/WhyChoose.jsx - trust cards [STATIC_FILE]
+      components/
+        ContactForm/ContactForm.jsx - legacy contact form [POTENTIALLY DEAD CODE]
+        ContactForm/Step1.jsx - legacy step 1 [POTENTIALLY DEAD CODE]
+        ContactForm/Step2.jsx - legacy step 2 [POTENTIALLY DEAD CODE]
+      data/
+        homepageContent.js - homeReviews/homeFaqs data [STATIC_FILE]
+      Layouts/
+        MainShell.jsx - wraps Navbar/Footer/ScrollToTop [STATIC_FILE]
+      lib/
+        react-router-dom-compat.js - React Router compatibility shim [POTENTIALLY DEAD CODE]
+        schemas/
+          contactSchema.js - legacy Zod schema [POTENTIALLY DEAD CODE]
+      PageViews/
+        Home1/Home1.jsx - home page composition [STATIC_FILE]
+        InnerPage/
+          AboutInner/AboutInner.jsx - legacy about page [POTENTIALLY DEAD CODE]
+          Appointment/AppointmentInner.jsx - legacy appointment page [POTENTIALLY DEAD CODE]
+          Appointment/Appoiontment.jsx - legacy appointment form [POTENTIALLY DEAD CODE]
+          BlogDetails/BlogDetails.jsx - legacy blog detail [POTENTIALLY DEAD CODE]
+          BlogGrid/BlogCard.jsx - legacy blog card [POTENTIALLY DEAD CODE]
+          BlogGrid/BlogGrid.jsx - legacy blog grid [POTENTIALLY DEAD CODE]
+          BlogList/BlogList.jsx - legacy blog list [POTENTIALLY DEAD CODE]
+          BlogList/BlogListCard.jsx - legacy blog list card [POTENTIALLY DEAD CODE]
+          ContactInner/ContactInner.jsx - legacy contact page [POTENTIALLY DEAD CODE]
+          ContactInner/ContactLocation.jsx - legacy contact location block [POTENTIALLY DEAD CODE]
+          PricingInner/Accordion/PricingAccordion.jsx - legacy accordion [POTENTIALLY DEAD CODE]
+          PricingInner/Accordion/PricingFaq.jsx - legacy pricing FAQ [POTENTIALLY DEAD CODE]
+          PricingInner/PricingInner.jsx - legacy pricing page [POTENTIALLY DEAD CODE]
+          ProjectDetails/ProjectDetails.jsx - legacy project detail [POTENTIALLY DEAD CODE]
+          ProjectInner/ProjectInner.jsx - legacy project grid [POTENTIALLY DEAD CODE]
+          ServiceDetails/Accordion/ServiceAccordion.jsx - legacy accordion [POTENTIALLY DEAD CODE]
+          ServiceDetails/Accordion/ServiceFaq.jsx - legacy FAQ [POTENTIALLY DEAD CODE]
+          ServiceDetails/ServiceDetails.jsx - legacy service detail [POTENTIALLY DEAD CODE]
+          ServiceDetails/ServiceDetails2.jsx - legacy service detail [POTENTIALLY DEAD CODE]
+          ServiceDetails/ServiceDetails3.jsx - legacy service detail [POTENTIALLY DEAD CODE]
+          ServiceDetails/ServiceDetails4.jsx - legacy service detail [POTENTIALLY DEAD CODE]
+          ServiceDetails/ServiceDetails5.jsx - legacy service detail [POTENTIALLY DEAD CODE]
+          ServiceDetails/ServiceDetails6.jsx - legacy service detail [POTENTIALLY DEAD CODE]
+          ServiceInner/Service.jsx - legacy service grid [POTENTIALLY DEAD CODE]
+          ServiceInner/ServiceCard.jsx - legacy service card [POTENTIALLY DEAD CODE]
+          ServiceInner/ServiceInner.jsx - legacy service page [POTENTIALLY DEAD CODE]
+          TeamInner/TeamInner.jsx - legacy team page [POTENTIALLY DEAD CODE]
+          TeamInner/TeamInnerCard.jsx - legacy team card [POTENTIALLY DEAD CODE]
+          TestimonialInner/TestimonialInner.jsx - legacy testimonials page [POTENTIALLY DEAD CODE]
+          TestimonialInner/TestimonialInnerCard.jsx - legacy testimonial card [POTENTIALLY DEAD CODE]
+        Services/ServicesPage.jsx - services page composition [STATIC_FILE]
+      Shared/
+        Breadcamp/Breadcamp.jsx - legacy breadcrumb hero [POTENTIALLY DEAD CODE]
+        ErrorPage/ErrorPage.jsx - legacy error page [POTENTIALLY DEAD CODE]
+        Footer/Footer.jsx - footer [STATIC_FILE]
+        Helmet/Helmet.jsx - legacy react-helmet wrapper [POTENTIALLY DEAD CODE]
+        Navbar/Navbar.jsx - main navigation [STATIC_FILE]
+        ScrollToTop/ScrollToTop.jsx - scroll helper [STATIC_FILE]
+    tailwind.config.js - Tailwind theme config [STATIC_FILE]
+    TEMPLATE_REPORT.txt - template report [STATIC_FILE]
+    WEBSITE_STRUCTURE_GUIDE.txt - template site structure notes [STATIC_FILE]
+
+=== 3. RUNTIME ARCHITECTURE
+  - entry_point: app/layout.jsx provides HTML shell, global CSS import, fonts, metadata, JSON-LD, analytics [STATIC_FILE]
+  - main_shell: app/(main)/layout.jsx wraps children with MainShell (Navbar + Footer + ScrollToTop) [STATIC_FILE]
+  - homepage: app/(main)/page.jsx -> src/PageViews/Home1/Home1.jsx -> Componant1 sections [STATIC_FILE]
+  - services_page: app/(main)/services/page.jsx -> src/PageViews/Services/ServicesPage.jsx -> Service + Support [STATIC_FILE]
+  - blog_article: app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx uses next/image + JSON-LD [STATIC_FILE]
+  - legacy_layer: src/PageViews/InnerPage components use react-router-dom and are not routed in App Router [POTENTIALLY DEAD CODE]
+  - styling: Tailwind utilities + src/index.css for global classes [STATIC_FILE]
+
+=== 4. ROUTING MAP
+  ─── 4.1 Active App Router routes
+    - / -> app/(main)/page.jsx (Home1) [STATIC_FILE]
+    - /services -> app/(main)/services/page.jsx (ServicesPage) [STATIC_FILE]
+    - /privacy-policy -> app/(main)/privacy-policy/page.jsx [STATIC_FILE]
+    - /terms-and-conditions -> app/(main)/terms-and-conditions/page.jsx [STATIC_FILE]
+    - /blog/how-to-move-heavy-furniture-without-damage -> app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx [STATIC_FILE]
+    - /api/contact -> app/api/contact/route.js [STATIC_FILE]
+    - /api/forms -> app/api/forms/route.js [STATIC_FILE]
+    - /sitemap.xml -> app/sitemap.js [STATIC_FILE]
+    - /robots.txt -> app/robots.js [STATIC_FILE]
+  ─── 4.2 Redirects and legacy routes
+    - next.config.mjs defines redirects from legacy pages (home variants, legacy service detail routes, legacy inner pages) to active routes or / [STATIC_FILE]
+    - legacy components in src/PageViews/InnerPage are not wired to App Router; treating as template carryover [POTENTIALLY DEAD CODE]
+
+=== 5. DATA FLOW AND STATE
+  - home_reviews: src/data/homepageContent.js drives testimonials + JSON-LD reviews [STATIC_FILE][CMS TARGET]
+  - home_faqs: src/data/homepageContent.js drives FAQ accordion + JSON-LD FAQ schema [STATIC_FILE][CMS TARGET]
+  - contact_form_state: components/ContactForm uses react-hook-form + zod for validation [DYNAMIC]
+  - turnstile_token_flow: client stores Turnstile token, sends recaptchaToken to /api/contact [DYNAMIC]
+  - deferred_sections: Home1 uses IntersectionObserver to lazy render sections [STATIC_FILE]
+  - nav_active_state: Navbar tracks pathname + hash for active states [DYNAMIC]
+
+=== 6. API ENDPOINTS AND SERVER LOGIC
+  ─── 6.1 /api/contact (app/api/contact/route.js, lines 1-348)
+    - method: POST [STATIC_FILE]
+    - validates: contactSchema (name, email, phone, dates, addresses, service type, etc.) [DYNAMIC]
+    - anti_spam: Turnstile verification (TURNSTILE_SECRET_KEY, TURNSTILE_ENABLED) [STATIC_FILE]
+    - email_delivery: Resend API (RESEND_API_KEY, RESEND_FROM_EMAIL, CONTACT_EMAIL_TO) [STATIC_FILE]
+    - rate_limit: basic in-memory limiter [STATIC_FILE]
+    - responses: JSON { success: true } or { error } [STATIC_FILE]
+  ─── 6.2 /api/forms (app/api/forms/route.js, lines 1-139)
+    - method: POST [STATIC_FILE]
+    - payload: generic form (formType + fields) [DYNAMIC]
+    - honeypot: hp field used to reject spam [STATIC_FILE]
+    - webhook: FORM_WEBHOOK_URL optional [STATIC_FILE]
+    - redirect_safety: only same-origin redirects allowed [STATIC_FILE]
+
+=== 7. CONTENT INVENTORY (PAGES + COMPONENTS)
+  ─── 7.1 Root layout + global metadata
+    - app/layout.jsx (lines 1-88)
+      - site_url_default: "https://example.com" [HARDCODED][CMS TARGET]
+      - metadata_title_default: "Awesome Mate Removals" [HARDCODED][CMS TARGET]
+      - metadata_title_template: "%s | Awesome Mate Removals" [HARDCODED]
+      - metadata_description: "Awesome Mate Removals provides residential, office, furniture, and special-item moving services across Perth." [HARDCODED][CMS TARGET]
+      - open_graph_title: "Awesome Mate Removals" [HARDCODED][CMS TARGET]
+      - open_graph_description: "Fully insured Perth movers for house, office, furniture, and specialty-item relocations." [HARDCODED][CMS TARGET]
+      - twitter_card: "summary_large_image" [HARDCODED]
+      - twitter_title: "Awesome Mate Removals" [HARDCODED][CMS TARGET]
+      - twitter_description: "Perth moving company for house, office, furniture, and heavy-item removals." [HARDCODED][CMS TARGET]
+      - icon_path: "/images/fav-icon/icon.png" [STATIC_FILE]
+      - skip_link_label: "Skip to main content" [HARDCODED][CMS TARGET]
+      - local_business_schema_name: "Awesome Mate Removals" [HARDCODED][CMS TARGET]
+      - local_business_schema_phone: "0412007264" [HARDCODED][CMS TARGET]
+      - local_business_schema_email: "info@awesomemateremovals.com.au" [HARDCODED][CMS TARGET]
+      - local_business_schema_abn: "ABN 42293475158" [HARDCODED][CMS TARGET]
+      - local_business_schema_address: "Unit 5/207 Waterloo Street, Tuart Hill, WA 6060" [HARDCODED][CMS TARGET]
+      - local_business_schema_description: "Professional Perth removalists for house, office, furniture, and special-item moving services." [HARDCODED][CMS TARGET]
+  ─── 7.2 Main layout schema
+    - app/(main)/layout.jsx (lines 1-65)
+      - metadata_title: "Home" [HARDCODED]
+      - metadata_description: "Homepage for Awesome Mate Removals, Perth moving and relocation services." [HARDCODED][CMS TARGET]
+      - review_schema: derived from homeReviews (name, rating, title, description) [DYNAMIC][CMS TARGET]
+      - faq_schema: derived from homeFaqs (question, answer) [DYNAMIC][CMS TARGET]
+  ─── 7.3 Home page route
+    - app/(main)/page.jsx (lines 1-5)
+      - renders_component: Home1 [STATIC_FILE]
+  ─── 7.4 Services page route
+    - app/(main)/services/page.jsx (lines 1-19)
+      - metadata_title: "Our Services" [HARDCODED][CMS TARGET]
+      - metadata_description: "Explore Perth removalist services from Awesome Mate Removals including residential, furniture, commercial, interstate, and specialty item moves." [HARDCODED][CMS TARGET]
+      - renders_component: ServicesPage [STATIC_FILE]
+  ─── 7.5 Privacy policy page
+    - app/(main)/privacy-policy/page.jsx (lines 1-106)
+      - last_updated_label: "Last updated: 24 April 2026" [HARDCODED][CMS TARGET]
+      - page_title: "Privacy Policy" [HARDCODED][CMS TARGET]
+      - section_who_we_are_title: "Who we are" [HARDCODED][CMS TARGET]
+      - section_who_we_are_body: "Awesome Mate Removals is a Perth-based moving business providing residential, commercial, furniture, and interstate removal services..." [HARDCODED][CMS TARGET]
+      - section_information_we_collect_title: "Information we collect" [HARDCODED][CMS TARGET]
+      - info_collect_list_items: ["Full name and email address.", "Preferred moving date and time.", "Service and property details relevant to your move.", "Moving-from and moving-to location details.", "Any additional information you choose to provide.", "Technical data such as IP address and basic request metadata for security and anti-spam controls."] [HARDCODED][CMS TARGET]
+      - section_how_we_use_info_title: "How we use information" [HARDCODED][CMS TARGET]
+      - use_info_list_items: ["Respond to enquiries and provide quotes.", "Schedule and deliver requested moving services.", "Improve customer support and service planning.", "Maintain website security, including spam and abuse prevention.", "Comply with legal and regulatory requirements in Australia."] [HARDCODED][CMS TARGET]
+      - section_disclosure_title: "Disclosure to third parties" [HARDCODED][CMS TARGET]
+      - section_data_security_title: "Data storage and security" [HARDCODED][CMS TARGET]
+      - section_rights_title: "Your choices and rights" [HARDCODED][CMS TARGET]
+      - section_external_links_title: "External links and map content" [HARDCODED][CMS TARGET]
+      - contact_email: "info@awesomemateremovals.com.au" [HARDCODED][CMS TARGET]
+      - contact_phone: "0412007264" [HARDCODED][CMS TARGET]
+      - contact_address: "Unit 5/207 Waterloo Street, Tuart Hill WA 6060" [HARDCODED][CMS TARGET]
+  ─── 7.6 Terms and conditions page
+    - app/(main)/terms-and-conditions/page.jsx (lines 1-127)
+      - last_updated_label: "Last updated: 24 April 2026" [HARDCODED][CMS TARGET]
+      - page_title: "Terms and Conditions" [HARDCODED][CMS TARGET]
+      - section_titles: ["1. Website use", "2. Quotes and bookings", "3. Customer responsibilities", "4. Restricted and high-risk items", "5. Delays and service timing", "6. Cancellation and rescheduling", "7. Liability and insurance", "8. Payments", "9. Privacy", "10. Governing law", "11. Contact details"] [HARDCODED][CMS TARGET]
+      - contact_details: "Awesome Mate Removals", "ABN: 42293475158", "info@awesomemateremovals.com.au", "0412007264", "Unit 5/207 Waterloo Street, Tuart Hill WA 6060" [HARDCODED][CMS TARGET]
+  ─── 7.7 Blog article page
+    - app/(main)/blog/how-to-move-heavy-furniture-without-damage/page.jsx (lines 1-141)
+      - slug: "how-to-move-heavy-furniture-without-damage" [HARDCODED][CMS TARGET]
+      - article_title: "How to Move Heavy Furniture Without Damage" [HARDCODED][CMS TARGET]
+      - article_description: "Learn practical steps to move heavy furniture with confidence, protect your floors, and keep your belongings safe from marks or cracks." [HARDCODED][CMS TARGET]
+      - publish_date: "12 May 2026" [HARDCODED][CMS TARGET]
+      - schema_date_published: "2026-05-12" [HARDCODED][CMS TARGET]
+      - schema_date_modified: "2026-05-12" [HARDCODED][CMS TARGET]
+      - schema_image: "/images/gallery/truck-1.png" [STATIC_FILE][CMS TARGET]
+      - hero_image_alt: "Furniture loaded safely inside a moving truck in Perth" [HARDCODED][CMS TARGET]
+      - section_heading_1: "Start With a Clear Plan Inside Every Room" [HARDCODED][CMS TARGET]
+      - paragraph_1: "Before lifting anything, walk through the room and map the full path..." [HARDCODED][CMS TARGET]
+      - paragraph_2: "For larger items such as wardrobes or bed frames..." [HARDCODED][CMS TARGET]
+      - inline_image_1: "/images/gallery/furniture.png" [STATIC_FILE][CMS TARGET]
+      - inline_image_1_alt: "Furniture wrapped and prepared before loading" [HARDCODED][CMS TARGET]
+      - inline_image_2: "/images/gallery/commercial.png" [STATIC_FILE][CMS TARGET]
+      - inline_image_2_alt: "Organized loading area for a professional move" [HARDCODED][CMS TARGET]
+      - section_heading_2: "Protect Surfaces Before You Lift" [HARDCODED][CMS TARGET]
+      - paragraph_3: "Wrap corners and edges with thick moving blankets..." [HARDCODED][CMS TARGET]
+      - paragraph_4: "When lifting, keep your back straight..." [HARDCODED][CMS TARGET]
+      - section_heading_3: "Load the Truck With Balance and Stability" [HARDCODED][CMS TARGET]
+      - paragraph_5: "Place the heaviest pieces first so they form a strong base..." [HARDCODED][CMS TARGET]
+      - paragraph_6: "If a single item feels risky or awkward..." [HARDCODED][CMS TARGET]
+      - cta_title: "Need a Hand With a Heavy Move in Perth?" [HARDCODED][CMS TARGET]
+      - cta_body: "Awesome Mate Removals can handle heavy furniture..." [HARDCODED][CMS TARGET]
+      - cta_phone_label: "Call Us Now: 0412007264" [HARDCODED][CMS TARGET]
+  ─── 7.8 Global navigation
+    - src/Shared/Navbar/Navbar.jsx (lines 1-253)
+      - top_bar_address: "Unit 5/207 Waterloo Street, Tuart Hill WA 6060" [HARDCODED][CMS TARGET]
+      - top_bar_email: "info@awesomemateremovals.com.au" [HARDCODED][CMS TARGET]
+      - social_link_facebook: "https://share.google/FxlSYzFTSUeiy0eoF" [HARDCODED][CMS TARGET]
+      - social_link_instagram: "https://share.google/KR5gm4sMGbYIO7JUA" [HARDCODED][CMS TARGET]
+      - social_link_tiktok: "https://share.google/56KlLkrd5Mi41pzM7" [HARDCODED][CMS TARGET]
+      - top_bar_phone_label: "Call :" [HARDCODED]
+      - top_bar_phone: "0412007264" [HARDCODED][CMS TARGET]
+      - nav_logo: "/images/logo final.png" [STATIC_FILE][CMS TARGET]
+      - nav_logo_alt: "Awesome Mate Removals" [HARDCODED][CMS TARGET]
+      - nav_items: ["Home", "About Us", "Our Services", "Blog", "Contact"] [HARDCODED][CMS TARGET]
+      - nav_cta_label: "Get Free Quote" [HARDCODED][CMS TARGET]
+  ─── 7.9 Footer
+    - src/Shared/Footer/Footer.jsx (lines 1-186)
+      - footer_logo: "/images/footer-logo.jpg" [STATIC_FILE][CMS TARGET]
+      - footer_logo_alt: "Awesome Mate Removals" [HARDCODED][CMS TARGET]
+      - company_summary: "Awesome Mate Removals is a local Perth moving company for residential, furniture, commercial, and interstate removals." [HARDCODED][CMS TARGET]
+      - social_links: ["#" (Facebook), "#" (X), "#" (LinkedIn), "#" (Pinterest)] [HARDCODED][NEEDS CLARIFICATION]
+      - quick_links: ["Home", "About Us", "Our Services", "Contact", "Privacy Policy", "Terms & Conditions"] [HARDCODED][CMS TARGET]
+      - service_links: ["All Services", "Residential Moving", "Furniture Removals", "Commercial Relocation", "Interstate Removals", "Specialty Item Moves", "Packing and Kitchen Moves"] [HARDCODED][CMS TARGET]
+      - contact_phone_label: "Phone" [HARDCODED]
+      - contact_phone: "0412007264" [HARDCODED][CMS TARGET]
+      - contact_email_label: "Email" [HARDCODED]
+      - contact_email: "info@awesomemateremovals.com.au" [HARDCODED][CMS TARGET]
+      - contact_address_label: "Address" [HARDCODED]
+      - contact_address: "Unit 5/207 Waterloo Street, Tuart Hill WA 6060" [HARDCODED][CMS TARGET]
+      - map_embed_url: "https://www.google.com/maps?q=Unit%205%2F207%20Waterloo%20Street%2C%20Tuart%20Hill%20WA%206060&output=embed" [HARDCODED][CMS TARGET]
+      - copyright: "© 2026 Awesome Mate Removals. All rights reserved." [HARDCODED][CMS TARGET]
+      - abn_label: "ABN: 42293475158" [HARDCODED][CMS TARGET]
+      - developer_credit: "Developed by AlpineRoot Technologies" + "https://rootalpine.com" [HARDCODED][CMS TARGET]
+  ─── 7.10 Homepage composition
+    - src/PageViews/Home1/Home1.jsx (lines 1-97)
+      - section_order: Banner, Feature, About, Service, Process, MovingCost, WhyChoose, ServiceAreas, Blog, Testimonial, Portfolio, HomeFaq, Support [STATIC_FILE]
+      - deferred_sections: Process, MovingCost, WhyChoose, ServiceAreas, Testimonial, Portfolio, HomeFaq, Support [STATIC_FILE]
+  ─── 7.11 Homepage hero + contact form
+    - src/Componant1/Banner/Banner.jsx (lines 1-53)
+      - hero_background_image: "/images/gallery/truck-6.jpeg" [STATIC_FILE][CMS TARGET]
+      - hero_image_alt: "" [HARDCODED][NEEDS CLARIFICATION]
+      - hero_eyebrow: "LOCAL PERTH MOVING COMPANY" [HARDCODED][CMS TARGET]
+      - hero_title: "Trusted Movers in Perth - Residential, Commercial & Furniture Removals" [HARDCODED][CMS TARGET]
+      - hero_description: "Fully insured, local Perth moving company. Get your free instant quote in 60 seconds." [HARDCODED][CMS TARGET]
+      - hero_cta_label: "Call Us Now: 0412007264" [HARDCODED][CMS TARGET]
+      - hero_cta_href: "tel:0412007264" [HARDCODED]
+      - contact_form_embed: components/ContactForm [DYNAMIC]
+  ─── 7.12 Trust strip
+    - src/Componant1/Feature/Feature.jsx (lines 1-50)
+      - trust_items: [
+        {title: "★ Licensed Perth Business", desc: "Registered and operating locally across Perth suburbs."},
+        {title: "4+ Years in Business", desc: "Experienced local Perth moving crew."},
+        {title: "Fully Insured", desc: "Transit and handling coverage for home and commercial moves."}
+      ] [HARDCODED][CMS TARGET]
+      - icons: FiTruck, FiClock, FiShield [STATIC_FILE]
+  ─── 7.13 About section
+    - src/Componant1/About/About.jsx (lines 1-79)
+      - section_title: "ABOUT US" [HARDCODED][CMS TARGET]
+      - headline: "Complete Moving Support for Homes, Offices, Villas, Units and Storage" [HARDCODED][CMS TARGET]
+      - body_copy: "Awesome Mate Removals provides house move, office move, furniture move, rubbish removals, piano move, pool table move, marble table move, white goods move and furniture delivery services across Perth." [HARDCODED][CMS TARGET]
+      - bullet_property_types: "Property Types: house, office, villas, storage, units, disability and NDIS moves." [HARDCODED][CMS TARGET]
+      - bullet_special_items: "Special Items: marble/stone tables, statues, pianos, pool tables, scooters and e-bikes." [HARDCODED][CMS TARGET]
+      - bullet_business_address: "Business Address: Unit 5/207 Waterloo Street, Tuart Hill WA 6060." [HARDCODED][CMS TARGET]
+      - cta_label: "More About Us" [HARDCODED][CMS TARGET]
+      - cta_href: "/about" [HARDCODED][NEEDS CLARIFICATION]
+      - about_image: "/images/gallery/truck-1.png" [STATIC_FILE][CMS TARGET]
+      - about_image_alt: "Truck on a Perth moving job" [HARDCODED][CMS TARGET]
+      - counter_icon: "/images/counter-icon.png" [STATIC_FILE][CMS TARGET]
+      - counter_value: "12+" [HARDCODED][CMS TARGET]
+      - counter_label: "Service Types Covered" [HARDCODED][CMS TARGET]
+  ─── 7.14 Services (home and services page)
+    - src/Componant1/Service/Service.jsx (lines 1-11)
+      - section_id: "services" [STATIC_FILE]
+      - section_background_color: "#0D3270" [STATIC_FILE]
+    - src/Componant1/Service/ServiceMain.jsx (lines 1-142)
+      - section_eyebrow: "OUR SERVICES" [HARDCODED][CMS TARGET]
+      - section_title: "Perth Removalist Services" [HARDCODED][CMS TARGET]
+      - service_items: [
+        {title: "Residential Moving", description: "Safe packing, loading, and transport for homes and apartments."},
+        {title: "Furniture Removals", description: "Specialist handling for heavy, fragile, and high-value furniture items."},
+        {title: "Commercial Relocation", description: "Planned office and retail moves with minimal business disruption."},
+        {title: "Interstate Removals", description: "End-to-end long-distance moving from Perth with secure transit."},
+        {title: "Junk Removals", description: "Fast and responsible removal of unwanted furniture, boxes, and general clutter."},
+        {title: "Special Items Moves", description: "Expert handling for pianos, statues, marble tables, pool tables, and fragile valuables."}
+      ] [HARDCODED][CMS TARGET]
+      - service_images: ["/images/gallery/services/residential.png", "/images/gallery/services/furniture.png", "/images/gallery/commercial.png", "/images/gallery/truck-1 (1).png", "/images/gallery/junk.png", "/images/gallery/services/special.png"] [STATIC_FILE][CMS TARGET]
+      - service_links: all "#" (normalized to /services via ServiceCard) [HARDCODED][NEEDS CLARIFICATION]
+      - service_button_label: "Learn More" [HARDCODED][CMS TARGET]
+    - src/Componant1/Service/ServiceCard.jsx (lines 1-78)
+      - image_alt: serviceTitle [DYNAMIC]
+      - icon_alt: "{serviceTitle} icon" [DYNAMIC]
+      - cta_label: buttonContent [DYNAMIC]
+  ─── 7.15 Working process
+    - src/Componant1/Process/Process.jsx (lines 1-77)
+      - section_eyebrow: "WORKING PROCESS" [HARDCODED][CMS TARGET]
+      - section_title: "How It Works" [HARDCODED][CMS TARGET]
+      - section_description: "A simple three-step process that keeps your move clear, efficient, and stress-free from quote to final delivery." [HARDCODED][CMS TARGET]
+      - process_steps: [
+        {title: "Get a Free Quote", description: "Share your moving details and receive a fast, transparent quote in under 60 seconds."},
+        {title: "We Pack and Load", description: "Our local team carefully packs, protects, and loads your items with proven moving systems."},
+        {title: "Safe Delivery", description: "We transport and unload your belongings securely, on-time, and exactly where you need them."}
+      ] [HARDCODED][CMS TARGET]
+      - process_shape: "/images/work-shape.png" [STATIC_FILE]
+    - src/Componant1/Process/ProcessCard.jsx (lines 1-46)
+      - icon_alt: "" [HARDCODED][NEEDS CLARIFICATION]
+      - shape_alt: "" [HARDCODED][NEEDS CLARIFICATION]
+  ─── 7.16 Moving pricing guide
+    - src/Componant1/MovingCost/MovingCost.jsx (lines 1-38)
+      - section_eyebrow: "MOVING PRICING GUIDE" [HARDCODED][CMS TARGET]
+      - section_title: "How Much Does a Moving Company Cost in Perth?" [HARDCODED][CMS TARGET]
+      - section_description: "In most Perth suburbs, standard moving services usually average around $120 per hour depending on access, distance, and load size." [HARDCODED][CMS TARGET]
+      - card_1_title: "Our Hourly Rates" [HARDCODED][CMS TARGET]
+      - card_1_body: "Awesome Mate Removals charges from $110 to $160 per hour, plus a call-out fee based on travel distance." [HARDCODED][CMS TARGET]
+      - card_2_title: "Stairs and Heavy Items" [HARDCODED][CMS TARGET]
+      - card_2_body: "Stair access fees: 1 flight starts at $60 and 2 flights at $120. Heavy item handling starts from $150 up to $350." [HARDCODED][CMS TARGET]
+      - card_3_title: "Truck and Coverage" [HARDCODED][CMS TARGET]
+      - card_3_body: "We operate a 4.5 ton truck setup for residential and commercial moves, with fully insured service delivery." [HARDCODED][CMS TARGET]
+  ─── 7.17 Why choose us
+    - src/Componant1/WhyChoose/WhyChoose.jsx (lines 1-56)
+      - section_eyebrow: "WHY CHOOSE US" [HARDCODED][CMS TARGET]
+      - section_title: "Trusted Perth Moving Experts" [HARDCODED][CMS TARGET]
+      - items: [
+        {title: "Fully Insured", desc: "Comprehensive move protection for household, office, and furniture removals."},
+        {title: "Experienced Local Team", desc: "Skilled Perth movers who know local streets, apartments, and loading access points."},
+        {title: "Transparent Pricing", desc: "Clear quotes with no hidden surprises, so you can plan your move with confidence."},
+        {title: "GPS-Tracked Fleet", desc: "Modern trucks with route tracking for reliable scheduling and safe delivery windows."}
+      ] [HARDCODED][CMS TARGET]
+  ─── 7.18 Service areas
+    - src/Componant1/ServiceAreas/ServiceAreas.jsx (lines 1-48)
+      - section_eyebrow: "AREAS WE SERVE" [HARDCODED][CMS TARGET]
+      - section_title: "Perth Suburbs We Move Every Week" [HARDCODED][CMS TARGET]
+      - section_description: "We currently service key Perth suburbs with dedicated moving crews. Suburb-specific landing pages are being rolled out in upcoming updates." [HARDCODED][CMS TARGET]
+      - suburb_list: ["Perth CBD", "Fremantle", "Joondalup", "Canning Vale", "Subiaco", "Morley", "Armadale", "Midland", "Osborne Park", "Rockingham", "Scarborough", "Victoria Park", "Leederville", "Bayswater", "Belmont"] [HARDCODED][CMS TARGET]
+  ─── 7.19 Blog section
+    - src/Componant1/Blog/Blog.jsx (lines 1-77)
+      - section_eyebrow: "LATEST BLOG" [HARDCODED][CMS TARGET]
+      - section_title: "Recent Blog Posts for Perth Movers" [HARDCODED][CMS TARGET]
+      - view_all_label: "Veiw All Blog" [HARDCODED][NEEDS CLARIFICATION]
+      - blog_items: [
+        {title: "How to Move Heavy Furniture Without Damage", desc: "Learn practical packing and lifting methods used by professional movers.", date: "12 MAY", url: "/blog/how-to-move-heavy-furniture-without-damage"}
+      ] [HARDCODED][CMS TARGET]
+    - src/Componant1/Blog/BlogCard.jsx (lines 1-59)
+      - card_title: blogTitle [DYNAMIC]
+      - card_description: blogDesc [DYNAMIC]
+      - date_label: thumbDate + thumbMonth [DYNAMIC]
+      - cta_label: "Read More" [HARDCODED][CMS TARGET]
+  ─── 7.20 Testimonials (home)
+    - src/Componant1/Testimonial/Testimonial.jsx (lines 1-84)
+      - section_eyebrow: "TESTIMONIALS" [HARDCODED][CMS TARGET]
+      - section_title: "Rated 5 Stars by Perth Customers" [HARDCODED][CMS TARGET]
+      - testimonials: derived from homeReviews (name, suburb, title, description) [DYNAMIC][CMS TARGET]
+      - testimonial_image: "/images/gallery/happy.png" [STATIC_FILE][CMS TARGET]
+      - testimonial_icon: "/images/testi-icon.png" [STATIC_FILE][CMS TARGET]
+    - src/Componant1/Testimonial/TestimonialCard.jsx (lines 1-58)
+      - reviewer_photo_alt: "{testiName} review photo" [DYNAMIC]
+      - quote_icon_alt: "Testimonial quote icon" [HARDCODED]
+  ─── 7.21 Portfolio
+    - src/Componant1/Portfolio/Portfolio.jsx (lines 1-172)
+      - section_eyebrow: "AWESOME MATE PORTFOLIO" [HARDCODED][CMS TARGET]
+      - section_title: "Latest Awesome Mate Portfolio from Work Galary" [HARDCODED][NEEDS CLARIFICATION]
+      - view_all_label: "Veiw All Work" [HARDCODED][NEEDS CLARIFICATION]
+      - portfolio_items: [
+        {thumb_title: "Residential Move", location: "Perth, WA", title: "Family Home Relocation"},
+        {thumb_title: "Furniture Move", location: "Joondalup, WA", title: "Heavy Furniture Transfer"},
+        {thumb_title: "Office Move", location: "Subiaco, WA", title: "Commercial Office Relocation"},
+        {thumb_title: "Apartment Move", location: "Fremantle, WA", title: "Apartment Transition Move"},
+        {thumb_title: "Storage Move", location: "Midland, WA", title: "Short-Term Storage Transfer"},
+        {thumb_title: "Interstate Move", location: "Perth to Adelaide", title: "Long-Distance House Move"},
+        {thumb_title: "Packing Service", location: "Canning Vale, WA", title: "Full Packing and Loading"}
+      ] [HARDCODED][CMS TARGET]
+      - portfolio_images: ["/images/gallery/services/residential.png", "/images/gallery/services/furniture.png", "/images/gallery/commercial.png", "/images/gallery/junk.png", "/images/gallery/truck-1 (1).png", "/images/gallery/services/special.png"] [STATIC_FILE][CMS TARGET]
+    - src/Componant1/Portfolio/PortfolioCard.jsx (lines 1-46)
+      - image_alt: portfolioTitle [DYNAMIC]
+      - location_label: portfolioLocation [DYNAMIC]
+  ─── 7.22 FAQ (home)
+    - src/Componant1/Faq/HomeFaq.jsx (lines 1-29)
+      - section_eyebrow: "FAQ" [HARDCODED][CMS TARGET]
+      - section_title: "Perth Movers Frequently Asked Questions" [HARDCODED][CMS TARGET]
+      - faq_items: derived from homeFaqs (question + answer) [DYNAMIC][CMS TARGET]
+  ─── 7.23 Support CTA
+    - src/Componant1/Support/Support.jsx (lines 1-34)
+      - headline: "Ready to Move? Get Your Free Perth Removalist Quote Today." [HARDCODED][CMS TARGET]
+      - cta_label: "Get a Free Quote" [HARDCODED][CMS TARGET]
+      - cta_href: "#" [HARDCODED][NEEDS CLARIFICATION]
+      - background_image_default: "/images/address-bg.png" [STATIC_FILE][CMS TARGET]
+      - background_image_alt_style: "/images/service-bg.png" [STATIC_FILE][CMS TARGET]
+  ─── 7.24 Services page hero
+    - src/PageViews/Services/ServicesPage.jsx (lines 1-46)
+      - hero_background_image: "/images/gallery/truck-6.jpeg" [STATIC_FILE][CMS TARGET]
+      - hero_image_alt: "Awesome Mate Removals truck ready for a Perth move" [HARDCODED][CMS TARGET]
+      - hero_eyebrow: "OUR SERVICES" [HARDCODED][CMS TARGET]
+      - hero_title: "Perth Removalist Services for Homes, Offices, Furniture and More" [HARDCODED][CMS TARGET]
+      - hero_description: "Choose reliable moving support from a local Perth team..." [HARDCODED][CMS TARGET]
+      - hero_cta_label: "Call Us Now: 0412007264" [HARDCODED][CMS TARGET]
+      - hero_cta_href: "tel:0412007264" [HARDCODED]
+  ─── 7.25 Contact form (active)
+    - components/ContactForm/ContactForm.jsx (lines 1-208)
+      - step_labels: "1", "2" [HARDCODED]
+      - success_message: "Thank you! Your message has been sent successfully. We will contact you soon." [HARDCODED][CMS TARGET]
+      - error_message_default: "Failed to submit form" / "An error occurred. Please try again." [HARDCODED]
+      - submit_endpoint: "/api/contact" [STATIC_FILE]
+      - recaptcha_token_field: "recaptchaToken" [STATIC_FILE]
+    - components/ContactForm/Step1.jsx (lines 1-164)
+      - title: "Get a Free Quote" [HARDCODED][CMS TARGET]
+      - field_labels: ["Full Name *", "Email Address *", "Phone Number *", "Preferred Date *", "Preferred Time *", "Service Type *"] [HARDCODED][CMS TARGET]
+      - placeholders: ["John Doe", "john@example.com", "0412 007 264", "Eg: 8 am, 1pm, or 13:00/15:00"] [HARDCODED][CMS TARGET]
+      - select_options_service_type: ["Select a service", "Removal", "Transport", "Storage", "Other"] [HARDCODED][CMS TARGET]
+      - next_button_label: "Next" [HARDCODED][CMS TARGET]
+    - components/ContactForm/Step2.jsx (lines 1-251)
+      - title: "Moving Details" [HARDCODED][CMS TARGET]
+      - field_labels: ["Property Type *", "Multi-Story House? *", "Building Has Lift? *", "Special Items to Move (Select any) *", "Moving From Address *", "Moving To Address *", "Additional Details (Optional)"] [HARDCODED][CMS TARGET]
+      - property_type_options: ["Select property type", "House", "Apartment", "Villa", "Other"] [HARDCODED][CMS TARGET]
+      - house_options: ["Select yes or no", "Yes", "No"] [HARDCODED][CMS TARGET]
+      - apartment_options: ["Select yes or no", "Yes", "No"] [HARDCODED][CMS TARGET]
+      - special_item_options: ["Marble Table", "Stone Table", "Statue", "Piano", "Pool Table", "Scooters", "E-Bikes"] [HARDCODED][CMS TARGET]
+      - address_placeholders: ["Unit 1, 123 Main Street, Perth WA 6000", "Unit 2, 456 Oak Avenue, Perth WA 6001"] [HARDCODED][CMS TARGET]
+      - additional_details_placeholder: "Any special instructions or additional information..." [HARDCODED][CMS TARGET]
+      - buttons: "Back", "Submit" [HARDCODED][CMS TARGET]
+      - turnstile_script_url: "https://challenges.cloudflare.com/turnstile/v0/api.js" [STATIC_FILE]
+  ─── 7.26 WhatsApp widget
+    - components/WhatsAppWidget.tsx (lines 1-15)
+      - whatsapp_link: "https://wa.me/+61412007264?text=Hello!" [HARDCODED][CMS TARGET]
+      - aria_label: "Chat on WhatsApp" [HARDCODED]
+  ─── 7.27 Homepage data source
+    - src/data/homepageContent.js (lines 1-56)
+      - home_reviews: 3 review entries (name, suburb, rating, title, description) [HARDCODED][CMS TARGET]
+      - home_faqs: 5 FAQ entries (question, answer) [HARDCODED][CMS TARGET]
+  ─── 7.28 Legacy/unused content (not wired to App Router)
+    - src/Layouts/MainShell.jsx (lines 1-16): wraps Navbar, Footer, ScrollToTop [STATIC_FILE]
+    - src/Shared/Breadcamp/Breadcamp.jsx (lines 1-58): breadcrumb hero with background images "/images/breatcome-bg.png" + "/images/breatcome-shape.png" [STATIC_FILE][POTENTIALLY DEAD CODE]
+    - src/Shared/Helmet/Helmet.jsx (lines 1-10): legacy page title "Royella" [POTENTIALLY DEAD CODE][NEEDS CLARIFICATION]
+    - src/Shared/ErrorPage/ErrorPage.jsx (lines 1-23): legacy 404 content [POTENTIALLY DEAD CODE]
+    - src/Shared/ScrollToTop/ScrollToTop.jsx (lines 1-53): scroll helper [STATIC_FILE]
+    - src/Componant1/Pricing/Pricing.jsx + PricingCard.jsx (lines 1-115, 1-87): pricing copy about cleaning services and "Choose Plan" buttons [POTENTIALLY DEAD CODE][NEEDS CLARIFICATION]
+    - src/Componant1/Service/Appoinment.jsx (lines 1-59): appointment form labels and placeholders [POTENTIALLY DEAD CODE][NEEDS CLARIFICATION]
+    - src/components/ContactForm/* (legacy) (lines 1-173/150/259): reCAPTCHA-based form labels; not used by App Router [POTENTIALLY DEAD CODE]
+    - src/PageViews/InnerPage/* (lines as listed in directory tree): extensive placeholder cleaning-service content and React Router links [POTENTIALLY DEAD CODE]
+    - src/lib/react-router-dom-compat.js (lines 1-149): compatibility shim for legacy React Router [POTENTIALLY DEAD CODE]
+    - src/lib/schemas/contactSchema.js (lines 1-76): legacy schema variant [POTENTIALLY DEAD CODE]
+
+=== 8. CMS MODELING BLUEPRINT (SNAKE_CASE FIELDS)
+  ─── 8.1 Global content types
+    - site_settings
+      - site_name
+      - site_tagline
+      - primary_phone
+      - primary_email
+      - primary_address
+      - abn
+      - logo_primary
+      - logo_footer
+      - social_links[] { label, url, icon }
+      - analytics_enabled
+    - navigation
+      - items[] { label, href, anchor_id, order }
+      - cta_label
+      - cta_href
+    - footer
+      - summary_text
+      - quick_links[] { label, href }
+      - service_links[] { label, href }
+      - map_embed_url
+      - developer_credit_text
+      - developer_credit_url
+  ─── 8.2 Page types
+    - home_page
+      - hero_eyebrow
+      - hero_title
+      - hero_description
+      - hero_background_image
+      - hero_cta_label
+      - hero_cta_href
+      - trust_items[] { title, description, icon }
+      - about_title
+      - about_heading
+      - about_body
+      - about_bullets[]
+      - about_image
+      - counter_value
+      - counter_label
+      - services_heading
+      - services[] { title, description, image, cta_label, cta_href }
+      - process_intro
+      - process_steps[] { title, description, step_number }
+      - pricing_guide_heading
+      - pricing_guide_cards[] { title, body }
+      - why_choose_title
+      - why_choose_items[] { title, description, icon }
+      - service_areas_title
+      - service_areas_description
+      - service_area_list[]
+      - blog_section_title
+      - blog_cta_label
+      - testimonials_title
+      - testimonials[] { name, suburb, rating, title, body, photo }
+      - portfolio_title
+      - portfolio_items[] { title, location, category, image, url }
+      - faq_items[] { question, answer }
+      - support_cta_text
+      - support_cta_label
+      - support_cta_href
+    - services_page
+      - hero_title
+      - hero_description
+      - hero_background_image
+      - hero_cta_label
+      - hero_cta_href
+      - services_grid (reuse home_page.services)
+      - support_cta_text
+    - blog_post
+      - slug
+      - title
+      - description
+      - publish_date
+      - modified_date
+      - hero_image
+      - hero_image_alt
+      - sections[] { heading, body, images[] { src, alt } }
+      - cta_title
+      - cta_body
+      - cta_phone
+    - legal_page
+      - page_title
+      - last_updated
+      - sections[] { heading, body, list_items[] }
+  ─── 8.3 Form settings
+    - contact_form_settings
+      - enabled
+      - success_message
+      - error_message
+      - service_type_options[]
+      - property_type_options[]
+      - special_item_options[]
+      - turnstile_enabled
+      - turnstile_site_key
+
+=== 9. ASSETS AND MEDIA INVENTORY
+  ─── 9.1 Used images (with references)
+    - /images/gallery/truck-6.jpeg -> Banner hero; ServicesPage hero [STATIC_FILE]
+    - /images/gallery/truck-1.png -> About image; Blog section card; Blog article schema [STATIC_FILE]
+    - /images/gallery/furniture.png -> Blog article inline image [STATIC_FILE]
+    - /images/gallery/commercial.png -> Blog article inline image; Portfolio; ServiceMain [STATIC_FILE]
+    - /images/gallery/services/residential.png -> Portfolio; ServiceMain [STATIC_FILE]
+    - /images/gallery/services/furniture.png -> Portfolio; ServiceMain [STATIC_FILE]
+    - /images/gallery/services/special.png -> Portfolio; ServiceMain [STATIC_FILE]
+    - /images/gallery/truck-1 (1).png -> Portfolio; ServiceMain [STATIC_FILE]
+    - /images/gallery/junk.png -> Portfolio; ServiceMain [STATIC_FILE]
+    - /images/gallery/happy.png -> Testimonial images [STATIC_FILE]
+    - /images/brand-img*.png -> Brand carousel [STATIC_FILE]
+    - /images/blog-thumb*.png -> Legacy blog grids/lists [POTENTIALLY DEAD CODE]
+    - /images/post1.png, /images/post2.png, /images/post3.png -> Legacy blog list/detail sidebars [POTENTIALLY DEAD CODE]
+    - /images/breatcome-bg.png, /images/breatcome-shape.png -> Legacy breadcamp hero [POTENTIALLY DEAD CODE]
+    - /images/contact-icon.png, /images/contact-icon2.png, /images/contact-shape.png -> Legacy appointment form [POTENTIALLY DEAD CODE]
+    - /images/counter-icon.png -> About counter icon [STATIC_FILE]
+    - /images/faq-thumb.png -> Legacy pricing FAQ [POTENTIALLY DEAD CODE]
+    - /images/work-shape.png -> Process steps connector [STATIC_FILE]
+    - /images/pricing-shape.png -> Pricing card decoration [POTENTIALLY DEAD CODE]
+    - /images/portfolio-bg.png -> Portfolio section background [STATIC_FILE]
+    - /images/address-bg.png -> Support background [STATIC_FILE]
+    - /images/service-bg.png -> Support background (matchServiceAreasStyle) [STATIC_FILE]
+    - /images/service-bg2.png -> Legacy service inner background [POTENTIALLY DEAD CODE]
+    - /images/fav-icon/icon.png -> Metadata icons [STATIC_FILE]
+    - /images/footer-logo.jpg -> Footer logo [STATIC_FILE]
+    - /images/logo final.png -> Navbar logo [STATIC_FILE]
+    - /images/testi-icon.png -> Home testimonial quote icon [STATIC_FILE]
+    - /images/widget-icon.png, /images/widget-thumb.png -> Legacy service/project sidebars [POTENTIALLY DEAD CODE]
+    - /images/sidber-* -> Legacy service/project/blog inner pages [POTENTIALLY DEAD CODE]
+    - /images/service-img*.png, /images/service-icon*.png -> Legacy service inner pages [POTENTIALLY DEAD CODE]
+    - /images/project-img*.png, /images/project-det-*.png -> Legacy project pages [POTENTIALLY DEAD CODE]
+    - /images/testi-thumb*.png, /images/testimonial-bg-four.png -> Legacy testimonial inner [POTENTIALLY DEAD CODE]
+    - /images/team-thumb9-14.png -> Legacy team page [POTENTIALLY DEAD CODE]
+  ─── 9.2 Unused public assets (not referenced in app/, src/, components/)
+    - /images/about-icon2.png
+    - /images/about-shape4.png
+    - /images/about-thumb.png
+    - /images/about-thumb3.png
+    - /images/counter-icon2.png
+    - /images/counter-icon3.png
+    - /images/feature-icon2.png
+    - /images/feature-icon3.png
+    - /images/feature-icon-6.png
+    - /images/footer-logo.png
+    - /images/gallery/commercial.jpg
+    - /images/gallery/furniture.jpg
+    - /images/gallery/truck-1.jpeg
+    - /images/gallery/truck-6.png
+    - /images/gallery/video 1.mp4
+    - /images/gallery/video 2.mp4
+    - /images/gallery/video 3.mp4
+    - /images/hero-bg.png
+    - /images/logo.png
+    - /images/portfolio-img.png
+    - /images/portfolio-img5.png
+    - /images/service-icon7.png
+    - /images/team-thumb3.png
+    - /images/team-thumb4.png
+    - /images/team-thumb5.png
+    - /images/team-thumb6.png
+    - /images/team-thumb7.png
+    - /images/team-thumb8.png
+    - /images/testi-shape4.png
+    - /images/work-icon2.png
+    - /images/work-icon3.png
+    - /images/work-shape4.png
+  ─── 9.3 Accessibility gaps
+    - many img tags use empty alt text (Banner, Brand, ProcessCard shapes) [NEEDS CLARIFICATION]
+
+=== 10. SEO, METADATA, AND ANALYTICS
+  - metadata: defined per route in app/(main) pages + app/layout.jsx [STATIC_FILE]
+  - JSON-LD: LocalBusiness schema in app/layout.jsx; Review and FAQ schema in app/(main)/layout.jsx; BlogPosting schema in blog page [STATIC_FILE]
+  - sitemap: app/sitemap.js uses NEXT_PUBLIC_SITE_URL and static route list [STATIC_FILE]
+  - robots: app/robots.js allows all and points to sitemap [STATIC_FILE]
+  - analytics: @vercel/analytics and @vercel/speed-insights in app/layout.jsx [STATIC_FILE]
+
+=== 11. SECURITY, PRIVACY, AND COMPLIANCE
+  - CSP/security headers: configured in next.config.mjs (CSP, referrer policy, permissions policy) [STATIC_FILE]
+  - Turnstile protection: enabled only in production with NEXT_PUBLIC_TURNSTILE_* and TURNSTILE_* [STATIC_FILE]
+  - rate_limiting: in-memory throttle in /api/contact [STATIC_FILE]
+  - PII handling: contact form collects personal details; described in privacy policy [STATIC_FILE]
+  - legal pages: privacy policy + terms pages hardcoded [STATIC_FILE]
+
+=== 12. TOOLING, BUILD, AND DEPENDENCIES
+  ─── 12.1 Scripts (package.json)
+    - dev: next dev --turbopack (with webpack flags) [STATIC_FILE]
+    - build: next build [STATIC_FILE]
+    - start: next start [STATIC_FILE]
+    - lint: next lint [STATIC_FILE]
+    - lighthouse: LHCI scripts [STATIC_FILE]
+  ─── 12.2 Top dependencies (top 10)
+    - next: App Router, routing, SSR/SSG [STATIC_FILE]
+    - react / react-dom: UI runtime [STATIC_FILE]
+    - tailwindcss: utility styling [STATIC_FILE]
+    - react-hook-form: form state [STATIC_FILE]
+    - zod + @hookform/resolvers: validation [STATIC_FILE]
+    - resend: email delivery [STATIC_FILE]
+    - @vercel/analytics: analytics [STATIC_FILE]
+    - @vercel/speed-insights: performance telemetry [STATIC_FILE]
+    - swiper: portfolio carousel [STATIC_FILE]
+    - react-icons: icon set [STATIC_FILE]
+  ─── 12.3 Dependency map (top 15)
+    - next -> app/ routing, metadata, Image, Script
+    - react -> components, hooks
+    - react-dom -> rendering
+    - tailwindcss -> class-based styles
+    - react-hook-form -> ContactForm
+    - zod -> contact schema validation
+    - @hookform/resolvers -> zodResolver
+    - resend -> /api/contact email
+    - @vercel/analytics -> app/layout analytics
+    - @vercel/speed-insights -> app/layout metrics
+    - swiper -> Portfolio carousel
+    - react-icons -> UI icons across components
+    - react-compare-image -> legacy ServiceDetails [POTENTIALLY DEAD CODE]
+    - react-countup -> legacy PricingCard [POTENTIALLY DEAD CODE]
+    - fslightbox-react -> legacy template usage [POTENTIALLY DEAD CODE]
+
+=== 13. RISKS, GAPS, AND RECOMMENDATIONS
+  - legacy pages/components in src/PageViews/InnerPage are not routed and contain placeholder content; confirm whether to remove or rewire [POTENTIALLY DEAD CODE]
+  - duplicate contact schema (lib/schemas vs src/lib/schemas) can drift; consolidate [NEEDS CLARIFICATION]
+  - alt text missing for several images (Banner, Brand, ProcessCard) impacts accessibility [NEEDS CLARIFICATION]
+  - pricing section uses unrelated cleaning-service copy; confirm whether to update or remove [NEEDS CLARIFICATION]
+  - some links use "#" placeholders (ServiceMain, Portfolio, Blog view-all, Support CTA); define destinations [NEEDS CLARIFICATION]
+  - unused assets in public/images increase bundle size and maintenance; consider pruning [POTENTIALLY DEAD CODE]

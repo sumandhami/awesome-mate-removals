@@ -3,7 +3,7 @@ import { FaPhone } from "react-icons/fa6";
 import Service from "@/src/Componant1/Service/Service";
 import Support from "@/src/Componant1/Support/Support";
 
-const ServicesPage = () => {
+const ServicesPage = ({ services }) => {
   return (
     <>
       <section className="min-h-[520px] sm:min-h-[600px] lg:min-h-[640px] pt-24 sm:pt-28 lg:pt-0 flex items-center overflow-hidden relative">
@@ -41,7 +41,7 @@ const ServicesPage = () => {
         </div>
       </section>
 
-      <Service />
+      <Service services={services} />
       <Support />
     </>
   );

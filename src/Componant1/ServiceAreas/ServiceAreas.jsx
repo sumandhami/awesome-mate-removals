@@ -1,26 +1,26 @@
 import Link from "next/link";
 
-const suburbs = [
-  "Perth CBD",
-  "Fremantle",
-  "Joondalup",
-  "Canning Vale",
-  "Subiaco",
-  "Morley",
-  "Armadale",
-  "Midland",
-  "Osborne Park",
-  "Rockingham",
-  "Scarborough",
-  "Victoria Park",
-  "Leederville",
-  "Bayswater",
-  "Belmont",
+const fallbackSuburbs = [
+  { suburb: "Perth CBD", slug: "perth-cbd" },
+  { suburb: "Fremantle", slug: "fremantle" },
+  { suburb: "Joondalup", slug: "joondalup" },
+  { suburb: "Canning Vale", slug: "canning-vale" },
+  { suburb: "Subiaco", slug: "subiaco" },
+  { suburb: "Morley", slug: "morley" },
+  { suburb: "Armadale", slug: "armadale" },
+  { suburb: "Midland", slug: "midland" },
+  { suburb: "Osborne Park", slug: "osborne-park" },
+  { suburb: "Rockingham", slug: "rockingham" },
+  { suburb: "Scarborough", slug: "scarborough" },
+  { suburb: "Victoria Park", slug: "victoria-park" },
+  { suburb: "Leederville", slug: "leederville" },
+  { suburb: "Bayswater", slug: "bayswater" },
+  { suburb: "Belmont", slug: "belmont" },
 ];
 
-const toSlug = (name) => name.toLowerCase().replace(/\s+/g, "-");
+const ServiceAreas = ({ serviceAreas = null }) => {
+  const areas = serviceAreas && serviceAreas.length > 0 ? serviceAreas : fallbackSuburbs;
 
-const ServiceAreas = () => {
   return (
     <section className="performance-section bg-[#0D3270] py-28 relative z-10">
       <div className="Container relative z-10">
@@ -34,10 +34,10 @@ const ServiceAreas = () => {
           </p>
         </div>
         <div className="mt-[45px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {suburbs.map((suburb) => (
+          {areas.map(({ suburb, slug }) => (
             <Link
               key={suburb}
-              href={`/services?suburb=${toSlug(suburb)}`}
+              href={`/services?suburb=${slug}`}
               className="font-Inter text-[15px] text-HeadingColor-0 text-center bg-BodyBg-0 rounded px-4 py-3 transition-all duration-300 hover:bg-SecondaryColor-0 hover:text-white"
             >
               {suburb}

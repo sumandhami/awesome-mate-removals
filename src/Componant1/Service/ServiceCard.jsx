@@ -16,7 +16,11 @@ const normalizeActiveRouteHref = (href, fallbackHref) => {
   try {
     const parsedUrl = new URL(href.trim(), "https://local.internal");
     const normalizedPath = parsedUrl.pathname.replace(/\/+$/, "") || "/";
-    return ACTIVE_ROUTE_HREFS.has(normalizedPath) ? normalizedPath : fallbackHref;
+    // Accept exact known routes or any /services/* sub-path
+    if (ACTIVE_ROUTE_HREFS.has(normalizedPath) || normalizedPath.startsWith("/services/")) {
+      return normalizedPath;
+    }
+    return fallbackHref;
   } catch {
     return fallbackHref;
   }
@@ -34,7 +38,8 @@ const ServiceCard = ({
   buttonIcon,
 }) => {
   const normalizedServiceHref = normalizeActiveRouteHref(serviceUrl, "/services");
-  const serviceThumbSrc = typeof serviceThumb === "string" ? serviceThumb : serviceThumb?.src;
+  // serviceThumb may be a URL string (from urlFor), a Next.js static import object, or null
+  const serviceThumbSrc = typeof serviceThumb === "string" ? serviceThumb : serviceThumb?.src ?? null;
 
   return (
     <div className="group">

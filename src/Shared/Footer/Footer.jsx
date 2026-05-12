@@ -11,7 +11,23 @@ import { IoLocationOutline } from "react-icons/io5";
 import { FiPhoneCall } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 
-const Footer = () => {
+const Footer = ({ settings }) => {
+  const phone = settings?.phone ?? "0412007264";
+  const email = settings?.email ?? "info@awesomemateremovals.com.au";
+  const abn = settings?.abn ?? "42293475158";
+  const addr = settings?.address;
+  const address = addr
+    ? `${addr.street}, ${addr.suburb} ${addr.state} ${addr.postcode}`
+    : "Unit 5/207 Waterloo Street, Tuart Hill WA 6060";
+  const fbHref = settings?.social?.facebook ?? "#";
+  const companyDescription =
+    settings?.companyDescription ??
+    "Awesome Mate Removals is a local Perth moving company for residential, furniture, commercial, and interstate removals.";
+  const copyrightYear = settings?.copyrightYear ?? 2026;
+  const mapsEmbedUrl =
+    settings?.googleMapsEmbedUrl ??
+    "https://maps.google.com/maps?q=Unit+5%2F207+Waterloo+Street+Tuart+Hill+WA+6060&output=embed&z=15";
+
   const quickLinks = [
     { label: "Home", href: "/" },
     { label: "About Us", href: "/#about" },
@@ -36,12 +52,11 @@ const Footer = () => {
             <div className="min-w-0">
             <img src={footerLogo?.src || footerLogo} alt="Awesome Mate Removals" loading="lazy" decoding="async" />
             <p className="font-Poppins text-white mt-6 mb-6 max-w-sm leading-7">
-              Awesome Mate Removals is a local Perth moving company for residential,
-              furniture, commercial, and interstate removals.
+              {companyDescription}
             </p>
             <ul className="flex gap-3">
               <li>
-                <a href="#" aria-label="Facebook" className="w-10 h-10 rounded-full border-2 border-[#334899] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
+                <a href={fbHref} aria-label="Facebook" className="w-10 h-10 rounded-full border-2 border-[#334899] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
                   <FaFacebookF />
                 </a>
               </li>
@@ -121,7 +136,7 @@ const Footer = () => {
               <div className="flex-1 -mt-1">
                 <h6 className="font-Inter font-medium text-[17px] text-white">Phone</h6>
                 <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  0412007264
+                  {phone}
                 </p>
               </div>
             </div>
@@ -132,7 +147,7 @@ const Footer = () => {
               <div className="flex-1 -mt-1">
                 <h6 className="font-Inter font-medium text-[17px] text-white">Email</h6>
                 <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  info@awesomemateremovals.com.au
+                  {email}
                 </p>
               </div>
             </div>
@@ -143,14 +158,14 @@ const Footer = () => {
               <div className="flex-1 -mt-1">
                 <h6 className="font-Inter font-medium text-[17px] text-white">Address</h6>
                 <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  Unit 5/207 Waterloo Street, Tuart Hill WA 6060
+                  {address}
                 </p>
               </div>
             </div>
             <div className="rounded-md overflow-hidden border border-[#334899] mt-2 max-w-full">
               <iframe
                 title="Awesome Mate Perth Service Area"
-                src="https://www.google.com/maps?q=Unit%205%2F207%20Waterloo%20Street%2C%20Tuart%20Hill%20WA%206060&output=embed"
+                src={mapsEmbedUrl}
                 className="w-full h-[150px]"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -162,11 +177,11 @@ const Footer = () => {
         <div className="py-6 border-t border-[#334899]">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <p className="font-Poppins text-white text-sm md:text-base">
-              © 2026 Awesome Mate Removals. All rights reserved.
+              © {copyrightYear} Awesome Mate Removals. All rights reserved.
             </p>
             <div className="flex flex-wrap items-center gap-6">
               <p className="font-Poppins text-[#B9BBD2] text-sm md:text-base">
-                ABN: 42293475158
+                ABN: {abn}
               </p>
               <p className="font-Poppins text-[#B9BBD2] text-sm md:text-base">
                 Developed by{" "}
@@ -188,4 +203,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
