@@ -220,7 +220,7 @@ const Navbar = ({ settings }) => {
                   isOpen ? "block" : "hidden"
                 } text-right lg:w-fit ease-in-out flex-1 lg:flex space-y-2 lg:space-y-0 space-x-0 flex flex-col lg:flex-row capitalize text-base lg:bg-transparent py-3 lg:py-0 font-Poppins font-medium text-white transition-all duration-500`}
               >
-                <li>
+                <li className="lg:flex lg:items-center lg:relative lg:before:content-[''] lg:before:block lg:before:h-4 lg:before:border-l-2 lg:before:border-HeadingColor-0 lg:first:before:hidden">
                   <Link
                     href="/#home"
                     className={`${pathname === "/" && (currentHash === "" || currentHash === "#home") ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
@@ -228,7 +228,7 @@ const Navbar = ({ settings }) => {
                     Home
                   </Link>
                 </li>
-                <li>
+                <li className="lg:flex lg:items-center lg:relative lg:before:content-[''] lg:before:block lg:before:h-4 lg:before:border-l-2 lg:before:border-HeadingColor-0 lg:first:before:hidden">
                   <Link
                     className={`${pathname === "/" && currentHash === "#about" ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
                     href="/#about"
@@ -236,7 +236,7 @@ const Navbar = ({ settings }) => {
                     About Us
                   </Link>
                 </li>
-                <li>
+                <li className="lg:flex lg:items-center lg:relative lg:before:content-[''] lg:before:block lg:before:h-4 lg:before:border-l-2 lg:before:border-HeadingColor-0 lg:first:before:hidden">
                   <Link
                     className={`${pathname === "/services" ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
                     href="/services"
@@ -244,7 +244,7 @@ const Navbar = ({ settings }) => {
                     Our Services
                   </Link>
                 </li>
-                <li>
+                <li className="lg:flex lg:items-center lg:relative lg:before:content-[''] lg:before:block lg:before:h-4 lg:before:border-l-2 lg:before:border-HeadingColor-0 lg:first:before:hidden">
                   <Link
                     className={`${pathname === "/" && currentHash === "#blog" ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
                     href="/#blog"
@@ -252,7 +252,7 @@ const Navbar = ({ settings }) => {
                     Blog
                   </Link>
                 </li>
-                <li>
+                <li className="lg:flex lg:items-center lg:relative lg:before:content-[''] lg:before:block lg:before:h-4 lg:before:border-l-2 lg:before:border-HeadingColor-0 lg:first:before:hidden">
                   <Link
                     className={`${pathname === "/" && currentHash === "#contact-form" ? "active" : ""} text-HeadingColor-0 text-left lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
                     href="/#contact-form"

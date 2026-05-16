@@ -151,76 +151,102 @@ The site renders the original hardcoded content until you publish data in Sanity
 
 ---
 
-## 🔲 Phase 4 — Services CMS (TODO)
+## ✅ Phase 4 — Services CMS (COMPLETE)
 
-### Goal
-Move the 6 service cards (title, description, thumbnail, icon, feature list) and services page metadata into Sanity.
+### What was done
+- `service` Sanity schema created — fields: `title`, `slug`, `shortDescription`, `thumbnail` (image+hotspot), `order`, `seo` (metaTitle, metaDescription)
+- GROQ query: `ALL_SERVICES_QUERY` — ordered by `order asc`
+- `src/Componant1/Service/ServiceMain.jsx` — accepts `services[]` prop; icons stay hardcoded by array index (same pattern as Feature/Process/WhyChoose); `urlFor()` imported directly from `@/sanity/lib/image` (NOT `@/lib/sanity`) to avoid pulling server-only `SanityLive` into the client component tree
+- `src/Componant1/Service/ServiceCard.jsx` — URL normalizer updated to accept `/services/*` sub-paths
+- Props threaded: `Service.jsx` → `ServicesPage.jsx` → `app/(main)/services/page.jsx` (async fetch)
+- `app/(main)/page.jsx` — 5-way `Promise.all` now includes services
+- `src/PageViews/Home1/Home1.jsx` — accepts and forwards `services` prop
+- `app/api/revalidate/route.js` — added `service` → `revalidateTag("services")`
 
-### Sanity schema to create
+### Icon handling decision
+Icons are permanently hardcoded in `ServiceMain.jsx` as a `serviceIcons` array (FiHome, FiTruck, FiBriefcase, FiMap, FiTrash2, FiPackage). When CMS data is present, `serviceIcons[index]` provides the icon; CMS provides title/description/image.
 
-**`service` document** (`sanity/schemaTypes/service.ts`):
-```
-fields: title, slug(slug), shortDescription(text), thumbnail(image+hotspot), icon(image),
-        features[](string), order(number), seo: { metaTitle, metaDescription }
-```
+### Pending user actions
+1. Open `http://localhost:3000/studio`
+2. Create 6 **Service** documents — fill title, shortDescription, thumbnail, order (1–6)
+3. Publish all 6
 
-### GROQ queries (`lib/queries/services.js`)
-```js
-export const ALL_SERVICES_QUERY = `*[_type == "service"] | order(order asc) { ... }`
-```
-
-### Files to touch
+### Key files created/modified
 - `sanity/schemaTypes/service.ts` (new)
-- `sanity/schemaTypes/index.ts` (register service)
+- `sanity/schemaTypes/index.ts` (registered service)
 - `lib/queries/services.js` (new)
-- `app/(main)/services/page.jsx` — async server component, fetch services, pass to `<ServicesPage>`
-- `src/Componant1/Service/ServiceMain.jsx` — accept `services[]` prop, replace hardcoded `serviceData` array, use `urlFor()` for images
-- `src/PageViews/Services/ServicesPage.jsx` — accept `services` prop, pass to ServiceMain
-- `app/(main)/page.jsx` — also fetch services here, pass to `<Home1>` → `<Service>`
-- `app/api/revalidate/route.js` — add `revalidateTag("services")`
+- `app/(main)/services/page.jsx` (async fetch)
+- `src/Componant1/Service/ServiceMain.jsx` (props + fallback)
+- `src/Componant1/Service/ServiceCard.jsx` (/services/* URL fix)
+- `src/Componant1/Service/Service.jsx` (props thread)
+- `src/PageViews/Services/ServicesPage.jsx` (props thread)
+- `src/PageViews/Home1/Home1.jsx` (services prop)
+- `app/(main)/page.jsx` (5-way Promise.all)
+- `app/api/revalidate/route.js` (services tag)
 
 ---
 
-## 🔲 Phase 5 — Site Settings & Page Metadata CMS (TODO)
+## ✅ Phase 5 — Site Settings CMS (COMPLETE)
 
-### Goal
-Move global company info (phone, email, address, social links, logo) and per-page SEO metadata into Sanity. Navbar and Footer become CMS-driven.
+### What was done
+- `siteSettings` singleton schema created — fields: `phone`, `email`, `abn`, `address` (object: street/suburb/state/postcode), `social` (object: facebook/instagram/tiktok), `googleMapsEmbedUrl`, `companyDescription`, `copyrightYear`
+- GROQ query: `SITE_SETTINGS_QUERY` with `tags: ["siteSettings"]`
+- `app/(main)/layout.jsx` — 3-way `Promise.all` (reviews, faqs, settings); `LocalBusiness` schema.org JSON-LD now uses CMS values with hardcoded fallbacks; passes `settings` to `<MainShell>`
+- `src/Layouts/MainShell.jsx` — forwards `settings` to `<Navbar>` and `<Footer>`
+- `src/Shared/Navbar/Navbar.jsx` — address, email, phone, all 3 social hrefs CMS-driven; also fixed pre-existing bug (email `<Link href="/">` → `<a href="mailto:...">`)
+- `src/Shared/Footer/Footer.jsx` — phone, email, address, Facebook href, company description, ABN, copyright year, maps iframe src all CMS-driven
+- `app/api/revalidate/route.js` — added `siteSettings` → `revalidateTag("siteSettings")`
 
-### Sanity schemas to create
+### Scope decisions
+- Logo/favicon: left as static assets (no CMS needed)
+- Footer `quickLinks` and `serviceLinks` nav arrays: left hardcoded (structural, not editorial)
+- X/LinkedIn/Pinterest social links: remain `"#"` (client hasn't provided URLs; not in schema)
+- `pageMeta` document type: skipped — handled via `siteSettings` object fields instead
 
-**`siteSettings` singleton** (`sanity/schemaTypes/siteSettings.ts`):
-```
-fields: companyName, tagline, phone, email, abn,
-        address: { street, suburb, state, postcode, country },
-        logo(image), favicon(image),
-        social: { facebook, instagram, tiktok, twitter, linkedin },
-        googleMapsEmbedUrl(text), copyrightYear(number)
-```
+### Pending user actions
+1. Open `http://localhost:3000/studio` → Site Settings document
+2. Fill in phone, email, ABN, address, social links, Google Maps embed URL
+3. Publish
 
-**`pageMeta` document** (`sanity/schemaTypes/pageMeta.ts`):
-```
-fields: pageKey(string — "home", "services", "privacy-policy", etc.),
-        title, description, ogImage(image), canonical(string)
-```
-
-### GROQ queries (`lib/queries/siteSettings.js`)
-```js
-export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] { ... }`
-export const PAGE_META_QUERY = `*[_type == "pageMeta" && pageKey == $pageKey][0] { ... }`
-```
-
-### Files to touch
+### Key files created/modified
 - `sanity/schemaTypes/siteSettings.ts` (new)
-- `sanity/schemaTypes/pageMeta.ts` (new)
-- `sanity/schemaTypes/index.ts` (register both)
+- `sanity/schemaTypes/index.ts` (registered siteSettings)
 - `lib/queries/siteSettings.js` (new)
-- `app/layout.jsx` — fetch siteSettings, build metadata + schema.org LocalBusiness from CMS
-- `app/(main)/services/page.jsx` — fall back to CMS pageMeta for metadata
-- `src/Shared/Navbar/Navbar.jsx` — accept `settings` prop (phone, email, address, socials)
-- `src/Shared/Footer/Footer.jsx` — accept `settings` prop (all contact + social + copyright)
-- `src/Layouts/MainShell.jsx` — pass settings prop through to Navbar + Footer
-- `app/api/revalidate/route.js` — add `revalidateTag("siteSettings")`
-- Caching: `siteSettings` fetches use `next: { revalidate: 3600 }` (1 hour)
+- `app/(main)/layout.jsx` (3-way Promise.all, LocalBusiness schema.org, settings prop)
+- `src/Layouts/MainShell.jsx` (settings prop thread)
+- `src/Shared/Navbar/Navbar.jsx` (CMS-driven + mailto fix)
+- `src/Shared/Footer/Footer.jsx` (CMS-driven)
+- `app/api/revalidate/route.js` (siteSettings tag)
+
+---
+
+## ✅ Phase 6 — Page SEO Metadata CMS (COMPLETE)
+
+### What was done
+- `homeSeo` and `servicesSeo` object fields added to existing `siteSettings` schema — each has: `metaTitle` (string), `metaDescription` (text), `ogImage` (image)
+- `SITE_SETTINGS_QUERY` extended to fetch both SEO objects including `ogImage { asset->{ url } }`
+- `app/(main)/page.jsx` — added `generateMetadata()` export; reads `settings.homeSeo.*` with hardcoded fallbacks; OG image included when present
+- `app/(main)/services/page.jsx` — replaced static `export const metadata` with `generateMetadata()`; reads `settings.servicesSeo.*` with hardcoded fallbacks
+- `app/(main)/layout.jsx` — removed redundant `metadata` export (was conflicting with page-level `generateMetadata`)
+- Blog posts already had per-post SEO from Phase 2; blog listing, privacy policy, terms left hardcoded (not in scope)
+
+### Recommended SEO values (enter these in Studio)
+| Page | Meta Title (chars) | Meta Description (chars) |
+|------|--------------------|--------------------------|
+| Home | `Awesome Mate Removals \| Perth Removalists You Can Trust` (57) | `Trusted Perth removalists for home, office, furniture & interstate moves. Fully insured, locally owned. Get a free quote from Awesome Mate Removals today.` (153) |
+| Services | `Our Removal Services \| Awesome Mate Removals Perth WA` (58) | `Explore our full range of removal services in Perth — residential, furniture, commercial, interstate & specialty item moves. Reliable, insured & affordable.` (152) |
+
+### Pending user actions
+1. Open `http://localhost:3000/studio` → Site Settings document
+2. Fill in **Home Page SEO** and **Services Page SEO** sections
+3. Publish
+
+### Key files modified
+- `sanity/schemaTypes/siteSettings.ts` (homeSeo + servicesSeo fields)
+- `lib/queries/siteSettings.js` (extended query)
+- `app/(main)/page.jsx` (generateMetadata)
+- `app/(main)/services/page.jsx` (generateMetadata)
+- `app/(main)/layout.jsx` (removed redundant metadata export)
 
 ---
 
