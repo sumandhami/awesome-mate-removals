@@ -236,13 +236,39 @@ const Navbar = ({ settings }) => {
                     About Us
                   </Link>
                 </li>
-                <li className="lg:flex lg:items-center lg:relative lg:before:content-[''] lg:before:block lg:before:h-4 lg:before:border-l-2 lg:before:border-HeadingColor-0 lg:first:before:hidden">
+                <li className="group lg:flex lg:items-center lg:relative lg:before:content-[''] lg:before:block lg:before:h-4 lg:before:border-l-2 lg:before:border-HeadingColor-0 lg:first:before:hidden">
                   <Link
                     className={`${pathname === "/services" ? "active" : ""} text-HeadingColor-0 text-left hover:text-PrimaryColor-0 lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
                     href="/services"
                   >
                     Our Services
                   </Link>
+                  <div
+                    className="hidden group-hover:lg:block group-focus-within:lg:block lg:absolute lg:top-full lg:left-0 lg:mt-0 lg:min-w-[240px] lg:bg-white lg:border lg:border-HeadingColor-0/15 lg:shadow-lg lg:z-50"
+                    role="menu"
+                    aria-label="Our Services submenu"
+                  >
+                    <ul className="divide-y divide-HeadingColor-0/15">
+                      {[
+                        "Residential Moving",
+                        "Furniture Removals",
+                        "Commercial Relocation",
+                        "Interstate Removals",
+                        "Junk Removals",
+                        "Special Items Moves",
+                      ].map((label) => (
+                        <li key={label}>
+                          <Link
+                            href="/services"
+                            role="menuitem"
+                            className="block text-left px-4 py-2 text-sm text-HeadingColor-0 hover:bg-SecondaryColor-0 hover:text-white transition-colors duration-200 font-Poppins font-normal"
+                          >
+                            {label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </li>
                 <li className="lg:flex lg:items-center lg:relative lg:before:content-[''] lg:before:block lg:before:h-4 lg:before:border-l-2 lg:before:border-HeadingColor-0 lg:first:before:hidden">
                   <Link
